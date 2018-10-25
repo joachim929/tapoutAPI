@@ -24,6 +24,8 @@ function checkParams()
 function getMenu() {
     $language = $_GET['lang'];
     $results = getAllWithLanguage($language);
+
+    $results = sortData($results);
     //@todo write some functions so sort the raw data for categories and positions!!
     return $results;
 }
@@ -78,4 +80,64 @@ function returnStatement($results)
         echo json_encode(null);
     }
 }
+
+function sortData($results)
+{
+    $sortedResults = sortCategories($results);
+    return $sortedResults;
+}
+
+function sortCategories($results) {
+    $sortedResults = array();
+
+    foreach ($results as $result) {
+        $itemArray = [
+            'id' => $result['id'],
+            'title' => $result['title'],
+            'price' => $result['price'],
+            'description' => $result['description'],
+            'categoryPosition' => $result['categoryPosition']
+        ];
+        if(!isset($sortedResults['category'][$result['categoryId']])){
+            $sortedResults['category'][$result['categoryId']] = [
+                'id' => $result['categoryId'],
+                'pagePosition' => $result['pagePosition'],
+                'name' => $result['categoryName'],
+                'items' => [ $itemArray ]
+            ];
+        } else {
+            $sortedResults['category'][$result['categoryId']]['items'][] = $itemArray;
+        }
+    }
+
+    $sortedResults = sortMenuItems($sortedResults);
+    return $sortedResults;
+}
+
+function sortMenuItems($results) {
+
+    foreach ($results['category'] as $i => $categories) {
+        $temp = [];
+
+        foreach ($categories['items'] as $key => $items) {
+            $temp[$items['categoryPosition'] . "oldkey" . $key] = $items;
+        }
+
+        ksort($temp, SORT_NUMERIC);
+
+        $results['category'][$i]['items'] = array_values($temp);
+    }
+    usort ($results['category'], "comparisonPagePosition");
+    return $results;
+}
+
+
+// Comparison function
+function comparisonPagePosition($a, $b) {
+    if ($a['pagePosition'] === $b['pagePosition']) {
+        return 0;
+    }
+    return ($a['pagePosition'] < $b['pagePosition']) ? -1 : 1;
+}
+
 
