@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2018 at 08:08 AM
--- Server version: 10.1.34-MariaDB
--- PHP Version: 7.2.8
+-- Generation Time: Oct 28, 2018 at 02:06 PM
+-- Server version: 10.1.36-MariaDB
+-- PHP Version: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -121,28 +121,41 @@ CREATE TABLE `tapout_menu_category` (
   `type` set('food','drink') COLLATE utf8_bin NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `language` set('en','vn') COLLATE utf8_bin NOT NULL,
-  `page_position` int(11) NOT NULL
+  `page_position` int(11) NOT NULL,
+  `tag` varchar(255) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `tapout_menu_category`
 --
 
-INSERT INTO `tapout_menu_category` (`id`, `name`, `type`, `active`, `language`, `page_position`) VALUES
-(1, 'Starters', 'food', 1, 'en', 1),
-(2, 'Burgers & Sandwiches', 'food', 1, 'en', 20),
-(3, 'Mains', 'food', 1, 'en', 30),
-(4, 'Sides', 'food', 1, 'en', 3),
-(5, 'Desserts', 'food', 1, 'en', 10),
-(6, 'On-tap', 'drink', 1, 'en', 5),
-(7, 'Bottles', 'drink', 1, 'en', 6),
-(8, 'Special-Beers', 'drink', 1, 'en', 7),
-(9, 'Mixers', 'drink', 1, 'en', 100),
-(10, 'Cocktails', 'drink', 1, 'en', 9),
-(11, 'Red Wine', 'drink', 1, 'en', 12),
-(12, 'White Wine', 'drink', 1, 'en', 11),
-(13, 'Rose & Prosecco', 'drink', 1, 'en', 13),
-(14, 'Du lịch ở Rạch Giá, ở phía Nam', 'food', 1, 'vn', 14);
+INSERT INTO `tapout_menu_category` (`id`, `name`, `type`, `active`, `language`, `page_position`, `tag`) VALUES
+(1, 'Starters', 'food', 1, 'en', 1, 'starters'),
+(2, 'Burgers & Sandwiches', 'food', 1, 'en', 20, 'burgers'),
+(3, 'Mains', 'food', 1, 'en', 30, 'mains'),
+(4, 'Sides', 'food', 1, 'en', 3, 'sides'),
+(5, 'Desserts', 'food', 1, 'en', 10, 'desserts'),
+(6, 'On-tap', 'drink', 1, 'en', 5, 'on-tap'),
+(7, 'Bottles', 'drink', 1, 'en', 6, 'bottles'),
+(8, 'Special-Beers', 'drink', 1, 'en', 7, 'special-beers'),
+(9, 'Mixers', 'drink', 1, 'en', 100, 'mixers'),
+(10, 'Cocktails', 'drink', 1, 'en', 9, 'cocktails'),
+(11, 'Red Wine', 'drink', 1, 'en', 12, 'red-wine'),
+(12, 'White Wine', 'drink', 1, 'en', 11, 'white-wine'),
+(13, 'Rose & Prosecco', 'drink', 1, 'en', 13, 'rose'),
+(14, 'VNStarters', 'food', 1, 'vn', 1, 'starters'),
+(15, 'VNMains', 'food', 1, 'vn', 30, 'mains'),
+(16, 'VNSides', 'food', 1, 'vn', 3, 'sides'),
+(17, 'VNBurgers & Sandwiches', 'food', 1, 'vn', 20, 'burgers'),
+(18, 'VNDesserts', 'food', 1, 'vn', 10, 'desserts'),
+(19, 'VNOn-top', 'drink', 1, 'vn', 5, 'on-tap'),
+(20, 'VNBottles', 'drink', 1, 'vn', 6, 'bottles'),
+(21, 'VNSpecial-Beers', 'drink', 1, 'vn', 7, 'special-beers'),
+(22, 'VNMixers', 'drink', 1, 'vn', 100, 'mixers'),
+(23, 'VNCocktails', 'drink', 1, 'vn', 9, 'cocktails'),
+(24, 'VNRed Wine', 'drink', 1, 'vn', 12, 'red-wine'),
+(25, 'VNWhite Wine', 'drink', 1, 'vn', 111, 'white-wine'),
+(26, 'VNRose & Prosecco', 'drink', 1, 'vn', 13, 'rose');
 
 -- --------------------------------------------------------
 
@@ -156,89 +169,88 @@ CREATE TABLE `tapout_menu_item` (
   `title` varchar(255) COLLATE utf8_bin NOT NULL,
   `price` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `description` text COLLATE utf8_bin,
-  `category_position` int(11) NOT NULL
+  `category_position` int(11) NOT NULL,
+  `tag` varchar(255) COLLATE utf8_bin NOT NULL,
+  `language` set('en','vn') COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `tapout_menu_item`
 --
 
-INSERT INTO `tapout_menu_item` (`id`, `category_id`, `title`, `price`, `description`, `category_position`) VALUES
-(1, 1, 'Grilled Peanut Butter Pad Thai Chicken Skewer', '25K', NULL, 11),
-(2, 1, 'Grilled Teriyaki Beef Skewer', '30K', NULL, 111),
-(3, 1, 'Cajun Prawns 1 / 3', '60K / 150K', 'Marinated & Grilled Prawn skewers, served with avocado crema', 1111),
-(4, 1, 'Fried Oysters', '85K', 'Topped with pomegranate molasses, cool ranch dressing and diced jalapeno', 2),
-(5, 1, 'Onion Blossom', '75K', 'Full white onion carved into a blossom shape then battered & fried, served with a spicy cocktail sauce', 1),
-(6, 1, 'Prawn Tacos', '85K', '2 homemade flour tortillas, avodaco crema, cajun prawns, sauteed onions & red pepper, marinated mango, sour cream', 6),
-(7, 1, 'Pulled Pork Tacos', '75K', '2 homemade flour tortillas, avocado crema, pickled red cabbage, smoked pork shoulder, pineapple salsa, sour cream', 7),
-(8, 1, 'Fried Chicken Wings 6pcs / 12pcs', '90K / 170K', 'Choice of sweet & sticky bourbon or Siracha Buffalo sauce', -1),
-(9, 1, 'Grilled Prawn Salad', '150K', 'Grilled prawns, roasted peppers & zucchini, cherry tomatoes, goats cheese, rosemary vinaigrette', -4),
-(10, 1, 'Mac ‘N Cheese Balls', '75K', 'Cheddar & bacon macaroni rolled into balls and fried. Topped with cool ranch dressing, bacon, cheddar cheese and green onions.', 20),
-(13, 1, 'Chili Con Carne Small / Large', '75K / 125K', 'A bowl of homemade chili topped with cheddar cheese, fried tortillas, sour cream & green onions', -15),
-(14, 1, 'Spinach & Artichoke DipSpinach & Artichoke Dip', '85K', 'Cold dip served with homemade chips, and assorted fresh vegetables', 156),
-(15, 1, 'Chili Cheese Fries', '155K', 'Hand cut fries topped with homemade chili, cheddar cheese, sour cream & green onions', 5116),
-(16, 1, 'Loaded Fries', '140K', 'Hand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', -1456),
-(19, 2, 'Served with a side of your choice', NULL, NULL, 0),
-(22, 2, 'Classic Burger', '125K', '150gr beef patty, lettuce, tomato, onion, pickle, ketchup & mustard', 0),
-(23, 2, 'Bacon & Cheese Burger', '150K', '150gr beef patty, lettuce, tomato, smoked bacon, cheddar cheese, dill pickle, ketchup & mustard', 0),
-(24, 2, 'Bacon, Cranberry and Brie Burger', '185K', '150gr beef patty, smoke bacon, brie cheese, homemade cranberry sauce and lettuce', 0),
-(25, 2, 'The TAP OUT BOMB', '250K', '125gr wheel of Camembert breaded and fried, 150gr beef patty, lettuce, tomato, homemade mustard sauce', 0),
-(26, 2, 'Chili Cheese Dogs Single / Double', '110K / 185K', 'Frankfurters in a grilled bun topped with chili con carne, cheddar cheese & diced Jalepenos', 0),
-(27, 2, 'Cubano Sandwich', '160K', 'Smoked pork shoulder, ham, Swiss cheese, dill pickles, yellow mustard. Pressed in a Cuban style bread', 0),
-(28, 2, 'Pulled Pork Sandwich', '150K', 'Smoked & pulled pork shoulder topped with green apple coleslaw, served with a side of your choice', 0),
-(29, 2, 'Steak Sandwich', '200K', '125g grilled Australian rib eye, marinated red peppers & zucchini, coriander & lime chimichurri and cheddar cheese. Served on a homemade grilled light rye bread.', 0),
-(30, 2, 'Montreal Smoked Meat Sandwich', '180K', 'Wood smoked cured brisket in our homemade rye bread, smothered in yellow mustard, served with hand cut fries, coleslaw and kosher dill', 0),
-(31, 3, 'Wood Smoked Ribs Half / Full Rack', '300K / 550K', 'Served with Two Choice of Sides', -20),
-(32, 3, '250g Australian Grain fed Rib Eye Steak', '250K', 'Flame grilled and pan finished with butter, garlic and rosemary', 0),
-(33, 3, 'Fish & Chips', '170K', 'Beer battered fish and fries, served with a homemade tartar sauce', 0),
-(34, 3, 'Bourbon Chicken', '160K', 'Grilled chicken breast coated in a sweet & sticky bourbon sauce, topped with goats cheese and avocado, served with a side of your choice', 0),
-(35, 4, 'Hand Cut Fries', '50K', NULL, 0),
-(36, 4, 'Sweet Potato Fries', '50K', NULL, 0),
-(37, 4, 'Salad', '45K', 'Lettuce, cherry tomato, marinated zucchini & peppers, rosemary vinaigrette', 0),
-(38, 4, 'Green Beans', '40K', 'Steamed and tossed with butter, garlic and cherry tomatoes', 0),
-(39, 4, 'Coleslaw', '35K', NULL, 0),
-(40, 5, 'Ice cream tacos', '90K', 'Homemade cheesecake & fudge, peanut butter, vanilla ice cream stuffed into a home made waffle “taco” cone', 0),
-(41, 5, 'Group Ice Cream Tacos deal:', '230K', '3 Tacos', 0),
-(42, 5, 'Baked Pineapple & Camembert', '190K', '125g Camembert wheel oven baked topped with a sweet pineapple reduction. Served with toasted bread.', 0),
-(43, 5, 'Banana Foster', '90K', 'Bananas flambéed with dark rum & banana liqueur, brown sugar and cinnamon, served with coconut ice cream', 0),
-(44, 6, 'East West Triple IPA', '110K', 'IBU 75 - ABV 11.0%', 0),
-(45, 6, 'East West Pale Ale', '90K', 'IBU 32 – ABV 6.0%', 0),
-(47, 6, 'Pasteur Street Jasmin IPA', '90K', 'IBU 50 - ABV 6.5%', 0),
-(48, 6, 'Pasteur Street Passion Fruit Wheat Ale', '90K', 'IBU 15 - ABV 4.0%', 0),
-(49, 6, 'Heart Of Darkness Loose Rivet New England IPA', '95K', 'IBU 59 - ABV 7.5%', 0),
-(50, 6, 'Heart Of Darkness Mexican Pilsner', '90K', 'IBU 24 - ABV 4.2%', 0),
-(51, 6, 'Te Te White Ale', '85K', 'IBU 19 - ABV 5.5%', 0),
-(52, 6, 'Hanoi Cider', '100K', 'ABV 6.0%', 0),
-(55, 6, 'Rooster Beers Blonde', '40K, 50K, 70K', 'S, M, L', 0),
-(56, 6, 'ROOSTER BEERS DARK', '50K, 60K, 80K', 'S, M, L', 0),
-(57, 6, 'Tiger Draft Small', '40K', 'ABV 5.0%', 0),
-(58, 6, 'Tiger Draft Big', '60K', 'ABV 5.0%', 0),
-(59, 7, 'Gauden Schwarzbier', '70K', 'ABV 5.2%', 0),
-(60, 7, 'Tiger Bottle', '50K', 'ABV 5.0%', 0),
-(61, 7, 'Desperado Bottle', '60K', 'ABV 5.9%', 0),
-(62, 8, 'Modern Belgian Dark', '200K', '500ml - IBU 23 - ABV 8.1%', 0),
-(63, 8, 'Independence Stout', '220K', '500ml - IBU 68 - ABV 12%', 0),
-(66, 9, 'House Pours', '80K', NULL, 10),
-(67, 9, 'Premium Pours', '90K - 175K', NULL, 0),
-(68, 10, 'Celery Sour', '120K', 'Gin, celery & lime juice, sugar syrup, egg whites, bitters', 0),
-(69, 10, 'Tropical Climax', '150K', 'Light rum, dark rum, apricot brandy, triple sec, pineapple, lime & fresh passion fruit juice.', 0),
-(72, 10, 'Coronita', '180K', 'Double shot tequila, triple sec, lime & passion fruit juice blended with ice, served in a large cocktail glass with a mini corona.', 0),
-(73, 10, 'Espresso Martini', '120K', 'Vodka, Kahlua, Baileys, Vietnamese café, vanilla.', 0),
-(74, 10, 'Deep South Peach Tea', '130K', 'Vodka, peach liqueur, peach puree, lime juice, bitters, earl grey honey tea', 0),
-(75, 10, 'Long Island', '120K', 'Vodka, rum, gin, tequila, triple sec, sugar syrup, lime juice, coke.', 0),
-(76, 10, 'Tito\'s Bloody Mary', '175K', 'Tito’s Vodka, Horseradish, lime juice, Tabasco, Worcestershire sauce, kosher salt, ground pepper in Tomato juice.', 0),
-(77, 11, 'Sanama – Cabernet Sauvignon – Chile 2016', '90K/400K', 'Glass/Bottle', 0),
-(78, 11, 'Woolshed – Merlot – Australia 2017', '95K/450K', 'Glass/Bottle', 0),
-(79, 11, 'Ribshack – Pinnotage/Merlot – South Africa 2016', '125K/680K', 'Glass/Bottle', 0),
-(80, 11, 'Yalumba – Shiraz/Viognier – Australia 2015', '945K', 'Bottle', 0),
-(81, 11, 'Alta Vista – Malbec – Argentina 2016', '1,250K', 'Bottle', 0),
-(82, 12, 'Casa Subercaseaux – Sauvignon Blanc – Chile 2017', '95K/420K', 'Glass/Bottle', 0),
-(83, 12, 'Woolshed - Sauvignon Blanc - Australia 2017', '95K/420K', 'Glass/Bottle', 0),
-(84, 12, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 'Glass/Bottle', 0),
-(85, 12, 'Allan Scott – Sauvignon Blanc – New Zealand 2017', '1,000K', 'Bottle', 0),
-(86, 13, 'Vignerons St. Tropez – Grenache/Cinsault – France', '1,000K', 'Bottle', 0),
-(87, 13, 'Tommasi Filo Dora Prosecco – Italy', '1,200K', 'Bottle', 0),
-(88, 14, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', 0);
+INSERT INTO `tapout_menu_item` (`id`, `category_id`, `title`, `price`, `description`, `category_position`, `tag`, `language`) VALUES
+(14, 1, 'Spinach & Artichoke DipSpinach & Artichoke Dip', '85K', 'Cold dip served with homemade chips, and assorted fresh vegetables', 28, 'spinach', 'en'),
+(15, 1, 'Chili Cheese Fries', '155K', 'Hand cut fries topped with homemade chili, cheddar cheese, sour cream & green onions', 5116, 'chili cheese', 'en'),
+(16, 1, 'Loaded Fries', '140K', 'Hand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', 18, 'loaded fries', 'en'),
+(28, 2, 'Pulled Pork Sandwich', '150K', 'Smoked & pulled pork shoulder topped with green apple coleslaw, served with a side of your choice', 24, 'pulled pork', 'en'),
+(29, 2, 'Steak Sandwich', '200K', '125g grilled Australian rib eye, marinated red peppers & zucchini, coriander & lime chimichurri and cheddar cheese. Served on a homemade grilled light rye bread.', 29, 'steak sand', 'en'),
+(30, 2, 'Montreal Smoked Meat Sandwich', '180K', 'Wood smoked cured brisket in our homemade rye bread, smothered in yellow mustard, served with hand cut fries, coleslaw and kosher dill', 21, 'montreal', 'en'),
+(31, 3, 'Wood Smoked Ribs Half / Full Rack', '300K / 550K', 'Served with Two Choice of Sides', 33, 'wood smoked', 'en'),
+(32, 3, '250g Australian Grain fed Rib Eye Steak', '250K', 'Flame grilled and pan finished with butter, garlic and rosemary', 2, 'australian', 'en'),
+(33, 3, 'Fish & Chips', '170K', 'Beer battered fish and fries, served with a homemade tartar sauce', 11, 'fish & chips', 'en'),
+(37, 4, 'Salad', '45K', 'Lettuce, cherry tomato, marinated zucchini & peppers, rosemary vinaigrette', 26, 'salad', 'en'),
+(38, 4, 'Green Beans', '40K', 'Steamed and tossed with butter, garlic and cherry tomatoes', 13, 'green beans', 'en'),
+(39, 4, 'Coleslaw', '35K', NULL, 8, 'coleslaw', 'en'),
+(41, 5, 'Group Ice Cream Tacos deal:', '230K', '3 Tacos', 14, 'group ice', 'en'),
+(42, 5, 'Baked Pineapple & Camembert', '190K', '125g Camembert wheel oven baked topped with a sweet pineapple reduction. Served with toasted bread.', 3, 'baked pineapple', 'en'),
+(43, 5, 'Banana Foster', '90K', 'Bananas flambéed with dark rum & banana liqueur, brown sugar and cinnamon, served with coconut ice cream', 4, 'banana foster', 'en'),
+(48, 6, 'Pasteur Street Passion Fruit Wheat Ale', '90K', 'IBU 15 - ABV 4.0%', 22, 'pasteur fruit wheat', 'en'),
+(49, 6, 'Heart Of Darkness Loose Rivet New England IPA', '95K', 'IBU 59 - ABV 7.5%', 15, 'heart of darkness', 'en'),
+(50, 6, 'Heart Of Darkness Mexican Pilsner', '90K', 'IBU 24 - ABV 4.2%', 19, 'mexican pils', 'en'),
+(59, 7, 'Gauden Schwarzbier', '70K', 'ABV 5.2%', 12, 'gauden', 'en'),
+(60, 7, 'Tiger Bottle', '50K', 'ABV 5.0%', 30, 'tiger bottle', 'en'),
+(61, 7, 'Desperado Bottle', '60K', 'ABV 5.9%', 10, 'desperado', 'en'),
+(62, 8, 'Modern Belgian Dark', '200K', '500ml - IBU 23 - ABV 8.1%', 20, 'modern belgian dark', 'en'),
+(63, 8, 'Independence Stout', '220K', '500ml - IBU 68 - ABV 12%', 17, 'independence stout', 'en'),
+(66, 9, 'House Pours', '80K', NULL, 16, 'house pours', 'en'),
+(67, 9, 'Premium Pours', '90K - 175K', NULL, 23, 'premium pours', 'en'),
+(68, 10, 'Celery Sour', '120K', 'Gin, celery & lime juice, sugar syrup, egg whites, bitters', 6, 'celery', 'en'),
+(69, 10, 'Tropical Climax', '150K', 'Light rum, dark rum, apricot brandy, triple sec, pineapple, lime & fresh passion fruit juice.', 7, 'climax', 'en'),
+(72, 10, 'Coronita', '180K', 'Double shot tequila, triple sec, lime & passion fruit juice blended with ice, served in a large cocktail glass with a mini corona.', 9, 'coronita', 'en'),
+(77, 11, 'Sanama – Cabernet Sauvignon – Chile 2016', '90K/400K', 'Glass/Bottle', 27, 'sanama', 'en'),
+(78, 11, 'Woolshed – Merlot – Australia 2017', '95K/450K', 'Glass/Bottle', 34, 'woolshedmer', 'en'),
+(79, 11, 'Ribshack – Pinnotage/Merlot – South Africa 2016', '125K/680K', 'Glass/Bottle', 25, 'ribshack', 'en'),
+(82, 12, 'Casa Subercaseaux – Sauvignon Blanc – Chile 2017', '95K/420K', 'Glass/Bottle', 5, 'casa', 'en'),
+(83, 12, 'Woolshed - Sauvignon Blanc - Australia 2017', '95K/420K', 'Glass/Bottle', 35, 'woolshedsauv', 'en'),
+(84, 12, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 'Glass/Bottle', 1, 'accomplice', 'en'),
+(86, 13, 'Vignerons St. Tropez – Grenache/Cinsault – France', '1,000K', 'Bottle', 32, 'vignerons', 'en'),
+(87, 13, 'Tommasi Filo Dora Prosecco – Italy', '1,200K', 'Bottle', 31, 'tommasi', 'en'),
+(90, 26, 'Tommasi Filo Dora Prosecco – Italy', '1,200K', 'Bottle', 31, 'tommasi', 'vn'),
+(91, 26, 'Vignerons St. Tropez – Grenache/Cinsault – France', '1,000K', 'Bottle', 32, 'vignerons', 'vn'),
+(92, 14, 'Spinach & Artichoke DipSpinach & Artichoke Dip', '85K', 'Cold dip served with homemade chips, and assorted fresh vegetables', 28, 'spinach', 'vn'),
+(93, 14, 'Chili Cheese Fries', '155K', 'Hand cut fries topped with homemade chili, cheddar cheese, sour cream & green onions', 5116, 'chili cheese', 'vn'),
+(94, 14, 'Loaded Fries', '140K', 'Hand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', 18, 'loaded fries', 'vn'),
+(95, 17, 'Pulled Pork Sandwich', '150K', 'Smoked & pulled pork shoulder topped with green apple coleslaw, served with a side of your choice', 24, 'pulled pork', 'vn'),
+(96, 17, 'Steak Sandwich', '200K', '125g grilled Australian rib eye, marinated red peppers & zucchini, coriander & lime chimichurri and cheddar cheese. Served on a homemade grilled light rye bread.', 29, 'steak sand', 'vn'),
+(97, 17, 'Montreal Smoked Meat Sandwich', '180K', 'Wood smoked cured brisket in our homemade rye bread, smothered in yellow mustard, served with hand cut fries, coleslaw and kosher dill', 21, 'montreal', 'vn'),
+(98, 15, 'Wood Smoked Ribs Half / Full Rack', '300K / 550K', 'Served with Two Choice of Sides', 33, 'wood smoked', 'vn'),
+(99, 15, '250g Australian Grain fed Rib Eye Steak', '250K', 'Flame grilled and pan finished with butter, garlic and rosemary', 2, 'australian', 'vn'),
+(100, 15, 'Fish & Chips', '170K', 'Beer battered fish and fries, served with a homemade tartar sauce', 11, 'fish & chips', 'vn'),
+(101, 16, 'Salad', '45K', 'Lettuce, cherry tomato, marinated zucchini & peppers, rosemary vinaigrette', 26, 'salad', 'vn'),
+(102, 16, 'Green Beans', '40K', 'Steamed and tossed with butter, garlic and cherry tomatoes', 13, 'green beans', 'vn'),
+(103, 16, 'Coleslaw', '35K', NULL, 8, 'coleslaw', 'vn'),
+(104, 18, 'Group Ice Cream Tacos deal:', '230K', '3 Tacos', 14, 'group ice', 'vn'),
+(105, 18, 'Baked Pineapple & Camembert', '190K', '125g Camembert wheel oven baked topped with a sweet pineapple reduction. Served with toasted bread.', 3, 'baked pineapple', 'vn'),
+(106, 18, 'Banana Foster', '90K', 'Bananas flambéed with dark rum & banana liqueur, brown sugar and cinnamon, served with coconut ice cream', 4, 'banana foster', 'vn'),
+(107, 19, 'Pasteur Street Passion Fruit Wheat Ale', '90K', 'IBU 15 - ABV 4.0%', 22, 'pasteur fruit wheat', 'vn'),
+(108, 19, 'Heart Of Darkness Loose Rivet New England IPA', '95K', 'IBU 59 - ABV 7.5%', 15, 'heart of darkness', 'vn'),
+(109, 19, 'Heart Of Darkness Mexican Pilsner', '90K', 'IBU 24 - ABV 4.2%', 19, 'mexican pils', 'vn'),
+(110, 20, 'Gauden Schwarzbier', '70K', 'ABV 5.2%', 12, 'gauden', 'vn'),
+(111, 20, 'Tiger Bottle', '50K', 'ABV 5.0%', 30, 'tiger bottle', 'vn'),
+(112, 20, 'Desperado Bottle', '60K', 'ABV 5.9%', 10, 'desperado', 'vn'),
+(113, 21, 'Modern Belgian Dark', '200K', '500ml - IBU 23 - ABV 8.1%', 20, 'modern belgian dark', 'vn'),
+(114, 21, 'Independence Stout', '220K', '500ml - IBU 68 - ABV 12%', 17, 'independence stout', 'vn'),
+(115, 22, 'House Pours', '80K', NULL, 16, 'house pours', 'vn'),
+(116, 22, 'Premium Pours', '90K - 175K', NULL, 23, 'premium pours', 'vn'),
+(117, 23, 'Celery Sour', '120K', 'Gin, celery & lime juice, sugar syrup, egg whites, bitters', 6, 'celery', 'vn'),
+(118, 23, 'Tropical Climax', '150K', 'Light rum, dark rum, apricot brandy, triple sec, pineapple, lime & fresh passion fruit juice.', 7, 'climax', 'vn'),
+(119, 10, 'Coronita', '180K', 'Double shot tequila, triple sec, lime & passion fruit juice blended with ice, served in a large cocktail glass with a mini corona.', 9, 'coronita', 'vn'),
+(120, 24, 'Sanama – Cabernet Sauvignon – Chile 2016', '90K/400K', 'Glass/Bottle', 27, 'sanama', 'vn'),
+(121, 24, 'Woolshed – Merlot – Australia 2017', '95K/450K', 'Glass/Bottle', 34, 'woolshedmer', 'vn'),
+(122, 24, 'Ribshack – Pinnotage/Merlot – South Africa 2016', '125K/680K', 'Glass/Bottle', 25, 'ribshack', 'vn'),
+(123, 25, 'Casa Subercaseaux – Sauvignon Blanc – Chile 2017', '95K/420K', 'Glass/Bottle', 5, 'casa', 'vn'),
+(124, 25, 'Woolshed - Sauvignon Blanc - Australia 2017', '95K/420K', 'Glass/Bottle', 35, 'woolshedsauv', 'vn'),
+(125, 25, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 'Glass/Bottle', 1, 'accomplice', 'vn');
 
 -- --------------------------------------------------------
 
@@ -373,13 +385,13 @@ ALTER TABLE `tapout_image`
 -- AUTO_INCREMENT for table `tapout_menu_category`
 --
 ALTER TABLE `tapout_menu_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tapout_menu_item`
 --
 ALTER TABLE `tapout_menu_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `tapout_page`
