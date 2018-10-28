@@ -2,6 +2,7 @@
 
 # IDEs and editors
 .idea
+.idea/
 
 # Custom
 #/src/assets/*
