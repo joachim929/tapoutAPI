@@ -16,7 +16,7 @@ class ConnectDb
 
 
     // The db connection is established in the private constructor.
-    private function __construct()
+    public function __construct()
     {
         $this->mysqli = new mysqli($this->host, $this->user, $this->pass, $this->name);
         mysqli_set_charset($this->mysqli, 'utf8mb4');
