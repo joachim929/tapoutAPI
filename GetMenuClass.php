@@ -101,7 +101,7 @@ class GetMenu extends ConnectDb
         $stmt->execute();
 
         $stmt->bind_result($itemId, $categoryId, $title, $price, $description, $categoryPosition,
-            $itemTag, $categoryName, $pagePosition, $categoryTag);
+            $itemTag, $language, $categoryName, $pagePosition, $categoryTag);
 
         while ($stmt->fetch()) {
             $results[] = [
