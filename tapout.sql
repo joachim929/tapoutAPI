@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2018 at 10:45 PM
+-- Generation Time: Nov 08, 2018 at 11:04 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `tapout_event_category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
-  `type` set('unique','weekly','bi-weekly','monthly','annually','biennial','quadrennial') COLLATE utf8_bin NOT NULL,
+  `type` set('unique','weekly') COLLATE utf8_bin NOT NULL,
   `language` set('en','vn') COLLATE utf8_bin NOT NULL,
   `tag` varchar(255) COLLATE utf8_bin NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -48,9 +48,11 @@ INSERT INTO `tapout_event_category` (`id`, `name`, `type`, `language`, `tag`, `c
 (1, 'ENWeekly', 'weekly', 'en', 'weekly', '2018-10-14 08:44:30', NULL, 1, 1),
 (2, 'VNUnique', 'unique', 'vn', 'unqiue', '2018-10-14 08:53:03', NULL, 1, 4),
 (3, 'ENUnique', 'unique', 'en', 'unqiue', '2018-10-14 08:53:03', NULL, 1, 4),
-(5, 'ENMonthly', 'monthly', 'en', 'monthly', '2018-10-14 08:53:03', NULL, 1, 2),
-(6, 'VNMonthly', 'monthly', 'vn', 'monthly', '2018-10-14 08:53:03', NULL, 1, 2),
-(10, 'VNWeekly', 'weekly', 'vn', 'weekly', '2018-10-14 08:44:30', NULL, 1, 1);
+(5, 'ENData', 'unique', 'en', 'unqiue', '2018-10-14 08:53:03', NULL, 1, 2),
+(6, 'VNData', 'unique', 'vn', 'unqiue', '2018-10-14 08:53:03', NULL, 1, 2),
+(10, 'VNWeekly', 'weekly', 'vn', 'weekly', '2018-10-14 08:44:30', NULL, 1, 1),
+(11, 'VNTest Active', 'weekly', 'vn', 'weekly', '2018-10-14 08:44:30', NULL, 0, 1),
+(12, 'ENTest Active', 'weekly', 'en', 'weekly', '2018-10-14 08:44:30', NULL, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -79,11 +81,11 @@ CREATE TABLE `tapout_event_item` (
 
 INSERT INTO `tapout_event_item` (`id`, `category_id`, `heading`, `description`, `language`, `tag`, `start_time`, `end_time`, `created_at`, `start_date`, `edited_at`, `category_position`) VALUES
 (1, 1, 'Daily Happy Hour', 'Buy one Cocktail, get one free from 4pm-7pm', '', '', '16:00:00', '19:00:00', 1541242800, 1641242800, NULL, 0),
-(2, 1, 'Tap Out Mondays', '6x wings any style, 1 medium Rooster bia - 130K ₫\r\n12x wings any style, 1 pint Rooster bia - 210K ₫\r\n24x wings any style, 4x medium Rooster bia 350K ₫\r\nBuy 2 get the 3rd FREE on Rooster Bia\'s all night', '', '', NULL, NULL, 1541242800, 1641242800, NULL, 0),
-(3, 1, 'Rooster Night, Tuesdays', '20% off all food items', '', '', NULL, NULL, 1541242800, 1641242800, NULL, 0),
-(4, 1, 'Why Wine? Wednesdays', '50% on all house wines by the glass', '', '', NULL, NULL, 1541242800, 1641242800, NULL, 0),
-(5, 1, 'Tap That Keg Thursdays', 'Half a rack of ribs, choice of two sides, and free flow Tiger draft!!!', '', '', NULL, NULL, 1541242800, 1641240800, NULL, 0),
-(6, 2, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', '', '', NULL, NULL, 1541242800, 1681242800, NULL, 0);
+(2, 1, 'Tap Out Mondays', '6x wings any style, 1 medium Rooster bia - 130K ₫\r\n12x wings any style, 1 pint Rooster bia - 210K ₫\r\n24x wings any style, 4x medium Rooster bia 350K ₫\r\nBuy 2 get the 3rd FREE on Rooster Bia\'s all night', '', '', '16:00:00', '20:00:00', 1541242800, 1641242800, NULL, 0),
+(3, 1, 'Rooster Night, Tuesdays', '20% off all food items', '', '', '17:00:00', '21:00:00', 1541242800, 1641242800, NULL, 0),
+(4, 1, 'Why Wine? Wednesdays', '50% on all house wines by the glass', '', '', '18:00:00', '22:00:00', 1541242800, 1641242800, NULL, 0),
+(5, 1, 'Tap That Keg Thursdays', 'Half a rack of ribs, choice of two sides, and free flow Tiger draft!!!', '', '', '19:00:00', '23:00:00', 1541242800, 1641240800, NULL, 0),
+(6, 2, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', '', '', '20:00:00', '00:00:00', 1541242800, 1681242800, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -376,7 +378,7 @@ ALTER TABLE `tapout_page_item`
 -- AUTO_INCREMENT for table `tapout_event_category`
 --
 ALTER TABLE `tapout_event_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tapout_event_item`

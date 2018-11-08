@@ -33,10 +33,108 @@ class GetEvents extends ConnectDb
     public function eventsCall() {
         $results = null;
         if($this->checkParams()) {
-            $results = $this->prepForCall();
+            $categories = $this->languageCheck();
+            $results = $this->getItems($categories);
         }
         return $results;
     }
+
+    private function getItems($categories) {
+        $tomorrowTimestamp = $this->getTomorrowsDate();
+
+        $results = array();
+        $count = 0;
+
+        foreach ($categories as $category) {
+            //Unique items
+            if($category['categoryType'] === 'unique') {
+                $category['categoryItems'] = $this->getTypeUnqiue($category['categoryId'], $tomorrowTimestamp);
+            } else {
+                $category['categoryItems'] = $this->getOtherCategories($category['categoryId']);
+            }
+
+            if(count($category['categoryItems']) !== 0) {
+                $results['category'][$count] = $category;
+
+            }
+
+            $count++;
+        }
+        return $results;
+    }
+
+    private function getTomorrowsDate() {
+        $dateCriteria = new dateTime('+1 day');
+        return $dateCriteria->getTimestamp();
+    }
+
+    private function getOtherCategories($requestCategoryId) {
+        $items = array();
+
+        $stmt = $this->mysqli->prepare(
+            'SELECT id, category_id, heading, description, start_time, end_time,
+            start_date, category_position
+            FROM tapout_event_item
+            WHERE category_id = ?
+            ORDER BY category_position ASC'
+        );
+
+        $stmt->bind_param('i', $requestCategoryId);
+
+        $stmt->execute();
+
+        $stmt->bind_result($id, $categoryId, $heading, $description, $startTime, $endTime, $startDate, $categoryPosition);
+
+        while($stmt->fetch()) {
+            $items[] = [
+                'itemId' => $id,
+                'categoryId' => $categoryId,
+                'itemHeading' => $heading,
+                'itemDescription' => $description,
+                'startTime' => $startTime,
+                'endTime' => $endTime,
+                'startDate' => $startDate,
+                'categoryPosition' => $categoryPosition
+            ];
+        }
+
+        return $items;
+    }
+
+    private function getTypeUnqiue($requestCategoryId, $dateCriteria) {
+        $items = array();
+
+        $stmt = $this->mysqli->prepare(
+            'SELECT id, category_id, heading, description, start_time, end_time, 
+            start_date, category_position
+            FROM tapout_event_item
+            WHERE category_id = ?
+            AND start_date > ?
+            ORDER BY category_position ASC'
+        );
+
+        $stmt->bind_param('ii', $requestCategoryId, $dateCriteria);
+
+        $stmt->execute();
+
+        $stmt->bind_result($id, $categoryId, $heading, $description, $startTime, $endTime, $startDate, $categoryPosition);
+
+        while($stmt->fetch()) {
+            $items[] = [
+                'itemId' => $id,
+                'categoryId' => $categoryId,
+                'itemHeading' => $heading,
+                'itemDescription' => $description,
+                'startTime' => $startTime,
+                'endTime' => $endTime,
+                'startDate' => $startDate,
+                'categoryPosition' => $categoryPosition
+            ];
+        }
+
+        return $items;
+    }
+
 
     private function checkParams() {
         if(isset($_GET['page']) && $_GET['page'] === 'Events' && isset($_GET['lang'])
@@ -47,124 +145,46 @@ class GetEvents extends ConnectDb
         }
     }
 
-    private function getCategories() {
+    private function getCategories($lang) {
+        /**
+         * Get categories by type (weekly, unique etc)
+         * Get items
+         */
+
         $categories = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT id, name, type, language, tag, page_position
-                FROM tapout_event_category
+            'SELECT id, name, type, language, page_position
+                FROM tapout_event_category AS t_e_category
                 WHERE active = 1
+                AND language = ?
                 ORDER BY page_position ASC'
         );
 
+        $stmt->bind_param('s', $lang);
+
         $stmt->execute();
 
-        $stmt->bind_result($id, $name, $type, $lang, $tag, $pagePosition);
+        $stmt->bind_result($id, $name, $type, $language, $pagePosition);
 
         while($stmt->fetch()) {
             $categories[] = [
                 'categoryId' => $id,
                 'categoryName' => $name,
                 'categoryType' => $type,
-                'lang' => $lang,
-                'tag' => $tag,
-                'pagePosition' => $pagePosition
-            ];
+                'language' => $language,
+                'pagePosition' => $pagePosition,
+                'categoryItems' => []
+                ];
         }
 
         return $categories;
     }
 
-    private function sortCategories($catResults) {
-        $matchedCats = array();
+    private function languageCheck() {
+        $lang = $_GET['lang'];
 
-        foreach ($catResults as $catResult) {
-            if(!isset($matchedCats[$catResult['tag']])) {
-                $matchedCats[$catResult['tag']]['tag'] = $catResult['tag'];
-                $matchedCats[$catResult['tag']]['type'] = $catResult['categoryType'];
-                $matchedCats[$catResult['tag']]['pagePosition'] = $catResult['pagePosition'];
-            }
-
-            if($catResult['lang'] === 'en') {
-                $matchedCats[$catResult['tag']]['enCatId'] = $catResult['categoryId'];
-                $matchedCats[$catResult['tag']]['enCatName'] = $catResult['categoryName'];
-                $matchedCats[$catResult['tag']]['enEventItems'] = array();
-            } else {
-                $matchedCats[$catResult['tag']]['vnCatId'] = $catResult['categoryId'];
-                $matchedCats[$catResult['tag']]['vnCatName'] = $catResult['categoryName'];
-                $matchedCats[$catResult['tag']]['vnEventItems'] = array();
-            }
-        }
-        return $this->formatMatchedCategories($matchedCats);
-    }
-
-    private function formatMatchedCategories($matchedCategories) {
-        $formattedCategories = array();
-
-        foreach($matchedCategories as $matCat) {
-            $formattedCategories['categories'][] = $matCat;
-        }
-
-        return $formattedCategories;
-    }
-
-    private function prepForCall() {
-        /**
-         * Get calls a month in advance,
-         * 2)If events aren't unique grab all of them, then check to see if they are happening
-         *  - within a month of current date/time
-         * 3)Grab all unique events that haven't been and gone
-         */
-        $categoryResults = $this->getCategories();
-        return $this->sortCategories($categoryResults);
-
-
-        $nowDate = new DateTime();
-        $nowDate->modify('+1 day');
-        $nowDate = $nowDate->getTimestamp();
-
-        $nowTime = time();
-
-        $results = array();
-
-        $stmt = $this->mysqli->prepare(
-            'SELECT t_e_item.*, t_e_category.name, t_e_category.tag,                     t_e_category.language
-                    FROM tapout_event_item AS t_e_item
-                    LEFT JOIN tapout_event_category AS t_e_category
-                    ON t_e_category.id = t_e_item.category_id
-                    WHERE t_e_category.active = 1
-                    AND t_e_item.start_date >= ?
-                    '
-        );
-
-        $stmt->bind_param('i', $nowDate);
-
-        $stmt->execute();
-
-        $stmt->bind_result($id, $categoryId, $heading, $description, $lang, $tag, $startTime,
-            $endTime, $createdAt, $startDate, $editedAt, $categoryPosition,
-            $categoryName, $categoryTag, $categoryLang);
-
-        while ($stmt->fetch()) {
-            $results[] = [
-                'id' => $id,
-                'categoryId' => $categoryId,
-                'heading' => $heading,
-                'description' => $description,
-                'lang' => $lang,
-                'tag' => $tag,
-                'startTime' => $startTime,
-                'endTime' => $endTime,
-                'startDate' => $startDate,
-                'categoryPosition' => $categoryPosition,
-                'categoryName' => $categoryName,
-                'categoryTag' => $categoryTag,
-                'categoryLang' => $categoryLang
-            ];
-        }
-
-        $stmt->close();
-        return $results;
+        return $this->getCategories($lang);
     }
 
 }
