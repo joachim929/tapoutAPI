@@ -11,10 +11,6 @@ function checkParams()
         if (isset($_GET['page'])) {
             $result = getPageCase();
         }
-    } else {
-        if (isset($_GET['page']) && isset($_GET['task']) && $_GET['task'] === 'edit' && !isset($_GET['lang'])) {
-            $result = getEditPageCase();
-        }
     }
     returnStatement($result);
 }
@@ -23,14 +19,6 @@ function getPageCase()
 {
     $pageId = getPageId();
     $result[] = getPageData($pageId);
-    $result[] = getPageImages($pageId);
-    return $result;
-}
-
-function getEditPageCase()
-{
-    $pageId = getPageId();
-    $result[] = getEditPageData($pageId);
     $result[] = getPageImages($pageId);
     return $result;
 }
@@ -92,44 +80,6 @@ function getPageId()
 }
 
 /**
- * This function gets all page data for it to be edited
- * @param $pageId
- * @return array
- */
-function getEditPageData($pageId)
-{
-    $conn = ConnectDb::getInstance();
-    $mysqli = $conn->getConnection();
-
-    $result = array();
-
-    $stmt = $mysqli->prepare('SELECT * FROM tapout_page_item WHERE page_id = ?');
-
-    $stmt->bind_param('s', $pageId);
-
-    $stmt->execute();
-
-    $stmt->bind_result($itemId, $pageId, $heading, $content, $createdAt, $editedAt, $language, $tag, $pagePosition);
-
-    while($stmt->fetch()){
-        $result[] = [
-            'itemId' => $itemId,
-            'pageId' => $pageId,
-            'heading' => $heading,
-            'content' => $content,
-            'createdAt' => $createdAt,
-            'editedAt' => $editedAt,
-            'language' => $language,
-            'tag' => $tag,
-            'pagePosition' => $pagePosition
-        ];
-    }
-
-    $stmt->close();
-    return $result;
-}
-
-/**
  * This function gets data for a page using language and pageId as conditionals
  * @param $pageId
  * @return array
@@ -145,7 +95,8 @@ function getPageData($pageId)
     $stmt = $mysqli->prepare('SELECT id, page_id, heading, content, created_at, edited_at, page_position 
         FROM tapout_page_item 
         WHERE language = ? 
-        AND page_id = ?');
+        AND page_id = ?
+        ORDER BY page_position ASC');
 
     $stmt->bind_param('si', $language, $pageId);
 

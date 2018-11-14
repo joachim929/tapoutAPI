@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: J-Lap2
- * Date: 11/7/2018
- * Time: 8:09 PM
- */
 class GetEventsToEdit extends ConnectDb
 {
     /**
@@ -24,8 +18,7 @@ class GetEventsToEdit extends ConnectDb
         $this->conn = ConnectDb::getInstance();
         $this->mysqli = $this->conn->getConnection();
     }
-    //@todo revisit as I was programming this as GetEvents.php while being tired and
-    //@todo - accidently wrote this code that got everything
+
     public function eventsCall() {
         $results = null;
         if($this->checkParams()) {
@@ -34,10 +27,9 @@ class GetEventsToEdit extends ConnectDb
         return $results;
     }
 
-    //@todo at first glance I can see this needs to change
     private function checkParams() {
-        if(isset($_GET['page']) && $_GET['page'] === 'Events' && isset($_GET['lang'])
-            && ($_GET['lang'] === 'en' || $_GET['lang'] === 'vn')) {
+        if(isset($_GET['page']) && $_GET['page'] === 'Events' && isset($_GET['task'])
+            && ($_GET['task'] === 'Edit')) {
             return true;
         } else {
             return false;
@@ -105,27 +97,129 @@ class GetEventsToEdit extends ConnectDb
         return $formattedCategories;
     }
 
+    private function getWeeklyCategoryItems($category) {
+        if(isset($category['enCatId']) && isset($category['vnCatId'])) {
+            $category['enEventItems'] = $this->getWeeklyItems($category['enCatId']);
+            $category['vnEventItems'] = $this->getWeeklyItems($category['vnCatId']);
+        }
+
+        return $category;
+    }
+
+    private function getUniqueCategoryItems($category, $dateCheck) {
+        if(isset($category['enCatId']) && isset($category['vnCatId'])) {
+            $category['enEventItems'] = $this->getUnqiueItems($category['enCatId'], $dateCheck);
+            $category['vnEventItems'] = $this->getUnqiueItems($category['vnCatId'], $dateCheck);
+        }
+
+        return $category;
+    }
+
+
+    private function getWeeklyItems($categoryId) {
+        $categoryItems = array();
+
+        $stmt = $this->mysqli->prepare(
+            'SELECT * FROM tapout_event_item
+                    WHERE category_id = ?
+                    ORDER BY category_position ASC'
+        );
+
+        $stmt->bind_param('i', $categoryId);
+
+        $stmt->execute();
+
+        $stmt->bind_result($id, $categoryId, $heading, $description, $language, $tag, $startTime, $endTime, $createdAt, $startDate, $editedAt, $categoryPosition);
+
+        while($stmt->fetch()) {
+            $categoryItems[] = [
+                'itemId' => $id,
+                'itemHeading' => $heading,
+                'itemDescription' => $description,
+                'itemTag' => $tag,
+                'startTime' => $startTime,
+                'endTime' => $endTime,
+                'createdAt' => $createdAt,
+                'startDate' => $startDate,
+                'editedAt' => $editedAt,
+                'categoryPosition' => $categoryPosition
+            ];
+        }
+
+        return $categoryItems;
+    }
+
+    private function getUnqiueItems($categoryId, $dateCheck) {
+        $categoryItems = array();
+
+        $stmt = $this->mysqli->prepare(
+            'SELECT * FROM tapout_event_item
+                    WHERE category_id = ?
+                    AND start_date > ?
+                    ORDER BY category_position ASC'
+        );
+
+        $stmt->bind_param('ii', $categoryId, $dateCheck);
+
+        $stmt->execute();
+
+        $stmt->bind_result($id, $categoryId, $heading, $description, $language, $tag, $startTime, $endTime, $createdAt, $startDate, $editedAt, $categoryPosition);
+
+        while($stmt->fetch()) {
+            $categoryItems[] = [
+                'itemId' => $id,
+                'itemHeading' => $heading,
+                'itemDescription' => $description,
+                'itemTag' => $tag,
+                'startTime' => $startTime,
+                'endTime' => $endTime,
+                'createdAt' => $createdAt,
+                'startDate' => $startDate,
+                'editedAt' => $editedAt,
+                'categoryPosition' => $categoryPosition
+            ];
+        }
+
+        return $categoryItems;
+    }
+
+    private function checkCategory($category, $dateCheck) {
+        $populatedCategories = array();
+
+        if($category['type'] === 'weekly') {
+            $populatedCategories = $this->getWeeklyCategoryItems($category);
+        } elseif ($category['type'] === 'unique') {
+            $populatedCategories = $this->getUniqueCategoryItems($category, $dateCheck);
+        } else {
+            $populatedCategories[] = 'Whoops, something went wrong, no useable category type found';
+        }
+
+        return $populatedCategories;
+    }
+
+
     private function prepForCall() {
         /**
-         * Get calls a month in advance,
-         * 2)If events aren't unique grab all of them, then check to see if they are happening
-         *  - within a month of current date/time
-         * 3)Grab all unique events that haven't been and gone
+         * 1) Loop over all categories
+         * 2) If weekly get weekly data
+         * 3) If unique, get all data as long as it is not expired
          */
         $categoryResults = $this->getCategories();
-        return $this->sortCategories($categoryResults);
+        $sortedCategories = $this->sortCategories($categoryResults);
 
+        $dateCheck = new DateTime('-1 day');
+        $dateCheck = $dateCheck->getTimestamp();
 
-        $nowDate = new DateTime();
-        $nowDate->modify('+1 day');
-        $nowDate = $nowDate->getTimestamp();
+        foreach ($sortedCategories['categories'] as $key => $sortedCategory) {
+            $sortedCategories['categories'][$key] = $this->checkCategory($sortedCategory, $dateCheck);
+        }
 
-        $nowTime = time();
+        return $sortedCategories;
 
         $results = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT t_e_item.*, t_e_category.name, t_e_category.tag,                     t_e_category.language
+            'SELECT t_e_item.*, t_e_category.name, t_e_category.tag, t_e_category.language
                     FROM tapout_event_item AS t_e_item
                     LEFT JOIN tapout_event_category AS t_e_category
                     ON t_e_category.id = t_e_item.category_id

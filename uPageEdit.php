@@ -1,15 +1,15 @@
 <?php
 require_once 'ConnectDb.php';
-require_once 'GetEventsToEdit.php';
+require_once 'GetPageToEdit.php';
 
 
 checkParams();
 
 function checkParams()
 {
-    $item = new GetEventsToEdit();
+    $item = new GetPageToEdit();
 
-    returnStatement($item->eventsCall());
+    returnStatement($item->pageCall());
 }
 
 /**
