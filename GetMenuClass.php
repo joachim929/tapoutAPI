@@ -34,7 +34,7 @@ class GetMenu extends ConnectDb
         $results = array();
 
         $stmt = $this->mysqli->prepare('
-        SELECT item.*, category.name, category.page_position, category.tag, category.language 
+        SELECT item.*, category.name, category.page_position, category.tag, category.language, category.type 
         FROM tapout_menu_item 
         AS item 
         LEFT JOIN tapout_menu_category 
@@ -44,7 +44,7 @@ class GetMenu extends ConnectDb
         $stmt->execute();
 
         $stmt->bind_result($itemId, $categoryId, $title, $price, $description, $categoryPosition,
-            $itemTag, $itemLanguage, $categoryName, $pagePosition, $categoryTag, $categoryLanguage);
+            $itemTag, $itemLanguage, $categoryName, $pagePosition, $categoryTag, $categoryLanguage, $categoryType);
 
         while ($stmt->fetch()) {
             $results[] = [
@@ -59,7 +59,8 @@ class GetMenu extends ConnectDb
                 'categoryName' => $categoryName,
                 'pagePosition' => $pagePosition,
                 'categoryTag' => $categoryTag,
-                'categoryLanguage' => $categoryLanguage
+                'categoryLanguage' => $categoryLanguage,
+                'categoryType' => $categoryType
             ];
         }
 

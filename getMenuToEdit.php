@@ -94,6 +94,7 @@ function getCategoryTags() {
             'pagePosition' => null,
             'enCategoryName' => null,
             'vnCategoryName' => null,
+            'categoryType' => null,
             'items' => array()
         ];
     }
@@ -111,6 +112,7 @@ function matchResultsWithCategoryTags($results, $categoryTags) {
             $categoryTags[$tag]['enCategoryId'] = $result['categoryId'];
             $categoryTags[$tag]['pagePosition'] = $result['pagePosition'];
             $categoryTags[$tag]['enCategoryName'] = $result['categoryName'];
+            $categoryTags[$tag]['categoryType'] = $result['categoryType'];
             $categoryTags[$tag]['items'][$result['itemTag']]['vnItemId'] = $result['id'];
             $categoryTags[$tag]['items'][$result['itemTag']]['vnTitle'] = $result['title'];
             $categoryTags[$tag]['items'][$result['itemTag']]['vnDescription'] = $result['description'];
@@ -122,6 +124,7 @@ function matchResultsWithCategoryTags($results, $categoryTags) {
             $categoryTags[$tag]['vnCategoryId'] = $result['categoryId'];
             $categoryTags[$tag]['pagePosition'] = $result['pagePosition'];
             $categoryTags[$tag]['vnCategoryName'] = $result['categoryName'];
+            $categoryTags[$tag]['categoryType'] = $result['categoryType'];
             $categoryTags[$tag]['items'][$result['itemTag']]['enItemId'] = $result['id'];
             $categoryTags[$tag]['items'][$result['itemTag']]['enTitle'] = $result['title'];
             $categoryTags[$tag]['items'][$result['itemTag']]['enDescription'] = $result['description'];
