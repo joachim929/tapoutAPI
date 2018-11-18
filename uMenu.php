@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 
 require_once './ConnectDb.php';
 require_once './GetMenuClass.php';
