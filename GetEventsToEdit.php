@@ -199,11 +199,6 @@ class GetEventsToEdit extends ConnectDb
 
 
     private function prepForCall() {
-        /**
-         * 1) Loop over all categories
-         * 2) If weekly get weekly data
-         * 3) If unique, get all data as long as it is not expired
-         */
         $categoryResults = $this->getCategories();
         $sortedCategories = $this->sortCategories($categoryResults);
 
@@ -215,47 +210,6 @@ class GetEventsToEdit extends ConnectDb
         }
 
         return $sortedCategories;
-
-        $results = array();
-
-        $stmt = $this->mysqli->prepare(
-            'SELECT t_e_item.*, t_e_category.name, t_e_category.tag, t_e_category.language
-                    FROM tapout_event_item AS t_e_item
-                    LEFT JOIN tapout_event_category AS t_e_category
-                    ON t_e_category.id = t_e_item.category_id
-                    WHERE t_e_category.active = 1
-                    AND t_e_item.start_date >= ?
-                    '
-        );
-
-        $stmt->bind_param('i', $nowDate);
-
-        $stmt->execute();
-
-        $stmt->bind_result($id, $categoryId, $heading, $description, $lang, $tag, $startTime,
-            $endTime, $createdAt, $startDate, $editedAt, $categoryPosition,
-            $categoryName, $categoryTag, $categoryLang);
-
-        while ($stmt->fetch()) {
-            $results[] = [
-                'id' => $id,
-                'categoryId' => $categoryId,
-                'heading' => $heading,
-                'description' => $description,
-                'lang' => $lang,
-                'tag' => $tag,
-                'startTime' => $startTime,
-                'endTime' => $endTime,
-                'startDate' => $startDate,
-                'categoryPosition' => $categoryPosition,
-                'categoryName' => $categoryName,
-                'categoryTag' => $categoryTag,
-                'categoryLang' => $categoryLang
-            ];
-        }
-
-        $stmt->close();
-        return $results;
     }
 
     function closeConn()

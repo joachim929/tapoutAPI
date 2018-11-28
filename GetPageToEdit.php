@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: J-Lap2
- * Date: 11/14/2018
- * Time: 7:29 PM
- */
 class GetPageToEdit extends ConnectDb
 {
     /**
