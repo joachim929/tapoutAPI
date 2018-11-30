@@ -1,12 +1,7 @@
 <?php
+require_once '../ConnectDb.php';
 
-/**
- * Created by PhpStorm.
- * User: J-Lap2
- * Date: 11/27/2018
- * Time: 10:17 PM
- */
-class UpdatePage
+class UpdatePage extends ConnectDb
 {
 
 }
