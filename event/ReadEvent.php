@@ -41,7 +41,7 @@ class ReadEvent extends ConnectDb
     private function checkParams()
     {
         $results = null;
-        if (isset($_GET['page'], $_GET['task']) && $_GET['page'] === 'events') {
+        if (isset($_GET['page'], $_GET['task']) && $_GET['page'] === 'Events') {
             //Case for user web page
             if (isset($_GET['lang']) && $_GET['task'] === 'read' &&
                 ($_GET['lang'] === 'en' || $_GET['lang'] === 'vn')) {

@@ -86,6 +86,11 @@ class ReadPage extends ConnectDb
         return $results;
     }
 
+    /**
+     * This function makes the calls to get all the data for a page with the purpose to edit it later
+     * @param $pageId
+     * @return array
+     */
     private function cGetEvents($pageId)
     {
         $pageItems = $this->getAllPageItems($pageId);
@@ -94,10 +99,16 @@ class ReadPage extends ConnectDb
         return $this->sortResults($sortedPageItems, $pageImages);
     }
 
+    /**
+     * This function merges page items and page images into one array and the sorts them by page position
+     * @param $pageItems
+     * @param $pageImages
+     * @return array
+     */
     private function sortResults($pageItems, $pageImages)
     {
         $sortedResults = $pageItems;
-        foreach($pageImages as $image) {
+        foreach ($pageImages as $image) {
             $sortedResults[] = $image;
         }
         usort($sortedResults, array('ReadPage', 'comparisonPagePosition'));
@@ -105,13 +116,17 @@ class ReadPage extends ConnectDb
         return $sortedResults;
     }
 
-
+    /**
+     * This function sorts page items and pairs up english and vietnamese counterparts
+     * @param $pageItems
+     * @return array
+     */
     private function sortPageItems($pageItems)
     {
         $sortedItems = array();
 
         foreach ($pageItems as $pageItem) {
-            if(isset($sortedItems[$pageItem['tag']])) {
+            if (isset($sortedItems[$pageItem['tag']])) {
                 $sortedItems[$pageItem['tag']] = $this->setPageItem($pageItem, $sortedItems[$pageItem['tag']]);
             } else {
                 $sortedItems[$pageItem['tag']] = $this->setPageItem($pageItem);
@@ -126,7 +141,8 @@ class ReadPage extends ConnectDb
      * @param $array
      * @return array
      */
-    private function removeArrayKeys($array) {
+    private function removeArrayKeys($array)
+    {
         $noKeysArray = array();
 
         foreach ($array as $item) {
@@ -142,8 +158,9 @@ class ReadPage extends ConnectDb
      * @param null $sortedItem
      * @return array|null
      */
-    private function setPageItem($pageItem, $sortedItem = null) {
-        if($pageItem['language'] === 'en') {
+    private function setPageItem($pageItem, $sortedItem = null)
+    {
+        if ($pageItem['language'] === 'en') {
             $sortedItem['pageId'] = $pageItem['pageId'];
             $sortedItem['enItemId'] = $pageItem['itemId'];
             $sortedItem['enHeading'] = $pageItem['heading'];
@@ -227,6 +244,11 @@ class ReadPage extends ConnectDb
         return $rawData;
     }
 
+    /**
+     * This function gets all page items with a given page id
+     * @param $pageId
+     * @return array
+     */
     private function getAllPageItems($pageId)
     {
         $result = array();
@@ -239,7 +261,7 @@ class ReadPage extends ConnectDb
 
         $stmt->bind_result($itemId, $pageId, $heading, $content, $createdAt, $editedAt, $language, $tag, $pagePosition);
 
-        while($stmt->fetch()){
+        while ($stmt->fetch()) {
             $result[] = [
                 'itemId' => $itemId,
                 'pageId' => $pageId,
