@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2018 at 11:04 PM
+-- Generation Time: Dec 05, 2018 at 10:50 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -46,10 +46,10 @@ CREATE TABLE `tapout_event_category` (
 
 INSERT INTO `tapout_event_category` (`id`, `name`, `type`, `language`, `tag`, `created_at`, `edited_at`, `active`, `page_position`) VALUES
 (1, 'ENWeekly', 'weekly', 'en', 'weekly', '2018-10-14 08:44:30', NULL, 1, 1),
-(2, 'VNUnique', 'unique', 'vn', 'unqiue', '2018-10-14 08:53:03', NULL, 1, 4),
-(3, 'ENUnique', 'unique', 'en', 'unqiue', '2018-10-14 08:53:03', NULL, 1, 4),
-(5, 'ENData', 'unique', 'en', 'unqiue', '2018-10-14 08:53:03', NULL, 1, 2),
-(6, 'VNData', 'unique', 'vn', 'unqiue', '2018-10-14 08:53:03', NULL, 1, 2),
+(2, 'VNUnique', 'unique', 'vn', 'football', '2018-10-14 08:53:03', NULL, 1, 4),
+(3, 'ENUnique', 'unique', 'en', 'football', '2018-10-14 08:53:03', NULL, 1, 4),
+(5, 'ENData', 'unique', 'en', 'data', '2018-10-14 08:53:03', NULL, 1, 2),
+(6, 'VNData', 'unique', 'vn', 'data', '2018-10-14 08:53:03', NULL, 1, 2),
 (10, 'VNWeekly', 'weekly', 'vn', 'weekly', '2018-10-14 08:44:30', NULL, 1, 1),
 (11, 'VNTest Active', 'weekly', 'vn', 'weekly', '2018-10-14 08:44:30', NULL, 0, 1),
 (12, 'ENTest Active', 'weekly', 'en', 'weekly', '2018-10-14 08:44:30', NULL, 0, 1);
@@ -80,12 +80,18 @@ CREATE TABLE `tapout_event_item` (
 --
 
 INSERT INTO `tapout_event_item` (`id`, `category_id`, `heading`, `description`, `language`, `tag`, `start_time`, `end_time`, `created_at`, `start_date`, `edited_at`, `category_position`) VALUES
-(1, 1, 'Daily Happy Hour', 'Buy one Cocktail, get one free from 4pm-7pm', '', '', '16:00:00', '19:00:00', 1541242800, 1641242800, NULL, 0),
-(2, 1, 'Tap Out Mondays', '6x wings any style, 1 medium Rooster bia - 130K ₫\r\n12x wings any style, 1 pint Rooster bia - 210K ₫\r\n24x wings any style, 4x medium Rooster bia 350K ₫\r\nBuy 2 get the 3rd FREE on Rooster Bia\'s all night', '', '', '16:00:00', '20:00:00', 1541242800, 1641242800, NULL, 0),
-(3, 1, 'Rooster Night, Tuesdays', '20% off all food items', '', '', '17:00:00', '21:00:00', 1541242800, 1641242800, NULL, 0),
-(4, 1, 'Why Wine? Wednesdays', '50% on all house wines by the glass', '', '', '18:00:00', '22:00:00', 1541242800, 1641242800, NULL, 0),
-(5, 1, 'Tap That Keg Thursdays', 'Half a rack of ribs, choice of two sides, and free flow Tiger draft!!!', '', '', '19:00:00', '23:00:00', 1541242800, 1641240800, NULL, 0),
-(6, 2, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', '', '', '20:00:00', '00:00:00', 1541242800, 1681242800, NULL, 0);
+(1, 1, 'Daily Happy Hour', 'Buy one Cocktail, get one free from 4pm-7pm', 'en', 'happyhour', '16:00:00', '19:00:00', 1541242800, 1641242800, NULL, 0),
+(2, 1, 'Tap Out Mondays', '6x wings any style, 1 medium Rooster bia - 130K ₫\r\n12x wings any style, 1 pint Rooster bia - 210K ₫\r\n24x wings any style, 4x medium Rooster bia 350K ₫\r\nBuy 2 get the 3rd FREE on Rooster Bia\'s all night', 'en', 'mondays', '16:00:00', '20:00:00', 1541242800, 1641242800, NULL, 2),
+(3, 1, 'Rooster Night, Tuesdays', '20% off all food items', 'en', 'tuesdays', '17:00:00', '21:00:00', 1541242800, 1641242800, NULL, 1),
+(4, 1, 'Why Wine? Wednesdays', '50% on all house wines by the glass', 'en', 'wednesdays', '18:00:00', '22:00:00', 1541242800, 1641242800, NULL, 4),
+(5, 1, 'Tap That Keg Thursdays', 'Half a rack of ribs, choice of two sides, and free flow Tiger draft!!!', 'en', 'thursdays', '19:00:00', '23:00:00', 1541242800, 1641240800, NULL, 3),
+(6, 3, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', 'en', '', '20:00:00', '00:00:00', 1541242800, 1641240800, NULL, 0),
+(7, 10, 'Daily Happy Hour', 'Buy one Cocktail, get one free from 4pm-7pm', 'vn', 'happyhour', '16:00:00', '19:00:00', 1541242800, 1641242800, NULL, 0),
+(8, 10, 'Tap Out Mondays', '6x wings any style, 1 medium Rooster bia - 130K ₫\r\n12x wings any style, 1 pint Rooster bia - 210K ₫\r\n24x wings any style, 4x medium Rooster bia 350K ₫\r\nBuy 2 get the 3rd FREE on Rooster Bia\'s all night', 'vn', 'mondays', '16:00:00', '20:00:00', 1541242800, 1641240800, NULL, 2),
+(9, 10, 'Rooster Night, Tuesdays', '20% off all food items', 'vn', 'tuesdays', '17:00:00', '21:00:00', 1541242800, 1641242800, NULL, 1),
+(10, 10, 'Why Wine? Wednesdays', '50% on all house wines by the glass', 'vn', 'wednesdays', '18:00:00', '22:00:00', 1541242800, 1641242800, NULL, 4),
+(11, 10, 'Tap That Keg Thursdays', 'Half a rack of ribs, choice of two sides, and free flow Tiger draft!!!', 'vn', 'thursdays', '19:00:00', '23:00:00', 1541242800, 1641240800, NULL, 3),
+(12, 2, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', 'en', '', '20:00:00', '00:00:00', 1541242800, 1641240800, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -106,19 +112,18 @@ CREATE TABLE `tapout_image` (
 --
 
 INSERT INTO `tapout_image` (`id`, `page_id`, `img_url`, `created_at`, `page_position`) VALUES
-(1, 2, 'src\\assets\\photos\\540\\0W5A4669.jpg', '2018-10-14 08:59:14', 0),
-(2, 2, 'src\\assets\\photos\\540\\0W5A4678.jpg', '2018-10-14 08:59:14', 0),
-(3, 2, 'src\\assets\\photos\\540\\0W5A4687.jpg', '2018-10-14 08:59:31', 0),
-(4, 2, 'src\\assets\\photos\\540\\0W5A4696.jpg', '2018-10-14 08:59:31', 0),
-(5, 2, 'src\\assets\\photos\\540\\0W5A4703.jpg', '2018-10-14 08:59:43', 0),
-(6, 2, 'src\\assets\\photos\\540\\0W5A4760.jpg', '2018-10-14 08:59:43', 0),
-(7, 2, 'src\\assets\\photos\\540\\0W5A4710.jpg', '2018-10-14 08:59:58', 0),
-(8, 2, 'src\\assets\\photos\\540\\0W5A4714.jpg', '2018-10-14 08:59:58', 0),
-(9, 2, 'src\\assets\\photos\\540\\0W5A4718.jpg', '2018-10-14 09:00:10', 0),
-(10, 2, 'src\\assets\\photos\\540\\0W5A4728.jpg', '2018-10-14 09:00:10', 0),
-(11, 2, 'src\\assets\\photos\\540\\0W5A4731.jpg', '2018-10-14 09:00:32', 0),
-(12, 2, 'src\\assets\\photos\\540\\0W5A4732.jpg', '2018-10-14 09:00:32', 0),
-(13, 2, 'src\\assets\\photos\\540\\0W5A4736.jpg', '2018-10-14 09:00:32', 0);
+(1, 1, '/assets/photos/540/0W5A4669.jpg', '2018-12-01 18:16:16', 1),
+(2, 2, '/assets/photos/540/0W5A4678.jpg', '2018-11-18 21:10:04', 3),
+(3, 3, '/assets/photos/540/0W5A4687.jpg', '2018-11-18 21:10:08', 1),
+(5, 1, '/assets/photos/540/0W5A4703.jpg', '2018-11-18 21:09:48', 10),
+(6, 2, '/assets/photos/540/0W5A4760.jpg', '2018-11-18 21:10:00', 4),
+(7, 3, '/assets/photos/540/0W5A4710.jpg', '2018-11-18 21:10:21', 6),
+(9, 1, '/assets/photos/540/0W5A4718.jpg', '2018-11-18 21:09:43', 8),
+(10, 2, '/assets/photos/540/0W5A4728.jpg', '2018-11-18 21:09:52', 11),
+(11, 3, '/assets/photos/540/0W5A4731.jpg', '2018-11-18 21:10:13', 7),
+(13, 2, '/assets/photos/540/0W5A4736.jpg', '2018-11-18 21:09:56', 13),
+(19, 2, '/assets/photos/540/0W5A4736.jpg', '2018-11-18 21:09:56', 13),
+(21, 4, '/assets/photos/540/0W5A4696.jpg', '2018-12-04 20:18:46', 7);
 
 -- --------------------------------------------------------
 
@@ -307,17 +312,21 @@ CREATE TABLE `tapout_page_item` (
 --
 
 INSERT INTO `tapout_page_item` (`id`, `page_id`, `heading`, `content`, `created_at`, `edited_at`, `language`, `tag`, `page_position`) VALUES
-(1, 1, 'Welcome', 'Join us for great BBQ, Craft Beers and introducing our Tap Tables. Book your Kegs now and have your own personal Tap on Table to enjoy while you support your teams.\r\n\r\nBook Your Tap Table Now!\r\ncontact@tapoutvietnam.com\r\n+84 28 62702700', '2018-10-13 19:25:46', NULL, 'en', '', 0),
-(3, 4, 'Overview', 'We present a modernized model between restaurants and bar, serving an interesting twist on the all-year-round smoked BBQ’s. We are organized as a team of Dutch, Canadian and Vietnamese experts with an extensive amount of experience in hospitality from all over the world.', '2018-10-13 19:27:55', NULL, 'en', '', 0),
-(4, 4, 'Johann', 'Johann has also got an international background, having lived in Germany, England, Uganda and now here in Vietnam. He has worked all over Vietnam in the hospitality industry ranging from Ha Long bay, Hanoi, Sapa, Hoi An and for the past year in Saigon.', '2018-10-13 19:27:55', NULL, 'en', '', 0),
-(5, 4, 'MINNIE (HUE ANH)', 'Minnie (Hue Anh) has achieved a prolonged hospitality background by her initially studying in Switzerland and working experience in Qatar, the Cayman Islands. Finally, she returns to her sweet home Vietnam for further expanding her restaurants in Saigon.', '2018-10-13 19:27:55', NULL, 'en', '', 0),
-(6, 4, 'GOAL', 'We have united together to bring one of a kind dishes, with the finest selection of beers and ciders as well as bottles of wine from our spacious cellar. A wide selection of BBQ’s cuisines, which have been smoked for hours, would also be a great accompany with the finest cocktails from Tapout’s mixologist.', '2018-10-13 19:27:55', NULL, 'en', '', 0),
-(7, 4, 'WHAT MAKES US DIFFERENT', 'Not only serving food and drink, we offer our diners a brand-new experience with our table taps. Customers can now help themselves to beers their own comfort whilst watching sports, or by competing against each other on different tables with the interactive tablets.', '2018-10-13 19:27:55', NULL, 'en', '', 0),
-(13, 3, 'Address', '170 Cong Quynh\r\nDistrict 1\r\nHCMC', '2018-10-13 19:29:08', NULL, 'en', '', 0),
-(14, 3, 'Contact', 'Contact Number: +84 963 806 071\r\nReservations: +84 28 62702700\r\nEmail: contact@tapoutvietnam.com', '2018-10-13 19:30:32', NULL, 'en', '', 0),
-(15, 3, 'Social Media', 'https://www.facebook.com/tapout84/\r\nhttps://www.instagram.com/tapoutvietnam', '2018-10-13 19:30:32', NULL, 'en', '', 0),
-(16, 3, 'Opening hours', 'Monday-Sunday: 11:00-Late', '2018-10-13 19:30:32', NULL, 'en', '', 0),
-(17, 1, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', '2018-10-14 08:52:09', NULL, 'vn', '', 0);
+(1, 1, 'Welcome', 'Join us for great BBQ, Craft Beers and introducing our Tap Tables. Book your Kegs now and have your own personal Tap on Table to enjoy while you support your teams.\r\n\r\nBook Your Tap Table Now!\r\ncontact@tapoutvietnam.com\r\n+84 28 62702700', '2018-10-13 19:25:46', NULL, 'en', 'welcome', 1),
+(3, 4, 'Overview', 'We present a modernized model between restaurants and bar, serving an interesting twist on the all-year-round smoked BBQ’s. We are organized as a team of Dutch, Canadian and Vietnamese experts with an extensive amount of experience in hospitality from all over the world.', '2018-10-13 19:27:55', NULL, 'en', 'overview', 8),
+(5, 4, 'MINNIE (HUE ANH)', 'Minnie (Hue Anh) has achieved a prolonged hospitality background by her initially studying in Switzerland and working experience in Qatar, the Cayman Islands. Finally, she returns to her sweet home Vietnam for further expanding her restaurants in Saigon.', '2018-10-13 19:27:55', NULL, 'en', 'minnie', 2),
+(6, 4, 'GOAL', 'We have united together to bring one of a kind dishes, with the finest selection of beers and ciders as well as bottles of wine from our spacious cellar. A wide selection of BBQ’s cuisines, which have been smoked for hours, would also be a great accompany with the finest cocktails from Tapout’s mixologist.', '2018-10-13 19:27:55', NULL, 'en', 'goal', 2),
+(13, 3, 'Address', '170 Cong Quynh\r\nDistrict 1\r\nHCMC', '2018-10-13 19:29:08', NULL, 'en', '', 10),
+(14, 3, 'Contact', 'Contact Number: +84 963 806 071\r\nReservations: +84 28 62702700\r\nEmail: contact@tapoutvietnam.com', '2018-10-13 19:30:32', NULL, 'en', '', 7),
+(15, 3, 'Social Media', 'https://www.facebook.com/tapout84/\r\nhttps://www.instagram.com/tapoutvietnam', '2018-10-13 19:30:32', NULL, 'en', '', 9),
+(16, 3, 'Opening hours', 'Monday-Sunday: 11:00-Late', '2018-10-13 19:30:32', NULL, 'en', '', 8),
+(17, 1, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', '2018-10-14 08:52:09', NULL, 'vn', '', 11),
+(18, 4, 'VNOverview', 'We present a modernized model between restaurants and bar, serving an interesting twist on the all-year-round smoked BBQ’s. We are organized as a team of Dutch, Canadian and Vietnamese experts with an extensive amount of experience in hospitality from all over the world.', '2018-10-13 19:27:55', NULL, 'vn', 'overview', 8),
+(20, 4, 'VNMINNIE (HUE ANH)', 'Minnie (Hue Anh) has achieved a prolonged hospitality background by her initially studying in Switzerland and working experience in Qatar, the Cayman Islands. Finally, she returns to her sweet home Vietnam for further expanding her restaurants in Saigon.', '2018-10-13 19:27:55', NULL, 'vn', 'minnie', 2),
+(21, 4, 'VNGOAL', 'We have united together to bring one of a kind dishes, with the finest selection of beers and ciders as well as bottles of wine from our spacious cellar. A wide selection of BBQ’s cuisines, which have been smoked for hours, would also be a great accompany with the finest cocktails from Tapout’s mixologist.', '2018-10-13 19:27:55', NULL, 'vn', 'goal', 2),
+(23, 1, 'VNWelcome', 'Join us for great BBQ, Craft Beers and introducing our Tap Tables. Book your Kegs now and have your own personal Tap on Table to enjoy while you support your teams.\r\n\r\nBook Your Tap Table Now!\r\ncontact@tapoutvietnam.com\r\n+84 28 62702700', '2018-10-13 19:25:46', NULL, 'vn', 'welcome', 1),
+(63, 4, 'ENTrevor', 'Trever Noah', '2018-10-13 19:27:55', NULL, 'en', 'initializeDelete', 2),
+(64, 4, 'VNTrevor', 'TREVER NOAH with the finest cocktails from Tapout’s mixologist.', '2018-10-13 19:27:55', NULL, 'vn', 'initializeDelete', 2);
 
 --
 -- Indexes for dumped tables
@@ -341,7 +350,6 @@ ALTER TABLE `tapout_event_item`
 --
 ALTER TABLE `tapout_image`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `img_url` (`img_url`),
   ADD KEY `page_id` (`page_id`);
 
 --
@@ -384,13 +392,13 @@ ALTER TABLE `tapout_event_category`
 -- AUTO_INCREMENT for table `tapout_event_item`
 --
 ALTER TABLE `tapout_event_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tapout_image`
 --
 ALTER TABLE `tapout_image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `tapout_menu_category`
@@ -414,7 +422,7 @@ ALTER TABLE `tapout_page`
 -- AUTO_INCREMENT for table `tapout_page_item`
 --
 ALTER TABLE `tapout_page_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- Constraints for dumped tables
