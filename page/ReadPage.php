@@ -293,7 +293,7 @@ class ReadPage extends ConnectDb
 
         $stmt->execute();
 
-        $stmt->bind_result($id, $pageId, $imgUrl, $createdAt, $pagePosition);
+        $stmt->bind_result($id, $pageId, $imgUrl, $createdAt, $pagePosition, $caption, $alt, $height, $width, $tag, $language);
 
         while ($stmt->fetch()) {
             $pageItems[] = [
@@ -301,7 +301,13 @@ class ReadPage extends ConnectDb
                 'pageId' => $pageId,
                 'imgUrl' => $imgUrl,
                 'createdAt' => $createdAt,
-                'pagePosition' => $pagePosition
+                'pagePosition' => $pagePosition,
+                'caption' => $caption,
+                'alt' => $alt,
+                'height' => $height,
+                'width' => $width,
+                'tag' => $tag,
+                'lang' => $language
             ];
         }
 

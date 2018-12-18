@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2018 at 10:50 AM
+-- Generation Time: Dec 18, 2018 at 11:35 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -104,26 +104,43 @@ CREATE TABLE `tapout_image` (
   `page_id` int(11) NOT NULL,
   `img_url` varchar(191) COLLATE utf8_bin NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `page_position` int(11) NOT NULL
+  `page_position` int(11) NOT NULL,
+  `caption` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `alt` varchar(255) COLLATE utf8_bin NOT NULL,
+  `height` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `tag` varchar(255) COLLATE utf8_bin NOT NULL,
+  `language` set('en','vn') COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `tapout_image`
 --
 
-INSERT INTO `tapout_image` (`id`, `page_id`, `img_url`, `created_at`, `page_position`) VALUES
-(1, 1, '/assets/photos/540/0W5A4669.jpg', '2018-12-01 18:16:16', 1),
-(2, 2, '/assets/photos/540/0W5A4678.jpg', '2018-11-18 21:10:04', 3),
-(3, 3, '/assets/photos/540/0W5A4687.jpg', '2018-11-18 21:10:08', 1),
-(5, 1, '/assets/photos/540/0W5A4703.jpg', '2018-11-18 21:09:48', 10),
-(6, 2, '/assets/photos/540/0W5A4760.jpg', '2018-11-18 21:10:00', 4),
-(7, 3, '/assets/photos/540/0W5A4710.jpg', '2018-11-18 21:10:21', 6),
-(9, 1, '/assets/photos/540/0W5A4718.jpg', '2018-11-18 21:09:43', 8),
-(10, 2, '/assets/photos/540/0W5A4728.jpg', '2018-11-18 21:09:52', 11),
-(11, 3, '/assets/photos/540/0W5A4731.jpg', '2018-11-18 21:10:13', 7),
-(13, 2, '/assets/photos/540/0W5A4736.jpg', '2018-11-18 21:09:56', 13),
-(19, 2, '/assets/photos/540/0W5A4736.jpg', '2018-11-18 21:09:56', 13),
-(21, 4, '/assets/photos/540/0W5A4696.jpg', '2018-12-04 20:18:46', 7);
+INSERT INTO `tapout_image` (`id`, `page_id`, `img_url`, `created_at`, `page_position`, `caption`, `alt`, `height`, `width`, `tag`, `language`) VALUES
+(1, 1, '/assets/photos/540/DSC07494.jpg', '2018-12-18 21:19:13', 1, NULL, '', 0, 0, '', ''),
+(2, 2, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:19:30', 3, NULL, '', 0, 0, '', ''),
+(3, 3, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:20:06', 1, NULL, '', 0, 0, '', ''),
+(5, 1, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:20:10', 10, NULL, '', 0, 0, '', ''),
+(6, 2, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:20:13', 4, NULL, '', 0, 0, '', ''),
+(7, 3, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:20:15', 6, NULL, '', 0, 0, '', ''),
+(9, 1, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:20:18', 8, NULL, '', 0, 0, '', ''),
+(10, 2, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:20:21', 11, NULL, '', 0, 0, '', ''),
+(11, 3, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:20:23', 7, NULL, '', 0, 0, '', ''),
+(13, 2, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:20:26', 13, NULL, '', 0, 0, '', ''),
+(19, 2, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:20:29', 13, NULL, '', 0, 0, '', ''),
+(24, 4, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:20:31', 6, NULL, '', 0, 0, '', ''),
+(25, 4, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:20:35', 4, NULL, '', 0, 0, '', ''),
+(26, 4, '/assets/photos/540/DSC07487.jpg', '2018-12-18 21:20:38', 10, NULL, '', 0, 0, '', ''),
+(27, 4, '/assets/photos/540/DSC07494.jpg', '2018-12-18 21:21:02', 1, NULL, '', 0, 0, '', ''),
+(28, 4, '/assets/photos/540/DSC07494.jpg', '2018-12-18 21:21:01', 10, NULL, '', 0, 0, '', ''),
+(29, 4, '/assets/photos/540/ACP-5.jpg', '2018-12-18 22:29:48', 4, NULL, '', 0, 0, '', ''),
+(30, 4, '/assets/photos/540/ACP-5.jpg', '2018-12-18 22:29:44', 8, NULL, '', 0, 0, '', ''),
+(31, 4, '/assets/photos/540/DSC07494.jpg', '2018-12-18 21:20:57', 8, NULL, '', 0, 0, '', ''),
+(32, 4, '/assets/photos/540/ACP-5.jpg', '2018-12-18 22:29:40', 11, NULL, '', 0, 0, '', ''),
+(33, 4, '/assets/photos/540/DSC07494.jpg', '2018-12-18 21:20:53', 11, NULL, '', 0, 0, '', ''),
+(34, 4, '/assets/photos/540/DSC07494.jpg', '2018-12-18 21:20:51', 13, NULL, '', 0, 0, '', ''),
+(35, 4, '/assets/photos/540/DSC07494.jpg', '2018-12-18 21:20:48', 13, NULL, '', 0, 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -146,7 +163,7 @@ CREATE TABLE `tapout_menu_category` (
 --
 
 INSERT INTO `tapout_menu_category` (`id`, `name`, `type`, `active`, `language`, `page_position`, `tag`) VALUES
-(1, 'Starters', 'food', 1, 'en', 1, 'starters'),
+(1, 'Breakfast', 'food', 1, 'en', 1, 'breakfast'),
 (2, 'Burgers & Sandwiches', 'food', 1, 'en', 20, 'burgers'),
 (3, 'Mains', 'food', 1, 'en', 30, 'mains'),
 (4, 'Sides', 'food', 1, 'en', 3, 'sides'),
@@ -159,7 +176,7 @@ INSERT INTO `tapout_menu_category` (`id`, `name`, `type`, `active`, `language`, 
 (11, 'Red Wine', 'drink', 1, 'en', 12, 'red-wine'),
 (12, 'White Wine', 'drink', 1, 'en', 11, 'white-wine'),
 (13, 'Rose & Prosecco', 'drink', 1, 'en', 13, 'rose'),
-(14, 'VNStarters', 'food', 1, 'vn', 1, 'starters'),
+(14, 'VNBreakfast', 'food', 1, 'vn', 1, 'breakfast'),
 (15, 'VNMains', 'food', 1, 'vn', 30, 'mains'),
 (16, 'VNSides', 'food', 1, 'vn', 3, 'sides'),
 (17, 'VNBurgers & Sandwiches', 'food', 1, 'vn', 20, 'burgers'),
@@ -266,7 +283,9 @@ INSERT INTO `tapout_menu_item` (`id`, `category_id`, `title`, `price`, `descript
 (122, 24, 'Ribshack – Pinnotage/Merlot – South Africa 2016', '125K/680K', 'Glass/Bottle', 25, 'ribshack', 'vn'),
 (123, 25, 'Casa Subercaseaux – Sauvignon Blanc – Chile 2017', '95K/420K', 'Glass/Bottle', 5, 'casa', 'vn'),
 (124, 25, 'Woolshed - Sauvignon Blanc - Australia 2017', '95K/420K', 'Glass/Bottle', 35, 'woolshedsauv', 'vn'),
-(125, 25, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 'Glass/Bottle', 1, 'accomplice', 'vn');
+(125, 25, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 'Glass/Bottle', 1, 'accomplice', 'vn'),
+(126, 1, 'Saigon Steak N\\\' Eggs', '220K', 'Thick sliced beef brisket two fried eggs and grilled tomato with home made bread roll', 1, 'steakneggs', 'en'),
+(127, 14, 'Saigon Steak N\\\' Eggs', '220K', 'Thick sliced beef brisket two fried eggs and grilled tomato with home made bread roll', 1, 'steakneggs', 'vn');
 
 -- --------------------------------------------------------
 
@@ -313,20 +332,20 @@ CREATE TABLE `tapout_page_item` (
 
 INSERT INTO `tapout_page_item` (`id`, `page_id`, `heading`, `content`, `created_at`, `edited_at`, `language`, `tag`, `page_position`) VALUES
 (1, 1, 'Welcome', 'Join us for great BBQ, Craft Beers and introducing our Tap Tables. Book your Kegs now and have your own personal Tap on Table to enjoy while you support your teams.\r\n\r\nBook Your Tap Table Now!\r\ncontact@tapoutvietnam.com\r\n+84 28 62702700', '2018-10-13 19:25:46', NULL, 'en', 'welcome', 1),
-(3, 4, 'Overview', 'We present a modernized model between restaurants and bar, serving an interesting twist on the all-year-round smoked BBQ’s. We are organized as a team of Dutch, Canadian and Vietnamese experts with an extensive amount of experience in hospitality from all over the world.', '2018-10-13 19:27:55', NULL, 'en', 'overview', 8),
-(5, 4, 'MINNIE (HUE ANH)', 'Minnie (Hue Anh) has achieved a prolonged hospitality background by her initially studying in Switzerland and working experience in Qatar, the Cayman Islands. Finally, she returns to her sweet home Vietnam for further expanding her restaurants in Saigon.', '2018-10-13 19:27:55', NULL, 'en', 'minnie', 2),
+(3, 4, 'Overview', 'We present a modernized model between restaurants and bar, serving an interesting twist on the all-year-round smoked BBQ’s. We are organized as a team of Dutch, Canadian and Vietnamese experts with an extensive amount of experience in hospitality from all over the world.', '2018-10-13 19:27:55', NULL, 'en', 'overview', 7),
+(5, 4, 'MINNIE (HUE ANH)', 'Minnie (Hue Anh) has achieved a prolonged hospitality background by her initially studying in Switzerland and working experience in Qatar, the Cayman Islands. Finally, she returns to her sweet home Vietnam for further expanding her restaurants in Saigon.', '2018-10-13 19:27:55', NULL, 'en', 'minnie', 3),
 (6, 4, 'GOAL', 'We have united together to bring one of a kind dishes, with the finest selection of beers and ciders as well as bottles of wine from our spacious cellar. A wide selection of BBQ’s cuisines, which have been smoked for hours, would also be a great accompany with the finest cocktails from Tapout’s mixologist.', '2018-10-13 19:27:55', NULL, 'en', 'goal', 2),
 (13, 3, 'Address', '170 Cong Quynh\r\nDistrict 1\r\nHCMC', '2018-10-13 19:29:08', NULL, 'en', '', 10),
 (14, 3, 'Contact', 'Contact Number: +84 963 806 071\r\nReservations: +84 28 62702700\r\nEmail: contact@tapoutvietnam.com', '2018-10-13 19:30:32', NULL, 'en', '', 7),
 (15, 3, 'Social Media', 'https://www.facebook.com/tapout84/\r\nhttps://www.instagram.com/tapoutvietnam', '2018-10-13 19:30:32', NULL, 'en', '', 9),
 (16, 3, 'Opening hours', 'Monday-Sunday: 11:00-Late', '2018-10-13 19:30:32', NULL, 'en', '', 8),
 (17, 1, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', '2018-10-14 08:52:09', NULL, 'vn', '', 11),
-(18, 4, 'VNOverview', 'We present a modernized model between restaurants and bar, serving an interesting twist on the all-year-round smoked BBQ’s. We are organized as a team of Dutch, Canadian and Vietnamese experts with an extensive amount of experience in hospitality from all over the world.', '2018-10-13 19:27:55', NULL, 'vn', 'overview', 8),
-(20, 4, 'VNMINNIE (HUE ANH)', 'Minnie (Hue Anh) has achieved a prolonged hospitality background by her initially studying in Switzerland and working experience in Qatar, the Cayman Islands. Finally, she returns to her sweet home Vietnam for further expanding her restaurants in Saigon.', '2018-10-13 19:27:55', NULL, 'vn', 'minnie', 2),
+(18, 4, 'VNOverview', 'We present a modernized model between restaurants and bar, serving an interesting twist on the all-year-round smoked BBQ’s. We are organized as a team of Dutch, Canadian and Vietnamese experts with an extensive amount of experience in hospitality from all over the world.', '2018-10-13 19:27:55', NULL, 'vn', 'overview', 7),
+(20, 4, 'VNMINNIE (HUE ANH)', 'Minnie (Hue Anh) has achieved a prolonged hospitality background by her initially studying in Switzerland and working experience in Qatar, the Cayman Islands. Finally, she returns to her sweet home Vietnam for further expanding her restaurants in Saigon.', '2018-10-13 19:27:55', NULL, 'vn', 'minnie', 3),
 (21, 4, 'VNGOAL', 'We have united together to bring one of a kind dishes, with the finest selection of beers and ciders as well as bottles of wine from our spacious cellar. A wide selection of BBQ’s cuisines, which have been smoked for hours, would also be a great accompany with the finest cocktails from Tapout’s mixologist.', '2018-10-13 19:27:55', NULL, 'vn', 'goal', 2),
 (23, 1, 'VNWelcome', 'Join us for great BBQ, Craft Beers and introducing our Tap Tables. Book your Kegs now and have your own personal Tap on Table to enjoy while you support your teams.\r\n\r\nBook Your Tap Table Now!\r\ncontact@tapoutvietnam.com\r\n+84 28 62702700', '2018-10-13 19:25:46', NULL, 'vn', 'welcome', 1),
-(63, 4, 'ENTrevor', 'Trever Noah', '2018-10-13 19:27:55', NULL, 'en', 'initializeDelete', 2),
-(64, 4, 'VNTrevor', 'TREVER NOAH with the finest cocktails from Tapout’s mixologist.', '2018-10-13 19:27:55', NULL, 'vn', 'initializeDelete', 2);
+(63, 4, 'ENTrevor', 'Trever Noah', '2018-10-13 19:27:55', NULL, 'en', 'initializeDelete', 9),
+(64, 4, 'VNTrevor', 'TREVER NOAH with the finest cocktails from Tapout’s mixologist.', '2018-10-13 19:27:55', NULL, 'vn', 'initializeDelete', 9);
 
 --
 -- Indexes for dumped tables
@@ -398,7 +417,7 @@ ALTER TABLE `tapout_event_item`
 -- AUTO_INCREMENT for table `tapout_image`
 --
 ALTER TABLE `tapout_image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `tapout_menu_category`
@@ -410,7 +429,7 @@ ALTER TABLE `tapout_menu_category`
 -- AUTO_INCREMENT for table `tapout_menu_item`
 --
 ALTER TABLE `tapout_menu_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT for table `tapout_page`
