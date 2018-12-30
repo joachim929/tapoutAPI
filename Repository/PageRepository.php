@@ -22,7 +22,7 @@ class PageRepository extends ConnectDb
 
     /**
      * This function gets all info from tapout_page table
-     * @return array|int
+     * @return array|null
      */
     public function getPages()
     {
@@ -45,9 +45,11 @@ class PageRepository extends ConnectDb
         }
 
         if ($stmt->errno) {
-            $pages = $stmt->errno;
-
+            $pages = null;
         }
+
+        $stmt->close();
+
         return $pages;
     }
 
@@ -75,6 +77,8 @@ class PageRepository extends ConnectDb
         if($stmt->errno) {
             $pageId = null;
         }
+
+        $stmt->close();
 
         return $pageId;
     }
