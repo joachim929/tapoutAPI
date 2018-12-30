@@ -37,16 +37,19 @@ class EventItem
      */
     var $categoryPosition;
 
+    // @todo: Does this work?
     /**
      * @var DateTime::format('H:i:s')
      */
     var $startDate;
 
+    // @todo: Does this work?
     /**
      * @var DateTime::format('H:i:s')
      */
     var $startTime;
 
+    // @todo: Does this work?
     /**
      * @var DateTime::format('H:i:s')
      */
@@ -73,22 +76,27 @@ class EventItem
         $this->setCategoryPosition($categoryPosition);
         $this->setStartDate($startDate);
 
+        // @todo: Is this necessary?
         if($id !== null) {
             $this->setId($id);
         }
 
+        // @todo: Is this necessary?
         if($createdAt !== null) {
             $this->setCreatedAt($createdAt);
         }
 
+        // @todo: Is this necessary?
         if($editedAt !== null) {
             $this->setEditedAt($editedAt);
         }
 
+        // @todo: Is this necessary?
         if($startTime !== null) {
             $this->setStartTime($startTime);
         }
 
+        // @todo: Is this necessary?
         if($endTime !== null) {
             $this->setEndTime($endTime);
         }
