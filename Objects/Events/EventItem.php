@@ -62,6 +62,38 @@ class EventItem
      */
     var $editedAt;
 
+    function __construct($categoryId, $heading, $description, $language, $tag, $categoryPosition, $startDate,
+                         $id = null, $createdAt = null, $editedAt = null, $startTime = null, $endTime = null)
+    {
+        $this->setCategoryId($categoryId);
+        $this->setHeading($heading);
+        $this->setDescription($description);
+        $this->setLanguage($language);
+        $this->setTag($tag);
+        $this->setCategoryPosition($categoryPosition);
+        $this->setStartDate($startDate);
+
+        if($id !== null) {
+            $this->setId($id);
+        }
+
+        if($createdAt !== null) {
+            $this->setCreatedAt($createdAt);
+        }
+
+        if($editedAt !== null) {
+            $this->setEditedAt($editedAt);
+        }
+
+        if($startTime !== null) {
+            $this->setStartTime($startTime);
+        }
+
+        if($endTime !== null) {
+            $this->setEndTime($endTime);
+        }
+    }
+
     /**
      * @return int
      */

@@ -47,6 +47,29 @@ class EventCategory
      */
     var $categoryItems;
 
+    function __construct($name, $type, $language, $tag, $pagePosition,
+                         $id = null, $createdAt = null, $editedAt = null)
+    {
+        $this->setName($name);
+        $this->setType($type);
+        $this->setLanguage($language);
+        $this->setTag($tag);
+        $this->setPagePosition($pagePosition);
+
+        if($id !== null) {
+            $this->setId($id);
+        }
+
+        if($createdAt !== null) {
+            $this->setCreatedAt($createdAt);
+        }
+
+        if($editedAt !== null) {
+            $this->setEditedAt($editedAt);
+        }
+
+    }
+
     /**
      * @return int
      */
