@@ -3,6 +3,15 @@
 class EventItem
 {
     /**
+    * Example
+    * ?int $example
+    * $example = null
+    *
+    * @todo: if done like this remove null checks in constructor, todos should always be in side the doc blocs
+    */
+        
+        
+    /**
      * @var int
      */
     var $id;
