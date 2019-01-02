@@ -5,67 +5,67 @@ class BilingualImage
     /**
      * @var int
      */
-    var $pageId;
+    public $pageId;
 
     /**
      * @var int
      */
-    var $pagePosition;
+    public $pagePosition;
 
     /**
      * @var string
      */
-    var $imgUrl;
+    public $imgUrl;
 
     /**
      * @var int
      */
-    var $height;
+    public $height;
 
     /**
      * @var int
      */
-    var $width;
+    public $width;
 
     /**
      * @var string
      */
-    var $tag;
+    public $tag;
 
     /**
      * @var int
      */
-    var $enImageId;
+    public $enImageId;
 
     /**
      * @var string|null
      */
-    var $enCaption;
+    public $enCaption;
 
     /**
      * @var string
      */
-    var $enAlt;
+    public $enAlt;
 
     /**
      * @var int
      */
-    var $vnImageId;
+    public $vnImageId;
 
     /**
      * @var string|null
      */
-    var $vnCaption;
+    public $vnCaption;
 
     /**
      * @var string
      */
-    var $vnAlt;
+    public $vnAlt;
 
     /**
-     * @var dateTime|null
+     * @var ?DateTime
      */
-    var $createdAt;
+    public $createdAt;
 
     /**
      * @return int

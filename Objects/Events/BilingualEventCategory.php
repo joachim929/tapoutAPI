@@ -5,42 +5,42 @@ class BilingualEventCategory
     /**
      * @var string
      */
-    var $tag;
+    public $tag;
 
     /**
      * @var string
      */
-    var $type;
+    public $type;
 
     /**
      * @var int
      */
-    var $pagePosition;
+    public $pagePosition;
 
     /**
      * @var array
      */
-    var $eventItems;
+    public $eventItems;
 
     /**
      * @var int
      */
-    var $enCatId;
+    public $enCatId;
 
     /**
      * @var string
      */
-    var $enCatName;
+    public $enCatName;
 
     /**
      * @var int
      */
-    var $vnCatId;
+    public $vnCatId;
 
     /**
      * @var string
      */
-    var $vnCatName;
+    public $vnCatName;
 
     /**
      * @return string

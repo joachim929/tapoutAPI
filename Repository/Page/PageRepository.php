@@ -1,5 +1,5 @@
 <?php
-require_once '../ConnectDb.php';
+require_once '../../ConnectDb.php';
 
 class PageRepository extends ConnectDb
 {

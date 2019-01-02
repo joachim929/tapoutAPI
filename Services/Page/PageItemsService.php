@@ -1,13 +1,13 @@
 <?php
 
-require_once '../ConnectDb.php';
+require_once '../../ConnectDb.php';
 
-require_once '../Repository/PageItemRepository.php';
+require_once '../../Repository/Page/PageItemRepository.php';
 
-require_once '../Objects/PageItem.php';
-require_once '../Objects/PageImage.php';
-require_once '../Objects/BilingualItem.php';
-require_once '../Objects/BilingualImage.php';
+require_once '../../Objects/Page/PageItem.php';
+require_once '../../Objects/Page/PageImage.php';
+require_once '../../Objects/Page/BilingualItem.php';
+require_once '../../Objects/Page/BilingualImage.php';
 
 class PageItemsService extends ConnectDb
 {

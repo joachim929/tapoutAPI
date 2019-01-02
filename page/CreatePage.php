@@ -2,15 +2,15 @@
 require_once '../ConnectDb.php';
 
 //Repos
-require_once '../Repository/PageItemRepository.php';
-require_once '../Repository/PageRepository.php';
+require_once '../Repository/Page/PageItemRepository.php';
+require_once '../Repository/Page/PageRepository.php';
 
 //Objects
-require_once '../Objects/PageItem.php';
-require_once '../Objects/BilingualItem.php';
+require_once '../Objects/Page/PageItem.php';
+require_once '../Objects/Page/BilingualItem.php';
 
 //Services
-require_once '../Services/PageItemsService.php';
+require_once '../Services/Page/PageItemsService.php';
 
 class CreatePage extends ConnectDb
 {

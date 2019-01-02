@@ -5,57 +5,57 @@ class BilingualItem
     /**
      * @var int
      */
-    var $pageId;
+    public $pageId;
 
     /**
      * @var int
      */
-    var $pagePosition;
+    public $pagePosition;
 
     /**
      * @var string
      */
-    var $enHeading;
+    public $enHeading;
 
     /**
      * @var string
      */
-    var $enContent;
+    public $enContent;
 
     /**
      * @var string
      */
-    var $vnHeading;
+    public $vnHeading;
 
     /**
      * @var string
      */
-    var $vnContent;
+    public $vnContent;
 
     /**
      * @var string|null
      */
-    var $tag;
+    public $tag;
 
     /**
      * @var int| null
      */
-    var $enItemId;
+    public $enItemId;
 
     /**
      * @var int|null
      */
-    var $vnItemId;
+    public $vnItemId;
 
     /**
-     * @var dateTime|null
+     * @var ?DateTime
      */
-    var $createdAt;
+    public $createdAt;
 
     /**
-     * @var dateTime|null
+     * @var ?DateTime
      */
-    var $editedAt;
+    public $editedAt;
 
     /**
      * @return int

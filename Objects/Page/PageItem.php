@@ -3,49 +3,49 @@
 class pageItem
 {
     /**
-     * @var int | null
+     * @var ?int
      */
-    var $id;
+    public $id;
 
     /**
      * @var int
      */
-    var $pageId;
+    public $pageId;
 
     /**
      * @var string
      */
-    var $heading;
+    public $heading;
 
     /**
      * @var string
      */
-    var $content;
+    public $content;
 
     /**
-     * @var dateTime | null
+     * @var ?DateTime
      */
-    var $createdAt;
+    public $createdAt;
 
     /**
-     * @var dateTime | null
+     * @var ?DateTime
      */
-    var $editedAt;
-
-    /**
-     * @var string
-     */
-    var $language;
+    public $editedAt;
 
     /**
      * @var string
      */
-    var $tag;
+    public $language;
+
+    /**
+     * @var string
+     */
+    public $tag;
 
     /**
      * @var int
      */
-    var $pagePosition;
+    public $pagePosition;
 
     function __construct($pageId, $heading, $content, $language, $tag, $pagePosition, $id = null, $createdAt = null, $editedAt = null)
     {
@@ -55,19 +55,13 @@ class pageItem
         $this->setLanguage($language);
         $this->setTag($tag);
         $this->setPagePosition($pagePosition);
-        if($id !== null) {
-            $this->setId($id);
-        }
-        if($createdAt !== null) {
-            $this->setCreatedAt($createdAt);
-        }
-        if($editedAt !== null) {
-            $this->setEditedAt($editedAt);
-        }
+        $this->setId($id);
+        $this->setCreatedAt($createdAt);
+        $this->setEditedAt($editedAt);
     }
 
     /**
-     * @return int|null
+     * @return mixed
      */
     public function getId()
     {
@@ -75,7 +69,7 @@ class pageItem
     }
 
     /**
-     * @param int|null $id
+     * @param mixed $id
      */
     public function setId($id)
     {
@@ -131,7 +125,7 @@ class pageItem
     }
 
     /**
-     * @return dateTime|null
+     * @return mixed
      */
     public function getCreatedAt()
     {
@@ -139,7 +133,7 @@ class pageItem
     }
 
     /**
-     * @param dateTime|null $createdAt
+     * @param mixed $createdAt
      */
     public function setCreatedAt($createdAt)
     {
@@ -147,7 +141,7 @@ class pageItem
     }
 
     /**
-     * @return dateTime|null
+     * @return mixed
      */
     public function getEditedAt()
     {
@@ -155,7 +149,7 @@ class pageItem
     }
 
     /**
-     * @param dateTime|null $editedAt
+     * @param mixed $editedAt
      */
     public function setEditedAt($editedAt)
     {

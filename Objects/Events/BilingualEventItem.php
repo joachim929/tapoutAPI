@@ -5,72 +5,72 @@ class BilingualEventItem
     /**
      * @var string
      */
-    var $tag;
+    public $tag;
 
     /**
      * @var DateTime
      */
-    var $startTime;
+    public $startTime;
 
     /**
      * @var DateTime
      */
-    var $endTime;
+    public $endTime;
 
     /**
      * @var DateTime
      */
-    var $createdAt;
+    public $createdAt;
 
     /**
      * @var DateTime
      */
-    var $editedAt;
+    public $editedAt;
 
     /**
      * @var int
      */
-    var $categoryPosition;
+    public $categoryPosition;
 
     /**
      * @var int
      */
-    var $vnItemId;
+    public $vnItemId;
 
     /**
      * @var int
      */
-    var $vnCatId;
+    public $vnCatId;
 
     /**
      * @var string
      */
-    var $vnItemHeading;
+    public $vnItemHeading;
 
     /**
      * @var string
      */
-    var $vnItemDescription;
+    public $vnItemDescription;
 
     /**
      * @var int
      */
-    var $enItemId;
+    public $enItemId;
 
     /**
      * @var int
      */
-    var $enCatId;
+    public $enCatId;
 
     /**
      * @var string
      */
-    var $enItemHeading;
+    public $enItemHeading;
 
     /**
      * @var string
      */
-    var $enItemDescription;
+    public $enItemDescription;
 
     /**
      * @return string

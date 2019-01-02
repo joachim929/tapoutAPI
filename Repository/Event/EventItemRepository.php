@@ -23,7 +23,6 @@ class EventItemRepository extends ConnectDb
     }
 
     /**
-     * @todo: Ask about strong typing/type casting date time
      * This function gets category items by id makes sure it has a later start date than the one passed if its set
      * @param int $catId
      * @param null $minDate

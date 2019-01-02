@@ -1,8 +1,8 @@
 <?php
-require_once '../ConnectDb.php';
+require_once '../../ConnectDb.php';
 
-require_once '../Objects/PageItem.php';
-require_once '../Objects/PageImage.php';
+require_once '../../Objects/Page/PageItem.php';
+require_once '../../Objects/Page/PageImage.php';
 
 //@todo split into image and page item?
 class PageItemRepository extends ConnectDb

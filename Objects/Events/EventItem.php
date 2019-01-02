@@ -3,76 +3,64 @@
 class EventItem
 {
     /**
-    * Example
-    * ?int $example
-    * $example = null
-    *
-    * @todo: if done like this remove null checks in constructor, todos should always be in side the doc blocs
-    */
-        
-        
-    /**
-     * @var int
+     * @var ?int
      */
-    var $id;
+    public $id;
 
     /**
      * @var int
      */
-    var $categoryId;
+    public $categoryId;
 
     /**
      * @var string
      */
-    var $heading;
+    public $heading;
 
     /**
      * @var string
      */
-    var $description;
+    public $description;
 
     /**
      * @var string
      */
-    var $language;
+    public $language;
 
     /**
      * @var string
      */
-    var $tag;
+    public $tag;
 
     /**
      * @var int
      */
-    var $categoryPosition;
-
-    // @todo: Does this work?
-    /**
-     * @var DateTime::format('H:i:s')
-     */
-    var $startDate;
-
-    // @todo: Does this work?
-    /**
-     * @var DateTime::format('H:i:s')
-     */
-    var $startTime;
-
-    // @todo: Does this work?
-    /**
-     * @var DateTime::format('H:i:s')
-     */
-    var $endTime;
+    public $categoryPosition;
 
     /**
      * @var DateTime
      */
-    var $createdAt;
+    public $startDate;
 
     /**
-     * @var DateTime
+     * @var ?DateTime
      */
-    var $editedAt;
+    public $startTime;
+
+    /**
+     * @var ?DateTime
+     */
+    public $endTime;
+
+    /**
+     * @var ?DateTime
+     */
+    public $createdAt;
+
+    /**
+     * @var ?DateTime
+     */
+    public $editedAt;
 
     function __construct($categoryId, $heading, $description, $language, $tag, $categoryPosition, $startDate,
                          $id = null, $createdAt = null, $editedAt = null, $startTime = null, $endTime = null)
@@ -84,45 +72,25 @@ class EventItem
         $this->setTag($tag);
         $this->setCategoryPosition($categoryPosition);
         $this->setStartDate($startDate);
-
-        // @todo: Is this necessary?
-        if($id !== null) {
-            $this->setId($id);
-        }
-
-        // @todo: Is this necessary?
-        if($createdAt !== null) {
-            $this->setCreatedAt($createdAt);
-        }
-
-        // @todo: Is this necessary?
-        if($editedAt !== null) {
-            $this->setEditedAt($editedAt);
-        }
-
-        // @todo: Is this necessary?
-        if($startTime !== null) {
-            $this->setStartTime($startTime);
-        }
-
-        // @todo: Is this necessary?
-        if($endTime !== null) {
-            $this->setEndTime($endTime);
-        }
+        $this->setId($id);
+        $this->setCreatedAt($createdAt);
+        $this->setEditedAt($editedAt);
+        $this->setStartTime($startTime);
+        $this->setEndTime($endTime);
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param mixed $id
      */
-    public function setId(int $id)
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -240,65 +208,65 @@ class EventItem
     }
 
     /**
-     * @return DateTime
+     * @return mixed
      */
-    public function getStartTime(): DateTime
+    public function getStartTime()
     {
         return $this->startTime;
     }
 
     /**
-     * @param DateTime $startTime
+     * @param mixed $startTime
      */
-    public function setStartTime(DateTime $startTime)
+    public function setStartTime($startTime)
     {
         $this->startTime = $startTime;
     }
 
     /**
-     * @return DateTime
+     * @return mixed
      */
-    public function getEndTime(): DateTime
+    public function getEndTime()
     {
         return $this->endTime;
     }
 
     /**
-     * @param DateTime $endTime
+     * @param mixed $endTime
      */
-    public function setEndTime(DateTime $endTime)
+    public function setEndTime($endTime)
     {
         $this->endTime = $endTime;
     }
 
     /**
-     * @return DateTime
+     * @return mixed
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
     /**
-     * @param DateTime $createdAt
+     * @param mixed $createdAt
      */
-    public function setCreatedAt(DateTime $createdAt)
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
     }
 
     /**
-     * @return DateTime
+     * @return mixed
      */
-    public function getEditedAt(): DateTime
+    public function getEditedAt()
     {
         return $this->editedAt;
     }
 
     /**
-     * @param DateTime $editedAt
+     * @param mixed $editedAt
      */
-    public function setEditedAt(DateTime $editedAt)
+    public function setEditedAt($editedAt)
     {
         $this->editedAt = $editedAt;
     }

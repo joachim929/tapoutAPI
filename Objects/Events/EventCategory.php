@@ -3,49 +3,49 @@
 class EventCategory
 {
     /**
+     * @var ?int
+     */
+    public $id;
+
+    /**
+     * @var string
+     */
+    public $name;
+
+    /**
+     * @var string
+     */
+    public $type;
+
+    /**
+     * @var string
+     */
+    public $language;
+
+    /**
+     * @var string
+     */
+    public $tag;
+
+    /**
+     * @var ?DateTime
+     */
+    public $createdAt;
+
+    /**
+     * @var ?DateTime
+     */
+    public $editedAt;
+
+    /**
      * @var int
      */
-    var $id;
-
-    /**
-     * @var string
-     */
-    var $name;
-
-    /**
-     * @var string
-     */
-    var $type;
-
-    /**
-     * @var string
-     */
-    var $language;
-
-    /**
-     * @var string
-     */
-    var $tag;
-
-    /**
-     * @var DateTime
-     */
-    var $createdAt;
-
-    /**
-     * @var DateTime
-     */
-    var $editedAt;
-
-    /**
-     * @var int
-     */
-    var $pagePosition;
+    public $pagePosition;
 
     /**
      * @var array
      */
-    var $categoryItems;
+    public $categoryItems;
 
     function __construct($name, $type, $language, $tag, $pagePosition,
                          $id = null, $createdAt = null, $editedAt = null)
@@ -55,33 +55,23 @@ class EventCategory
         $this->setLanguage($language);
         $this->setTag($tag);
         $this->setPagePosition($pagePosition);
-
-        if($id !== null) {
-            $this->setId($id);
-        }
-
-        if($createdAt !== null) {
-            $this->setCreatedAt($createdAt);
-        }
-
-        if($editedAt !== null) {
-            $this->setEditedAt($editedAt);
-        }
-
+        $this->setId($id);
+        $this->setCreatedAt($createdAt);
+        $this->setEditedAt($editedAt);
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param mixed $id
      */
-    public function setId(int $id)
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -135,6 +125,54 @@ class EventCategory
     }
 
     /**
+     * @return string
+     */
+    public function getTag(): string
+    {
+        return $this->tag;
+    }
+
+    /**
+     * @param string $tag
+     */
+    public function setTag(string $tag)
+    {
+        $this->tag = $tag;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEditedAt()
+    {
+        return $this->editedAt;
+    }
+
+    /**
+     * @param mixed $editedAt
+     */
+    public function setEditedAt($editedAt)
+    {
+        $this->editedAt = $editedAt;
+    }
+
+    /**
      * @return int
      */
     public function getPagePosition(): int
@@ -164,53 +202,5 @@ class EventCategory
     public function setCategoryItems(array $categoryItems)
     {
         $this->categoryItems = $categoryItems;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTag(): string
-    {
-        return $this->tag;
-    }
-
-    /**
-     * @param string $tag
-     */
-    public function setTag(string $tag)
-    {
-        $this->tag = $tag;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt(): DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param DateTime $createdAt
-     */
-    public function setCreatedAt(DateTime $createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getEditedAt(): DateTime
-    {
-        return $this->editedAt;
-    }
-
-    /**
-     * @param DateTime $editedAt
-     */
-    public function setEditedAt(DateTime $editedAt)
-    {
-        $this->editedAt = $editedAt;
     }
 }

@@ -5,57 +5,57 @@ class PageImage
     /**
      * @var int
      */
-    var $pageId;
+    public $pageId;
 
     /**
      * @var string
      */
-    var $imgUrl;
+    public $imgUrl;
 
     /**
      * @var int
      */
-    var $pagePosition;
+    public $pagePosition;
 
     /**
      * @var int
      */
-    var $height;
+    public $height;
 
     /**
      * @var int
      */
-    var $width;
+    public $width;
 
     /**
      * @var string
      */
-    var $tag;
+    public $tag;
 
     /**
      * @var string
      */
-    var $language;
+    public $language;
 
     /**
      * @var string|null
      */
-    var $caption;
+    public $caption;
 
     /**
      * @var string|null
      */
-    var $alt;
+    public $alt;
 
     /**
      * @var dateTime|null
      */
-    var $createdAt;
+    public $createdAt;
 
     /**
      * @var int|null
      */
-    var $id;
+    public $id;
 
     function __construct(
         $pageId, $imageUrl, $pagePosition, $height, $width, $tag, $language,
@@ -69,18 +69,10 @@ class PageImage
         $this->setWidth($width);
         $this->setTag($tag);
         $this->setLanguage($language);
-        if($caption !== null) {
-            $this->setCaption($caption);
-        }
-        if($alt !== null) {
-            $this->setAlt($alt);
-        }
-        if($createdAt !== null) {
-            $this->setCreatedAt($createdAt);
-        }
-        if($id !== null) {
-            $this->setId($id);
-        }
+        $this->setCaption($caption);
+        $this->setAlt($alt);
+        $this->setCreatedAt($createdAt);
+        $this->setId($id);
     }
 
     /**
