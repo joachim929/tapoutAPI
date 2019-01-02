@@ -191,7 +191,7 @@ class ReadPage extends ConnectDb
     {
         $page = $_GET['page'];
 
-        $stmt = $this->mysqli->prepare('SELECT id FROM tapout_page WHERE name = ?');
+        $stmt = $this->mysqli->prepare('SELECT id FROM page WHERE name = ?');
 
         $stmt->bind_param('s', $page);
 
@@ -217,7 +217,7 @@ class ReadPage extends ConnectDb
         $language = $_GET['lang'];
 
         $stmt = $this->mysqli->prepare('SELECT id, page_id, heading, content, created_at, edited_at, page_position 
-        FROM tapout_page_item 
+        FROM page_item 
         WHERE language = ? 
         AND page_id = ?
         ORDER BY page_position ASC');
@@ -253,7 +253,7 @@ class ReadPage extends ConnectDb
     {
         $result = array();
 
-        $stmt = $this->mysqli->prepare('SELECT * FROM tapout_page_item WHERE page_id = ?');
+        $stmt = $this->mysqli->prepare('SELECT * FROM page_item WHERE page_id = ?');
 
         $stmt->bind_param('s', $pageId);
 
@@ -287,7 +287,7 @@ class ReadPage extends ConnectDb
      */
     private function getPageImages($pageId, $pageItems = [])
     {
-        $stmt = $this->mysqli->prepare('SELECT * FROM tapout_image WHERE page_id = ?');
+        $stmt = $this->mysqli->prepare('SELECT * FROM image_details WHERE page_id = ?');
 
         $stmt->bind_param('i', $pageId);
 

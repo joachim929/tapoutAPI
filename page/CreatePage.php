@@ -1,16 +1,16 @@
 <?php
-require_once '../ConnectDb.php';
+require_once './../ConnectDb.php';
 
 //Repos
-require_once '../Repository/Page/PageItemRepository.php';
-require_once '../Repository/Page/PageRepository.php';
+require_once './../Repository/Page/PageItemRepository.php';
+require_once './../Repository/Page/PageRepository.php';
 
 //Objects
-require_once '../Objects/Page/PageItem.php';
-require_once '../Objects/Page/BilingualItem.php';
+require_once './../Objects/Page/PageItem.php';
+require_once './../Objects/Page/BilingualItem.php';
 
 //Services
-require_once '../Services/Page/PageItemsService.php';
+require_once './../Services/Page/PageItemsService.php';
 
 class CreatePage extends ConnectDb
 {
@@ -85,7 +85,7 @@ class CreatePage extends ConnectDb
         $check = false;
         $tag = $this->createNewTag();
         $pageId = $this->pageRepo->getPageId($this->page);
-//@todo uncomment this, using this to test new services and repos
+
         $enItem = $this->createEnItem($tag, $pageId);
         $vnItem = $this->createVnItem($tag, $pageId);
 
@@ -165,7 +165,7 @@ class CreatePage extends ConnectDb
         $result = true;
 
         $stmt = $this->mysqli->prepare(
-            'INSERT INTO tapout_page_item
+            'INSERT INTO page_item
             (page_id, heading, content, language, tag, page_position)
             VALUES
             (?, ?, ?, ?, ?, ?)'

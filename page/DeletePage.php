@@ -81,7 +81,7 @@ class DeletePage extends ConnectDb
     {
         $result = true;
         $stmt = $this->mysqli->prepare(
-            'DELETE FROM tapout_image
+            'DELETE FROM image_details
             WHERE id = ?
             AND page_id = ?'
         );
@@ -103,7 +103,7 @@ class DeletePage extends ConnectDb
     {
         $result = true;
         $stmt = $this->mysqli->prepare(
-            'DELETE FROM tapout_page_item
+            'DELETE FROM page_item
             WHERE id = ?
             AND page_id = ?'
         );

@@ -1,16 +1,18 @@
 <?php
-require_once '../../ConnectDb.php';
+require_once __DIR__ . '/../../ConnectDb.php';
 
-require_once '../../Objects/Page/PageItem.php';
-require_once '../../Objects/Page/PageImage.php';
+require_once __DIR__ . '/../../Objects/Page/PageItem.php';
+require_once __DIR__ . '/../../Objects/Page/PageImage.php';
 
 //@todo split into image and page item?
-class PageItemRepository extends ConnectDb
+class PageItemRepository
 {
     /**
      * @var ConnectDb|null
      */
     private $conn;
+
+    private $connectDb;
 
     /**
      * @var mysqli
@@ -19,8 +21,8 @@ class PageItemRepository extends ConnectDb
 
     function __construct()
     {
-        ConnectDb::__construct();
-        $this->conn = ConnectDb::getInstance();
+        $this->connectDb = new ConnectDb();
+        $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
     }
 
@@ -34,7 +36,7 @@ class PageItemRepository extends ConnectDb
         $pageItems = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT * FROM tapout_page_item WHERE page_id = ?'
+            'SELECT * FROM page_item WHERE page_id = ?'
         );
 
         $stmt->bind_param('i', $pageId);
@@ -66,7 +68,7 @@ class PageItemRepository extends ConnectDb
         $pageImages = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT * FROM tapout_image WHERE page_id = ?'
+            'SELECT * FROM image_details WHERE page_id = ?'
         );
 
         $stmt->bind_param('i', $pageId);
@@ -100,7 +102,7 @@ class PageItemRepository extends ConnectDb
 
         $stmt = $this->mysqli->prepare(
             'SELECT * 
-            FROM tapout_page_item'
+            FROM page_item'
         );
 
         $stmt->execute();
@@ -130,7 +132,7 @@ class PageItemRepository extends ConnectDb
         $id = null;
 
         $stmt = $this->mysqli->prepare(
-            'SELECT MAX(id) FROM tapout_page_item'
+            'SELECT MAX(id) FROM page_item'
         );
 
         $stmt->execute();
@@ -256,7 +258,7 @@ class PageItemRepository extends ConnectDb
         $result = true;
 
         $stmt = $this->mysqli->prepare(
-            'UPDATE tapout_image
+            'UPDATE image_details
             SET page_position = ? WHERE id = ? AND page_id = ?'
         );
 
@@ -285,7 +287,7 @@ class PageItemRepository extends ConnectDb
         $result = true;
 
         $stmt = $this->mysqli->prepare(
-            'UPDATE tapout_page_item
+            'UPDATE page_item
             SET page_position = ?
             WHERE id = ?
             AND page_id = ?'

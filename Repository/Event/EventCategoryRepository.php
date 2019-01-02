@@ -1,8 +1,8 @@
 <?php
-require_once '../../ConnectDb.php';
+require_once __DIR__ . '/../../ConnectDb.php';
 
 //Objects
-require_once '../../Objects/Events/EventCategory.php';
+require_once __DIR__ . '/../../Objects/Events/EventCategory.php';
 
 class EventCategoryRepository extends ConnectDb
 {
@@ -33,7 +33,7 @@ class EventCategoryRepository extends ConnectDb
         $categories = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT * FROM tapout_event_category
+            'SELECT * FROM event_category
                 WHERE active =  1
                 AND language = ? 
                 ORDER BY page_position ASC'
@@ -67,7 +67,7 @@ class EventCategoryRepository extends ConnectDb
         $categories = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT * FROM tapout_event_category
+            'SELECT * FROM event_category
                 WHERE active =  1
                 ORDER BY page_position ASC'
         );
@@ -98,7 +98,7 @@ class EventCategoryRepository extends ConnectDb
         $names = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT name FROM tapout_event_category'
+            'SELECT name FROM event_category'
         );
 
         $stmt->execute();
@@ -127,7 +127,7 @@ class EventCategoryRepository extends ConnectDb
         $ids = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT id FROM tapout_event_category'
+            'SELECT id FROM event_category'
         );
 
         $stmt->execute();
@@ -158,7 +158,7 @@ class EventCategoryRepository extends ConnectDb
         $check = true;
 
         $stmt = $this->mysqli->prepare(
-            'UPDATE tapout_event_category
+            'UPDATE event_category
             SET page_position = ? WHERE id = ?'
         );
 
@@ -185,7 +185,7 @@ class EventCategoryRepository extends ConnectDb
         $check = true;
 
         $stmt = $this->mysqli->prepare(
-            'UPDATE tapout_event_category
+            'UPDATE event_category
             SET active = 0 WHERE id = ?'
         );
 

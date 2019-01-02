@@ -1,7 +1,7 @@
 <?php
-require_once '../../ConnectDb.php';
+require_once __DIR__ . '/../../ConnectDb.php';
 
-require_once '../../Objects/Events/EventItem.php';
+require_once __DIR__ . '/../../Objects/Events/EventItem.php';
 
 class EventItemRepository extends ConnectDb
 {
@@ -38,7 +38,7 @@ class EventItemRepository extends ConnectDb
 
         $stmt = $this->mysqli->prepare(
             'SELECT * 
-            FROM tapout_event_item
+            FROM event_item
             WHERE category_id = ?
             AND start_date > ?
             ORDER BY category_position ASC'

@@ -1,13 +1,17 @@
 <?php
 
-require_once '../../ConnectDb.php';
+require_once __DIR__ . '/../../ConnectDb.php';
 
-require_once '../../Repository/Page/PageItemRepository.php';
+require_once __DIR__ . '/../../Repository/Page/PageItemRepository.php';
 
-require_once '../../Objects/Page/PageItem.php';
-require_once '../../Objects/Page/PageImage.php';
-require_once '../../Objects/Page/BilingualItem.php';
-require_once '../../Objects/Page/BilingualImage.php';
+//Services
+require_once '../SortingService.php';
+
+//Objects
+require_once __DIR__ . '/../../Objects/Page/PageItem.php';
+require_once __DIR__ . '/../../Objects/Page/PageImage.php';
+require_once __DIR__ . '/../../Objects/Page/BilingualItem.php';
+require_once __DIR__ . '/../../Objects/Page/BilingualImage.php';
 
 class PageItemsService extends ConnectDb
 {
@@ -23,12 +27,15 @@ class PageItemsService extends ConnectDb
 
     private $pageItemRepo;
 
+    private $sortingService;
+
     function __construct()
     {
         ConnectDb::__construct();
         $this->conn = ConnectDb::getInstance();
         $this->mysqli = $this->conn->getConnection();
         $this->pageItemRepo = new PageItemRepository();
+        $this->sortingService = new SortingService();
     }
 
     public function reorderPagePositions(int $pageId)
@@ -51,7 +58,7 @@ class PageItemsService extends ConnectDb
         foreach ($pageImages as $pageImage) {
             $sortedResults[] = $pageImage;
         }
-        usort($sortedResults, array('PageItemsService', 'comparisonPagePosition'));
+        usort($sortedResults, array('SortingService', 'comparisonPosition'));
 
         return $sortedResults;
     }
@@ -104,7 +111,7 @@ class PageItemsService extends ConnectDb
             }
         }
 
-        return $this->removeArrayKeys($sortedItems);
+        return $this->sortingService->removeArrayKeys($sortedItems);
     }
 
     /**
@@ -154,7 +161,7 @@ class PageItemsService extends ConnectDb
             }
         }
 
-        return $this->removeArrayKeys($sortedImages);
+        return $this->sortingService->removeArrayKeys($sortedImages);
     }
 
     /**
@@ -186,34 +193,5 @@ class PageItemsService extends ConnectDb
         }
 
         return $sortedImage;
-    }
-
-    /**
-     * This function removes array keys and returns said array
-     * @param $array
-     * @return array
-     */
-    private function removeArrayKeys($array)
-    {
-        $noKeysArray = array();
-
-        foreach ($array as $item) {
-            $noKeysArray[] = $item;
-        }
-
-        return $noKeysArray;
-    }
-
-    /**
-     * @param BilingualImage|BilingualItem $a
-     * @param BilingualImage|BilingualItem $b
-     * @return int
-     */
-    private function comparisonPagePosition($a, $b)
-    {
-        if ($a->getPagePosition() === $b->getPagePosition()) {
-            return 0;
-        }
-        return ($a->getPagePosition() < $b->getPagePosition()) ? -1 : 1;
     }
 }

@@ -93,7 +93,7 @@ class ReadEvent extends ConnectDb
 
         $stmt = $this->mysqli->prepare(
             'SELECT id, name, type, language, page_position
-                FROM tapout_event_category AS t_e_category
+                FROM event_category AS t_e_category
                 WHERE active = 1
                 AND language = ?
                 ORDER BY page_position ASC'
@@ -174,7 +174,7 @@ class ReadEvent extends ConnectDb
         $stmt = $this->mysqli->prepare(
             'SELECT id, category_id, heading, description, start_time, end_time, 
             start_date, category_position
-            FROM tapout_event_item
+            FROM event_item
             WHERE category_id = ?
             AND start_date > ?
             ORDER BY category_position ASC'
@@ -214,7 +214,7 @@ class ReadEvent extends ConnectDb
         $stmt = $this->mysqli->prepare(
             'SELECT id, category_id, heading, description, start_time, end_time,
             start_date, category_position
-            FROM tapout_event_item
+            FROM event_item
             WHERE category_id = ?
             ORDER BY category_position ASC'
         );
@@ -251,7 +251,7 @@ class ReadEvent extends ConnectDb
 
         $stmt = $this->mysqli->prepare(
             'SELECT id, name, type, language, tag, page_position
-                FROM tapout_event_category
+                FROM event_category
                 WHERE active = 1
                 ORDER BY page_position ASC'
         );
@@ -352,7 +352,7 @@ class ReadEvent extends ConnectDb
         $categoryItems = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT * FROM tapout_event_item
+            'SELECT * FROM event_item
                     WHERE category_id = ?
                     OR category_id = ?
                     AND start_date > ?
@@ -485,7 +485,7 @@ class ReadEvent extends ConnectDb
         $categoryItems = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT * FROM tapout_event_item
+            'SELECT * FROM event_item
                     WHERE category_id = ?
                     OR category_id = ?
                     ORDER BY category_position ASC'

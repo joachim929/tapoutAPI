@@ -99,7 +99,7 @@ class UpdatePage extends ConnectDb
         $result = true;
 
         $stmt = $this->mysqli->prepare(
-            'UPDATE tapout_page_item
+            'UPDATE page_item
             SET page_position = ?, heading = ?, content = ?, edited_at = ?, tag = ?
             WHERE id = ?
             AND page_id = ?'
@@ -272,7 +272,7 @@ class UpdatePage extends ConnectDb
         $result = true;
 
         $stmt = $this->mysqli->prepare(
-            'UPDATE tapout_page_item
+            'UPDATE page_item
             SET page_position = ?
             WHERE id = ?
             AND page_id = ?'
@@ -301,7 +301,7 @@ class UpdatePage extends ConnectDb
         $result = true;
 
         $stmt = $this->mysqli->prepare(
-            'UPDATE tapout_image 
+            'UPDATE image_details 
             SET page_position = ? 
             WHERE id = ? 
             AND page_id = ?'

@@ -1,5 +1,5 @@
 <?php
-require_once '../../ConnectDb.php';
+require_once __DIR__ . '/../../ConnectDb.php';
 
 class PageRepository extends ConnectDb
 {
@@ -30,7 +30,7 @@ class PageRepository extends ConnectDb
 
         $stmt = $this->mysqli->prepare(
             'SELECT * 
-            FROM tapout_page'
+            FROM page'
         );
 
         $stmt->execute();
@@ -63,7 +63,7 @@ class PageRepository extends ConnectDb
         $pageId = null;
 
         $stmt = $this->mysqli->prepare(
-            'SELECT id FROM tapout_page WHERE name = ?'
+            'SELECT id FROM page WHERE name = ?'
         );
 
         $stmt->bind_param('s', $pageName);

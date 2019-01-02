@@ -12,7 +12,7 @@ class ConnectDb
     private $host = 'localhost';
     private $user = 'root';
     private $pass = '';
-    private $name = 'tapout';
+    private $name = 'tap_out';
 
 
     // The db connection is established in the private constructor.

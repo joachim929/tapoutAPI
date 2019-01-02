@@ -1,7 +1,19 @@
 <?php
-require_once('../ConnectDb.php');
+require_once '../ConnectDb.php';
 
-class ReadMenu extends ConnectDb
+//Services
+require_once '../Services/SortingService.php';
+
+//Repos
+require_once '../Repository/Menu/MenuRepository.php';
+
+//Objects
+require_once '../Objects/Menu/MenuItem.php';
+require_once '../Objects/Menu/MenuCategory.php';
+require_once './../Objects/Menu/BilingualMenuItem.php';
+require_once './../Objects/Menu/BilingualMenuCategory.php';
+
+class ReadMenu
 {
     /**
      * @var ConnectDb|null
@@ -13,11 +25,26 @@ class ReadMenu extends ConnectDb
      */
     private $mysqli;
 
+    private $connectDb;
+
+    //Repos
+    private $menuRepo;
+
+    //Services
+    private $sortingService;
+
+    /**
+     * @var null|string
+     */
+    private $language = null;
+
     function __construct()
     {
-        ConnectDb::__construct();
-        $this->conn = ConnectDb::getInstance();
+        $this->connectDb = new ConnectDb();
+        $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
+        $this->menuRepo = new MenuRepository();
+        $this->sortingService = new SortingService();
     }
 
     /**
@@ -46,6 +73,7 @@ class ReadMenu extends ConnectDb
             if (isset($_GET['lang']) && $_GET['task'] === 'read' &&
                 ($_GET['lang'] === 'en' || $_GET['lang'] === 'vn')
             ) {
+                $this->language = $_GET['lang'];
                 $results = $this->getMenu();
             }
             //Case for editing web page
@@ -62,7 +90,7 @@ class ReadMenu extends ConnectDb
      */
     private function getMenu()
     {
-        $rawResults = $this->fetchMenuDataByLanguage($_GET['lang']);
+        $rawResults = $this->menuRepo->getMenuByLanguage($this->language);
         $sortedRawResults = $this->sortRawData($rawResults);
         return $this->sortMenuResults($sortedRawResults);
     }
@@ -76,71 +104,18 @@ class ReadMenu extends ConnectDb
         $sortedCategories = array();
 
         foreach ($results as $result) {
-            $itemArray = [
-                'id' => $result['id'],
-                'title' => $result['title'],
-                'price' => $result['price'],
-                'description' => $result['description'],
-                'categoryPosition' => $result['categoryPosition'],
-                'itemTag' => $result['itemTag']
-            ];
+            $itemArray = new MenuItem($result['title'], $result['price'], $result['categoryPosition'],
+                $result['id'], $result['description'], $result['itemTag']);
             if(!isset($sortedCategories[$result['categoryId']])){
-                $sortedCategories[$result['categoryId']] = [
-                    'id' => $result['categoryId'],
-                    'pagePosition' => $result['pagePosition'],
-                    'name' => $result['categoryName'],
-                    'categoryTag' => $result['categoryTag'],
-                    'items' => [ $itemArray ]
-                ];
+                $sortedCategories[$result['categoryId']] = new MenuCategory($result['categoryId'],
+                    $result['pagePosition'], $result['categoryName'], $result['categoryTag']);
+                $sortedCategories[$result['categoryId']]->addItem($itemArray);
             } else {
-                $sortedCategories[$result['categoryId']]['items'][] = $itemArray;
+                $sortedCategories[$result['categoryId']]->addItem($itemArray);
             }
         }
 
         return $sortedCategories;
-    }
-
-    /**
-     * This function fetches menu item data by language
-     * @param $language
-     * @return array
-     */
-    private function fetchMenuDataByLanguage($language)
-    {
-        $results = array();
-
-        $stmt = $this->mysqli->prepare('SELECT item.*, category.name, category.page_position, category.tag 
-        FROM tapout_menu_item 
-        AS item 
-        LEFT JOIN tapout_menu_category 
-        AS category 
-        ON item.category_id = category.id 
-        WHERE category.language = ?');
-
-        $stmt->bind_param('s', $language);
-
-        $stmt->execute();
-
-        $stmt->bind_result($itemId, $categoryId, $title, $price, $description, $categoryPosition,
-            $itemTag, $language, $categoryName, $pagePosition, $categoryTag);
-
-        while ($stmt->fetch()) {
-            $results[] = [
-                'id' => $itemId,
-                'categoryId' => $categoryId,
-                'title' => $title,
-                'price' => $price,
-                'description' => $description,
-                'categoryPosition' => $categoryPosition,
-                'itemTag' => $itemTag,
-                'categoryName' => $categoryName,
-                'pagePosition' => $pagePosition,
-                'categoryTag' => $categoryTag
-            ];
-        }
-
-        $stmt->close();
-        return $results;
     }
 
     /**
@@ -149,131 +124,50 @@ class ReadMenu extends ConnectDb
      */
     private function getMenuToEdit()
     {
-        $rawResults = $this->fetchMenuData();
-        $categoryTags = $this->getCategoryTags();
+        $rawResults = $this->menuRepo->getBilingualMenu();
+        $categoryTags = $this->menuRepo->getCategoryTags();
         $matchedResultsAndCategories = $this->matchResultsWithCategoryTags($rawResults, $categoryTags);
-        $sortedResults = $this->sortMenuResults($matchedResultsAndCategories);
-        return $sortedResults;
-    }
-
-    /**
-     * This function gets all distinct menu category tags and returns an array with null values
-     * @return array
-     */
-    public function getCategoryTags()
-    {
-        $categoryTags = array();
-
-        $stmt = $this->mysqli->prepare('SELECT DISTINCT tag FROM tapout_menu_category');
-
-        $stmt->execute();
-
-        $stmt->bind_result($tag);
-
-        while ($stmt->fetch()) {
-            $categoryTags[$tag] = [
-                'categoryTag' => null,
-                'enCategoryId' => null,
-                'vnCategoryId' => null,
-                'pagePosition' => null,
-                'enCategoryName' => null,
-                'vnCategoryName' => null,
-                'categoryType' => null,
-                'items' => array()
-            ];
-        }
-
-        $stmt->close();
-        return $categoryTags;
-    }
-
-    /**
-     * This function fetches menu item data
-     * @return array
-     */
-    private function fetchMenuData()
-    {
-        $results = array();
-
-        $stmt = $this->mysqli->prepare('
-        SELECT item.*, category.name, category.page_position, category.tag, category.language, category.type 
-        FROM tapout_menu_item 
-        AS item 
-        LEFT JOIN tapout_menu_category 
-        AS category 
-        ON item.category_id = category.id');
-
-        $stmt->execute();
-
-        $stmt->bind_result($itemId, $categoryId, $title, $price, $description, $categoryPosition,
-            $itemTag, $itemLanguage, $categoryName, $pagePosition, $categoryTag, $categoryLanguage, $categoryType);
-
-        while ($stmt->fetch()) {
-            $results[] = [
-                'id' => $itemId,
-                'categoryId' => $categoryId,
-                'title' => $title,
-                'price' => $price,
-                'description' => $description,
-                'categoryPosition' => $categoryPosition,
-                'itemTag' => $itemTag,
-                'itemLanguage' => $itemLanguage,
-                'categoryName' => $categoryName,
-                'pagePosition' => $pagePosition,
-                'categoryTag' => $categoryTag,
-                'categoryLanguage' => $categoryLanguage,
-                'categoryType' => $categoryType
-            ];
-        }
-
-        $stmt->close();
-        return $results;
+        return $this->sortMenuResults($matchedResultsAndCategories);
     }
 
     /**
      * This function matches menu item data with categories, combing data for both languages
      * @param $results
-     * @param $categoryTags
+     * @param BilingualMenuCategory[] $categoryTags
      * @return array
      */
     private function matchResultsWithCategoryTags($results, $categoryTags)
     {
+        $items = array();
         $sortedResults = array();
         foreach ($results as $result) {
             $tag = $result['categoryTag'];
-            if ($result['categoryLanguage'] === 'en') {
-                $categoryTags[$tag]['categoryTag'] = $result['categoryTag'];
-                $categoryTags[$tag]['enCategoryId'] = $result['categoryId'];
-                $categoryTags[$tag]['pagePosition'] = $result['pagePosition'];
-                $categoryTags[$tag]['enCategoryName'] = $result['categoryName'];
-                $categoryTags[$tag]['categoryType'] = $result['categoryType'];
-                $categoryTags[$tag]['items'][$result['itemTag']]['vnItemId'] = $result['id'];
-                $categoryTags[$tag]['items'][$result['itemTag']]['vnTitle'] = $result['title'];
-                $categoryTags[$tag]['items'][$result['itemTag']]['vnDescription'] = $result['description'];
-                $categoryTags[$tag]['items'][$result['itemTag']]['price'] = $result['price'];
-                $categoryTags[$tag]['items'][$result['itemTag']]['categoryPosition'] = $result['categoryPosition'];
-                $categoryTags[$tag]['items'][$result['itemTag']]['itemTag'] = $result['itemTag'];
-            } else {
-                $categoryTags[$tag]['categoryTag'] = $result['categoryTag'];
-                $categoryTags[$tag]['vnCategoryId'] = $result['categoryId'];
-                $categoryTags[$tag]['pagePosition'] = $result['pagePosition'];
-                $categoryTags[$tag]['vnCategoryName'] = $result['categoryName'];
-                $categoryTags[$tag]['categoryType'] = $result['categoryType'];
-                $categoryTags[$tag]['items'][$result['itemTag']]['enItemId'] = $result['id'];
-                $categoryTags[$tag]['items'][$result['itemTag']]['enTitle'] = $result['title'];
-                $categoryTags[$tag]['items'][$result['itemTag']]['enDescription'] = $result['description'];
-                $categoryTags[$tag]['items'][$result['itemTag']]['price'] = $result['price'];
-                $categoryTags[$tag]['items'][$result['itemTag']]['categoryPosition'] = $result['categoryPosition'];
-                $categoryTags[$tag]['items'][$result['itemTag']]['itemTag'] = $result['itemTag'];
+
+            if(!isset($items[$result['itemTag']])) {
+                $items[$result['itemTag']] = new BilingualMenuItem($result['price'], $result['categoryPosition'], $result['itemTag']);
             }
+            if($categoryTags[$tag] === null) {
+                $categoryTags[$tag] = new BilingualMenuCategory($result['categoryTag'], $result['pagePosition'], $result['categoryType']);
+            }
+
+            if ($result['categoryLanguage'] === 'en') {
+                $categoryTags[$tag]->setEnglish($result['categoryId'], $result['categoryName']);
+
+                $items[$result['itemTag']]->setEnglish($result['id'], $result['title'], $result['description']);
+            } else {
+                $categoryTags[$tag]->setVietnamese($result['categoryId'], $result['categoryName']);
+
+                $items[$result['itemTag']]->setVietnamese($result['id'], $result['title'], $result['description']);
+            }
+            $categoryTags[$tag]->addToItems($result['itemTag'], $items[$result['itemTag']]);
         }
 
         foreach ($categoryTags as $categoryTag) {
             $sortedCategory = array();
-            foreach ($categoryTag['items'] as $item) {
+            foreach ($categoryTag->items as $item) {
                 $sortedCategory[] = $item;
             }
-            $categoryTag['items'] = $sortedCategory;
+            $categoryTag->setItems($sortedCategory);
             $sortedResults[] = $categoryTag;
         }
 
@@ -281,33 +175,17 @@ class ReadMenu extends ConnectDb
     }
 
     /**
-     * This function sorts menu items by category position and categories by page position
+     * This function sorts items by category position and categories by page position
      * @param $sortedResults
      * @return mixed
      */
     private function sortMenuResults($sortedResults)
     {
         foreach ($sortedResults as $key => $sortedResult) {
-            usort($sortedResult['items'], array('ReadMenu', 'comparisonCategoryPosition'));
+            usort($sortedResult->items, array('SortingService', 'comparisonPosition'));
             $sortedResults[$key] = $sortedResult;
         }
-        usort($sortedResults, array('ReadMenu', 'comparisonPagePosition'));
+        usort($sortedResults, array('SortingService', 'comparisonPosition'));
         return $sortedResults;
-    }
-
-    private function comparisonCategoryPosition($a, $b)
-    {
-        if ($a['categoryPosition'] === $b['categoryPosition']) {
-            return 0;
-        }
-        return ($a['categoryPosition'] < $b['categoryPosition']) ? -1 : 1;
-    }
-
-    private function comparisonPagePosition($a, $b)
-    {
-        if ($a['pagePosition'] === $b['pagePosition']) {
-            return 0;
-        }
-        return ($a['pagePosition'] < $b['pagePosition']) ? -1 : 1;
     }
 }
