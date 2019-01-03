@@ -1,7 +1,10 @@
 <?php
 require_once __DIR__ . '/../../ConnectDb.php';
 
+// Objects
 require_once __DIR__ . '/../../Objects/Menu/BilingualMenuCategory.php';
+require_once __DIR__ . '/../../Objects/Menu/NewBilingualMenuItem.php';
+require_once __DIR__ . '/../../Objects/Menu/NewBilingualMenuCategory.php';
 
 class MenuRepository
 {
@@ -28,7 +31,6 @@ class MenuRepository
     }
 
     /**
-     * Copy and paste from ReadMenu
      * This function gets all menu data from category and menu item tables with a given language and returns it in an array
      * @param $language
      * @return array|null
@@ -69,7 +71,7 @@ class MenuRepository
             ];
         }
 
-        if($stmt->errno) {
+        if ($stmt->errno) {
             $results = null;
         }
 
@@ -117,7 +119,7 @@ class MenuRepository
             ];
         }
 
-        if($stmt->errno) {
+        if ($stmt->errno) {
             $results = null;
         }
 
@@ -146,5 +148,53 @@ class MenuRepository
 
         $stmt->close();
         return $categoryTags;
+    }
+
+    /**
+     * @todo: Might need to split call up, see how the database evolves to see if it makes more sense
+     * @todo        to get categories AND/OR items separately
+     * @todo: Check categories are active
+     * @return array|null
+     */
+    public function newGetBilingualMenu()
+    {
+        $results = array();
+
+        $stmt = $this->mysqli->prepare(
+            'SELECT cat.id AS catId, cat.en_name AS catEnName, cat.vn_name AS catVnName, cat.type AS catType, cat.page_position AS pagePosition,
+            item.id AS itemId, item.caption AS itemCaption, item.price AS itemPrice, item.category_position AS catPosition,
+            enDetails.id AS enDetailId, enDetails.title AS enDetailTitle, enDetails.description AS enDetailDescription, 
+            vnDetails.id AS vnDetailId, vnDetails.title as vnDetailTitle, vnDetails.description AS vnDetailDescription
+            FROM menu_category AS cat
+            LEFT JOIN menu_item as item ON cat.id = item.category_id
+            LEFT JOIN menu_item_details as enDetails ON item.id = enDetails.item_id AND enDetails.language = "en"
+            LEFT JOIN menu_item_details as vnDetails ON item.id = vnDetails.item_id AND vnDetails.language = "vn"
+            WHERE enDetails.id IS NOT NULL 
+            AND vnDetails.id IS NOT NULL
+            AND cat.active = 1
+            ORDER BY pagePosition, catPosition'
+        );
+
+        $stmt->execute();
+        // 16
+        $stmt->bind_result($catId, $catEnName, $catVnName, $catType, $pagePosition, $itemId, $itemCaption, $itemPrice, $catPosition,
+            $enId, $enTitle, $enDescription, $vnId, $vnTitle, $vnDescription);
+
+        while ($stmt->fetch()) {
+            $menuItem = new NewBilingualMenuItem($itemPrice, $catPosition, $itemCaption,
+                $enTitle, $enDescription, $vnTitle, $vnDescription, $enId, $vnId, $itemId);
+            if(!isset($results[$catId])) {
+                $results[$catId] = new NewBilingualMenuCategory($catEnName, $catVnName, $catType, $pagePosition, $catId);
+            }
+            $results[$catId]->addItem($menuItem);
+        }
+
+        if ($stmt->errno) {
+            $results = null;
+        }
+
+        $stmt->close();
+
+        return $results;
     }
 }

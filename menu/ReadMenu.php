@@ -1,50 +1,28 @@
 <?php
 require_once '../ConnectDb.php';
 
-//Services
+// Services
 require_once '../Services/SortingService.php';
+require_once '../Services/Menu/BilingualMenuService.php';
 
-//Repos
+// Repos
 require_once '../Repository/Menu/MenuRepository.php';
 
-//Objects
-require_once '../Objects/Menu/MenuItem.php';
-require_once '../Objects/Menu/MenuCategory.php';
-require_once './../Objects/Menu/BilingualMenuItem.php';
-require_once './../Objects/Menu/BilingualMenuCategory.php';
 
 class ReadMenu
 {
-    /**
-     * @var ConnectDb|null
-     */
-    private $conn;
-
-    /**
-     * @var mysqli
-     */
-    private $mysqli;
-
-    private $connectDb;
-
     //Repos
     private $menuRepo;
 
-    //Services
-    private $sortingService;
-
     /**
-     * @var null|string
+     * @var string
      */
-    private $language = null;
+    private $language;
 
     function __construct()
     {
-        $this->connectDb = new ConnectDb();
-        $this->conn = $this->connectDb->getInstance();
-        $this->mysqli = $this->conn->getConnection();
+        // @todo: Remove this once params are sorted
         $this->menuRepo = new MenuRepository();
-        $this->sortingService = new SortingService();
     }
 
     /**
@@ -62,6 +40,7 @@ class ReadMenu
     }
 
     /**
+     * @todo: Refactor this as it is fugly
      * This function checks the $_GET params and calls functions depending on the params
      * @return array|null
      */
@@ -78,7 +57,8 @@ class ReadMenu
             }
             //Case for editing web page
             if (!isset($_GET['lang']) && $_GET['task'] === 'edit') {
-                $results = $this->getMenuToEdit();
+                $menuService = new BilingualMenuService();
+                $results = $menuService->getMenu();
             }
         }
         return $results;
@@ -100,13 +80,14 @@ class ReadMenu
      * @param $results
      * @return array
      */
-    private function sortRawData($results) {
+    private function sortRawData($results)
+    {
         $sortedCategories = array();
 
         foreach ($results as $result) {
             $itemArray = new MenuItem($result['title'], $result['price'], $result['categoryPosition'],
                 $result['id'], $result['description'], $result['itemTag']);
-            if(!isset($sortedCategories[$result['categoryId']])){
+            if (!isset($sortedCategories[$result['categoryId']])) {
                 $sortedCategories[$result['categoryId']] = new MenuCategory($result['categoryId'],
                     $result['pagePosition'], $result['categoryName'], $result['categoryTag']);
                 $sortedCategories[$result['categoryId']]->addItem($itemArray);
@@ -116,62 +97,6 @@ class ReadMenu
         }
 
         return $sortedCategories;
-    }
-
-    /**
-     * This function calls other functions that gets and returns data in the required structure
-     * @return array|null
-     */
-    private function getMenuToEdit()
-    {
-        $rawResults = $this->menuRepo->getBilingualMenu();
-        $categoryTags = $this->menuRepo->getCategoryTags();
-        $matchedResultsAndCategories = $this->matchResultsWithCategoryTags($rawResults, $categoryTags);
-        return $this->sortMenuResults($matchedResultsAndCategories);
-    }
-
-    /**
-     * This function matches menu item data with categories, combing data for both languages
-     * @param $results
-     * @param BilingualMenuCategory[] $categoryTags
-     * @return array
-     */
-    private function matchResultsWithCategoryTags($results, $categoryTags)
-    {
-        $items = array();
-        $sortedResults = array();
-        foreach ($results as $result) {
-            $tag = $result['categoryTag'];
-
-            if(!isset($items[$result['itemTag']])) {
-                $items[$result['itemTag']] = new BilingualMenuItem($result['price'], $result['categoryPosition'], $result['itemTag']);
-            }
-            if($categoryTags[$tag] === null) {
-                $categoryTags[$tag] = new BilingualMenuCategory($result['categoryTag'], $result['pagePosition'], $result['categoryType']);
-            }
-
-            if ($result['categoryLanguage'] === 'en') {
-                $categoryTags[$tag]->setEnglish($result['categoryId'], $result['categoryName']);
-
-                $items[$result['itemTag']]->setEnglish($result['id'], $result['title'], $result['description']);
-            } else {
-                $categoryTags[$tag]->setVietnamese($result['categoryId'], $result['categoryName']);
-
-                $items[$result['itemTag']]->setVietnamese($result['id'], $result['title'], $result['description']);
-            }
-            $categoryTags[$tag]->addToItems($result['itemTag'], $items[$result['itemTag']]);
-        }
-
-        foreach ($categoryTags as $categoryTag) {
-            $sortedCategory = array();
-            foreach ($categoryTag->items as $item) {
-                $sortedCategory[] = $item;
-            }
-            $categoryTag->setItems($sortedCategory);
-            $sortedResults[] = $categoryTag;
-        }
-
-        return $sortedResults;
     }
 
     /**

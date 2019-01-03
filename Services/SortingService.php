@@ -18,8 +18,6 @@ class SortingService
         return $noKeysArray;
     }
 
-
-
     /**
      * @param $a
      * @param $b
