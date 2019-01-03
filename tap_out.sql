@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 02, 2019 at 05:46 PM
+-- Generation Time: Jan 04, 2019 at 12:36 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.13
 
@@ -118,8 +118,7 @@ CREATE TABLE `image_details` (
 --
 
 INSERT INTO `image_details` (`id`, `page_id`, `img_url`, `created_at`, `page_position`, `caption`, `alt`, `height`, `width`, `tag`, `language`) VALUES
-(24, 4, '/assets/photos/540/DSC07487.jpg', '2018-12-30 18:36:03', 5, NULL, '', 0, 0, '4', 'en'),
-(25, 4, '/assets/photos/540/DSC07487.jpg', '2018-12-30 18:36:03', 5, NULL, '', 0, 0, '4', 'vn'),
+(25, 4, '/assets/photos/540/DSC07487.jpg', '2019-01-02 17:30:28', 3, NULL, '', 0, 0, '4', 'vn'),
 (26, 4, '/assets/photos/540/DSC07487.jpg', '2018-12-30 18:36:03', 10, NULL, '', 0, 0, '5', 'en'),
 (27, 4, '/assets/photos/540/DSC07487.jpg', '2018-12-30 18:36:03', 10, NULL, '', 0, 0, '5', 'vn'),
 (28, 4, '/assets/photos/540/DSC07494.jpg', '2018-12-30 18:36:03', 11, NULL, '', 0, 0, '6', 'en'),
@@ -174,45 +173,21 @@ INSERT INTO `image_list` (`id`, `imgUrl`, `active`, `created_at`) VALUES
 
 CREATE TABLE `menu_category` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `en_name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `vn_name` varchar(255) COLLATE utf8_bin NOT NULL,
   `type` set('food','drink') COLLATE utf8_bin NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `language` set('en','vn') COLLATE utf8_bin NOT NULL,
-  `page_position` int(11) NOT NULL,
-  `tag` varchar(255) COLLATE utf8_bin NOT NULL
+  `page_position` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `menu_category`
 --
 
-INSERT INTO `menu_category` (`id`, `name`, `type`, `active`, `language`, `page_position`, `tag`) VALUES
-(1, 'Breakfast', 'food', 1, 'en', 1, 'breakfast'),
-(2, 'Burgers & Sandwiches', 'food', 1, 'en', 20, 'burgers'),
-(3, 'Mains', 'food', 1, 'en', 30, 'mains'),
-(4, 'Sides', 'food', 1, 'en', 3, 'sides'),
-(5, 'Desserts', 'food', 1, 'en', 10, 'desserts'),
-(6, 'On-tap', 'drink', 1, 'en', 5, 'on-tap'),
-(7, 'Bottles', 'drink', 1, 'en', 6, 'bottles'),
-(8, 'Special-Beers', 'drink', 1, 'en', 7, 'special-beers'),
-(9, 'Mixers', 'drink', 1, 'en', 100, 'mixers'),
-(10, 'Cocktails', 'drink', 1, 'en', 9, 'cocktails'),
-(11, 'Red Wine', 'drink', 1, 'en', 12, 'red-wine'),
-(12, 'White Wine', 'drink', 1, 'en', 11, 'white-wine'),
-(13, 'Rose & Prosecco', 'drink', 1, 'en', 13, 'rose'),
-(14, 'VNBreakfast', 'food', 1, 'vn', 1, 'breakfast'),
-(15, 'VNMains', 'food', 1, 'vn', 30, 'mains'),
-(16, 'VNSides', 'food', 1, 'vn', 3, 'sides'),
-(17, 'VNBurgers & Sandwiches', 'food', 1, 'vn', 20, 'burgers'),
-(18, 'VNDesserts', 'food', 1, 'vn', 10, 'desserts'),
-(19, 'VNOn-top', 'drink', 1, 'vn', 5, 'on-tap'),
-(20, 'VNBottles', 'drink', 1, 'vn', 6, 'bottles'),
-(21, 'VNSpecial-Beers', 'drink', 1, 'vn', 7, 'special-beers'),
-(22, 'VNMixers', 'drink', 1, 'vn', 100, 'mixers'),
-(23, 'VNCocktails', 'drink', 1, 'vn', 9, 'cocktails'),
-(24, 'VNRed Wine', 'drink', 1, 'vn', 12, 'red-wine'),
-(25, 'VNWhite Wine', 'drink', 1, 'vn', 111, 'white-wine'),
-(26, 'VNRose & Prosecco', 'drink', 1, 'vn', 13, 'rose');
+INSERT INTO `menu_category` (`id`, `en_name`, `vn_name`, `type`, `active`, `page_position`) VALUES
+(1, 'EN Breakfast', 'VN Breakfast', 'food', 1, 1),
+(3, 'EN Mains', 'VN Mains', 'food', 1, 30),
+(12, 'EN White Wine', 'VN White Wines', 'drink', 1, 11);
 
 -- --------------------------------------------------------
 
@@ -223,93 +198,20 @@ INSERT INTO `menu_category` (`id`, `name`, `type`, `active`, `language`, `page_p
 CREATE TABLE `menu_item` (
   `id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  `title` varchar(255) COLLATE utf8_bin NOT NULL,
+  `caption` varchar(255) COLLATE utf8_bin NOT NULL,
   `price` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `description` text COLLATE utf8_bin,
-  `category_position` int(11) NOT NULL,
-  `tag` varchar(255) COLLATE utf8_bin NOT NULL,
-  `language` set('en','vn') COLLATE utf8_bin NOT NULL
+  `category_position` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `menu_item`
 --
 
-INSERT INTO `menu_item` (`id`, `category_id`, `title`, `price`, `description`, `category_position`, `tag`, `language`) VALUES
-(14, 1, 'Spinach & Artichoke DipSpinach & Artichoke Dip', '85K', 'Cold dip served with homemade chips, and assorted fresh vegetables', 28, 'spinach', 'en'),
-(15, 1, 'Chili Cheese Fries', '155K', 'Hand cut fries topped with homemade chili, cheddar cheese, sour cream & green onions', 5116, 'chili cheese', 'en'),
-(16, 1, 'Loaded Fries', '140K', 'Hand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', 18, 'loaded fries', 'en'),
-(28, 2, 'Pulled Pork Sandwich', '150K', 'Smoked & pulled pork shoulder topped with green apple coleslaw, served with a side of your choice', 24, 'pulled pork', 'en'),
-(29, 2, 'Steak Sandwich', '200K', '125g grilled Australian rib eye, marinated red peppers & zucchini, coriander & lime chimichurri and cheddar cheese. Served on a homemade grilled light rye bread.', 29, 'steak sand', 'en'),
-(30, 2, 'Montreal Smoked Meat Sandwich', '180K', 'Wood smoked cured brisket in our homemade rye bread, smothered in yellow mustard, served with hand cut fries, coleslaw and kosher dill', 21, 'montreal', 'en'),
-(31, 3, 'Wood Smoked Ribs Half / Full Rack', '300K / 550K', 'Served with Two Choice of Sides', 33, 'wood smoked', 'en'),
-(32, 3, '250g Australian Grain fed Rib Eye Steak', '250K', 'Flame grilled and pan finished with butter, garlic and rosemary', 2, 'australian', 'en'),
-(33, 3, 'Fish & Chips', '170K', 'Beer battered fish and fries, served with a homemade tartar sauce', 11, 'fish & chips', 'en'),
-(37, 4, 'Salad', '45K', 'Lettuce, cherry tomato, marinated zucchini & peppers, rosemary vinaigrette', 26, 'salad', 'en'),
-(38, 4, 'Green Beans', '40K', 'Steamed and tossed with butter, garlic and cherry tomatoes', 13, 'green beans', 'en'),
-(39, 4, 'Coleslaw', '35K', NULL, 8, 'coleslaw', 'en'),
-(41, 5, 'Group Ice Cream Tacos deal:', '230K', '3 Tacos', 14, 'group ice', 'en'),
-(42, 5, 'Baked Pineapple & Camembert', '190K', '125g Camembert wheel oven baked topped with a sweet pineapple reduction. Served with toasted bread.', 3, 'baked pineapple', 'en'),
-(43, 5, 'Banana Foster', '90K', 'Bananas flambéed with dark rum & banana liqueur, brown sugar and cinnamon, served with coconut ice cream', 4, 'banana foster', 'en'),
-(48, 6, 'Pasteur Street Passion Fruit Wheat Ale', '90K', 'IBU 15 - ABV 4.0%', 22, 'pasteur fruit wheat', 'en'),
-(49, 6, 'Heart Of Darkness Loose Rivet New England IPA', '95K', 'IBU 59 - ABV 7.5%', 15, 'heart of darkness', 'en'),
-(50, 6, 'Heart Of Darkness Mexican Pilsner', '90K', 'IBU 24 - ABV 4.2%', 19, 'mexican pils', 'en'),
-(59, 7, 'Gauden Schwarzbier', '70K', 'ABV 5.2%', 12, 'gauden', 'en'),
-(60, 7, 'Tiger Bottle', '50K', 'ABV 5.0%', 30, 'tiger bottle', 'en'),
-(61, 7, 'Desperado Bottle', '60K', 'ABV 5.9%', 10, 'desperado', 'en'),
-(62, 8, 'Modern Belgian Dark', '200K', '500ml - IBU 23 - ABV 8.1%', 20, 'modern belgian dark', 'en'),
-(63, 8, 'Independence Stout', '220K', '500ml - IBU 68 - ABV 12%', 17, 'independence stout', 'en'),
-(66, 9, 'House Pours', '80K', NULL, 16, 'house pours', 'en'),
-(67, 9, 'Premium Pours', '90K - 175K', NULL, 23, 'premium pours', 'en'),
-(68, 10, 'Celery Sour', '120K', 'Gin, celery & lime juice, sugar syrup, egg whites, bitters', 6, 'celery', 'en'),
-(69, 10, 'Tropical Climax', '150K', 'Light rum, dark rum, apricot brandy, triple sec, pineapple, lime & fresh passion fruit juice.', 7, 'climax', 'en'),
-(72, 10, 'Coronita', '180K', 'Double shot tequila, triple sec, lime & passion fruit juice blended with ice, served in a large cocktail glass with a mini corona.', 9, 'coronita', 'en'),
-(77, 11, 'Sanama – Cabernet Sauvignon – Chile 2016', '90K/400K', 'Glass/Bottle', 27, 'sanama', 'en'),
-(78, 11, 'Woolshed – Merlot – Australia 2017', '95K/450K', 'Glass/Bottle', 34, 'woolshedmer', 'en'),
-(79, 11, 'Ribshack – Pinnotage/Merlot – South Africa 2016', '125K/680K', 'Glass/Bottle', 25, 'ribshack', 'en'),
-(82, 12, 'Casa Subercaseaux – Sauvignon Blanc – Chile 2017', '95K/420K', 'Glass/Bottle', 5, 'casa', 'en'),
-(83, 12, 'Woolshed - Sauvignon Blanc - Australia 2017', '95K/420K', 'Glass/Bottle', 35, 'woolshedsauv', 'en'),
-(84, 12, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 'Glass/Bottle', 1, 'accomplice', 'en'),
-(86, 13, 'Vignerons St. Tropez – Grenache/Cinsault – France', '1,000K', 'Bottle', 32, 'vignerons', 'en'),
-(87, 13, 'Tommasi Filo Dora Prosecco – Italy', '1,200K', 'Bottle', 31, 'tommasi', 'en'),
-(90, 26, 'Tommasi Filo Dora Prosecco – Italy', '1,200K', 'VNBottle', 31, 'tommasi', 'vn'),
-(91, 26, 'Vignerons St. Tropez – Grenache/Cinsault – France', '1,000K', 'VNBottle', 32, 'vignerons', 'vn'),
-(92, 14, 'Spinach & Artichoke DipSpinach & Artichoke Dip', '85K', 'VNCold dip served with homemade chips, and assorted fresh vegetables', 28, 'spinach', 'vn'),
-(93, 14, 'Chili Cheese Fries', '155K', 'VNHand cut fries topped with homemade chili, cheddar cheese, sour cream & green onions', 5116, 'chili cheese', 'vn'),
-(94, 14, 'Loaded Fries', '140K', 'VNHand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', 18, 'loaded fries', 'vn'),
-(95, 17, 'Pulled Pork Sandwich', '150K', 'VNSmoked & pulled pork shoulder topped with green apple coleslaw, served with a side of your choice', 24, 'pulled pork', 'vn'),
-(96, 17, 'Steak Sandwich', '200K', 'ở phía125g grilled Australian rib eye, marinated red peppers & zucchini, coriander & lime chimichurri and cheddar cheese. Served on a homemade grilled light rye bread.', 29, 'steak sand', 'vn'),
-(97, 17, 'Montreal Smoked Meat Sandwich', '180K', 'ở phíaWood smoked cured brisket in our homemade rye bread, ở phíasmothered in yellow mustard, served with hand cut fries, coleslaw and kosher dill', 21, 'montreal', 'vn'),
-(98, 15, 'Wood Smoked Ribs Half / Full Rack', '300K / 550K', 'ở phíaServed with Two Choice of Sides', 33, 'wood smoked', 'vn'),
-(99, 15, '250g Australian Grain fed Rib Eye Steak', '250K', 'ở phíaFlame grilled and pan finished with butter, garlic and rosemary', 2, 'australian', 'vn'),
-(100, 15, 'Fish & Chips', '170K', 'ở phíaBeer battered fish and fries, served with a homemade tartar sauce', 11, 'fish & chips', 'vn'),
-(101, 16, 'Salad', '45K', 'ở phíaLettuce, cherry tomato, marinated zucchini & peppers, rosemary vinaigretteở phía', 26, 'salad', 'vn'),
-(102, 16, 'Green Beans', '40K', 'ở phíaSteamed and tossed with butter, garlic and cherry tomatoes', 13, 'green beans', 'vn'),
-(103, 16, 'Coleslaw', '35K', NULL, 8, 'coleslaw', 'vn'),
-(104, 18, 'Group Ice Cream Tacos deal:', '230K', 'ở phía3 Tacos', 14, 'group ice', 'vn'),
-(105, 18, 'Baked Pineapple & Camembert', '190K', 'ở phía125g Camembert wheel oven baked topped with a sweet pineapple reduction. Served with toasted bread.', 3, 'baked pineapple', 'vn'),
-(106, 18, 'Banana Foster', '90K', 'ở phíaBananas flambéed with dark rum & banana liqueur, brown sugar and cinnamon, served with coconut ice cream', 4, 'banana foster', 'vn'),
-(107, 19, 'Pasteur Street Passion Fruit Wheat Ale', '90K', 'ở phíaIBU 15 - ABV 4.0%', 22, 'pasteur fruit wheat', 'vn'),
-(108, 19, 'Heart Of Darkness Loose Rivet New England IPA', '95K', 'ở phíaIBU 59 - ABV 7.5%', 15, 'heart of darkness', 'vn'),
-(109, 19, 'Heart Of Darkness Mexican Pilsner', '90K', 'ở phíaIBU 24 - ABV 4.2%', 19, 'mexican pils', 'vn'),
-(110, 20, 'Gauden Schwarzbier', '70K', 'ở phíaABV 5.2%', 12, 'gauden', 'vn'),
-(111, 20, 'Tiger Bottle', '50K', 'ở phíaABV 5.0%', 30, 'tiger bottle', 'vn'),
-(112, 20, 'Desperado Bottle', '60K', 'ở phíaABV 5.9%', 10, 'desperado', 'vn'),
-(113, 21, 'Modern Belgian Dark', '200K', 'ở phía500ml - IBU 23 - ABV 8.1%', 20, 'modern belgian dark', 'vn'),
-(114, 21, 'Independence Stout', '220K', 'ở phía500ml - IBU 68 - ABV 12%', 17, 'independence stout', 'vn'),
-(115, 22, 'House Pours', '80K', 'ở phía', 16, 'house pours', 'vn'),
-(116, 22, 'Premium Pours', '90K - 175K', 'ở phía', 23, 'premium pours', 'vn'),
-(117, 23, 'Celery Sour', '120K', 'ở phíaGin, celery & lime juice, sugar syrup, egg whites, bitters', 6, 'celery', 'vn'),
-(118, 23, 'Tropical Climax', '150K', 'ở phíaLight rum, dark rum, apricot brandy, triple sec, pineapple, lime & fresh passion fruit juice.', 7, 'climax', 'vn'),
-(119, 10, 'Coronita', '180K', 'ở phíaDouble shot tequila, triple sec, lime & passion fruit juice blended with ice, served in a large cocktail glass with a mini corona.', 9, 'coronita', 'vn'),
-(120, 24, 'Sanama – Cabernet Sauvignon – Chile 2016', '90K/400K', 'ở phíaGlass/Bottle', 27, 'sanama', 'vn'),
-(121, 24, 'Woolshed – Merlot – Australia 2017', '95K/450K', 'ở phíaGlass/Bottle', 34, 'woolshedmer', 'vn'),
-(122, 24, 'Ribshack – Pinnotage/Merlot – South Africa 2016', '125K/680K', 'ở phíaGlass/Bottle', 25, 'ribshack', 'vn'),
-(123, 25, 'Casa Subercaseaux – Sauvignon Blanc – Chile 2017', '95K/420K', 'ở phíaGlass/Bottle', 5, 'casa', 'vn'),
-(124, 25, 'Woolshed - Sauvignon Blanc - Australia 2017', '95K/420K', 'ở phíaGlass/Bottle', 35, 'woolshedsauv', 'vn'),
-(125, 25, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 'ở phíaGlass/Bottle', 1, 'accomplice', 'vn'),
-(126, 1, 'Saigon Steak N\\\' Eggs', '220K', 'Thick sliced beef brisket two fried eggs and grilled tomato with home made bread roll', 1, 'steakneggs', 'en'),
-(127, 14, 'Saigon Steak N\\\' Eggs', '220K', 'ở phíaThick sliced beef brisket two fried eggs and grilled tomato with home made bread roll', 1, 'steakneggs', 'vn');
+INSERT INTO `menu_item` (`id`, `category_id`, `caption`, `price`, `category_position`) VALUES
+(14, 1, 'Spinach & Artichoke DipSpinach & Artichoke Dip', '85K', 28),
+(16, 1, 'Loaded Fries', '140K', 18),
+(32, 3, '250g Australian Grain fed Rib Eye Steak', '250K', 2),
+(84, 12, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 1);
 
 -- --------------------------------------------------------
 
@@ -331,7 +233,13 @@ CREATE TABLE `menu_item_details` (
 
 INSERT INTO `menu_item_details` (`id`, `item_id`, `title`, `description`, `language`) VALUES
 (1, 16, 'EN Loaded Fries', 'Hand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', 'en'),
-(2, 16, 'VN Loaded Fries', 'ở phíaServed with Two Choice of Sides', 'vn');
+(2, 16, 'VN Loaded Fries', 'ở phíaServed with Two Choice of Sides', 'vn'),
+(3, 84, 'The Accomplice', 'EN Glass/Bottle', 'en'),
+(4, 84, 'VN chữ Quốc ngữ The Accomplice', 'chữ Quốc ngữ Glass/Bottle', 'vn'),
+(5, 32, '250g Australian Grain fed Rib Eye Steak', 'Its a fooking burger alright', 'en'),
+(6, 32, 'chữ Quốc ngữ Australian burger', 'chữ Quốc ngữ Its a fooking burger alright', 'vn'),
+(7, 14, 'En Spinach innit', 'Hand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', 'en'),
+(8, 14, 'ở phíaServed Spinach with Two Choice of Sides', 'ở phíaServed with Two Choice of Sides', 'vn');
 
 -- --------------------------------------------------------
 
@@ -394,10 +302,10 @@ INSERT INTO `page_item` (`id`, `page_id`, `heading`, `content`, `created_at`, `e
 (64, 4, 'VNTrevor', 'TREVER NOAH with the finest cocktails from Tapout’s mixologist.', '2018-10-13 19:27:55', NULL, 'vn', 'initializeDelete', 8),
 (65, 4, 'EnHeadingTest', 'EnContentTest EnContentTest EnContentTest EnContentTest ', '2018-12-30 12:10:32', NULL, 'en', '41', 9),
 (66, 4, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía NamDu lịch ở Rạch Giá, ở phía NamDu lịch ở Rạch Giá, ở phía Nam', '2018-12-30 12:10:32', NULL, 'vn', '41', 9),
-(71, 4, 'Test from frontend', 'Content test from front end', '2018-12-30 12:14:47', NULL, 'en', '47', 3),
-(72, 4, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía NamDu lịch ở Rạch Giá, ở phía NamDu lịch ở Rạch Giá, ở phía Nam', '2018-12-30 12:14:47', NULL, 'vn', '47', 3),
-(73, 4, 'Test from frontend', 'Content test from front end', '2018-12-30 12:15:01', NULL, 'en', '49', 1),
-(74, 4, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía NamDu lịch ở Rạch Giá, ở phía NamDu lịch ở Rạch Giá, ở phía Nam', '2018-12-30 12:15:01', NULL, 'vn', '49', 1),
+(71, 4, 'Test from frontend', 'Content test from front end', '2018-12-30 12:14:47', NULL, 'en', '47', 1),
+(72, 4, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía NamDu lịch ở Rạch Giá, ở phía NamDu lịch ở Rạch Giá, ở phía Nam', '2018-12-30 12:14:47', NULL, 'vn', '47', 1),
+(73, 4, 'Test from frontend', 'Content test from front end', '2018-12-30 12:15:01', NULL, 'en', '49', 4),
+(74, 4, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía NamDu lịch ở Rạch Giá, ở phía NamDu lịch ở Rạch Giá, ở phía Nam', '2018-12-30 12:15:01', NULL, 'vn', '49', 4),
 (79, 4, 'EnHeadingTest', 'EnContentTest EnContentTest EnContentTest EnContentTest ', '2019-01-02 11:40:10', NULL, 'en', '4f', 12),
 (80, 4, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía NamDu lịch ở Rạch Giá, ở phía NamDu lịch ở Rạch Giá, ở phía Nam', '2019-01-02 11:40:10', NULL, 'vn', '4f', 12);
 
@@ -509,7 +417,7 @@ ALTER TABLE `menu_item`
 -- AUTO_INCREMENT for table `menu_item_details`
 --
 ALTER TABLE `menu_item_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `page`
