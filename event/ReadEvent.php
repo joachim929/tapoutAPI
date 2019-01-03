@@ -1,7 +1,7 @@
 <?php
 require_once('../ConnectDb.php');
 
-class ReadEvent extends ConnectDb
+class ReadEvent
 {
     /**
      * @var ConnectDb|null
@@ -13,10 +13,12 @@ class ReadEvent extends ConnectDb
      */
     private $mysqli;
 
+    private $connectDb;
+
     function __construct()
     {
-        ConnectDb::__construct();
-        $this->conn = ConnectDb::getInstance();
+        $this->connectDb = new ConnectDb();
+        $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
     }
 
