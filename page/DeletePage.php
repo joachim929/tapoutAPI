@@ -1,7 +1,7 @@
 <?php
 require_once '../ConnectDb.php';
 
-class DeletePage extends ConnectDb
+class DeletePage
 {
     /**
      * @var ConnectDb|null
@@ -13,10 +13,12 @@ class DeletePage extends ConnectDb
      */
     private $mysqli;
 
+    private $connectDb;
+
     function __construct()
     {
-        ConnectDb::__construct();
-        $this->conn = ConnectDb::getInstance();
+        $this->connectDb = new ConnectDb();
+        $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
     }
 

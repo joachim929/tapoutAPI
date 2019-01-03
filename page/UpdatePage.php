@@ -1,7 +1,7 @@
 <?php
 require_once '../ConnectDb.php';
 
-class UpdatePage extends ConnectDb
+class UpdatePage
 {
     /**
      * @var ConnectDb|null
@@ -13,6 +13,8 @@ class UpdatePage extends ConnectDb
      */
     private $mysqli;
 
+    private $connectDb;
+
     private $page = null;
     private $task = null;
     private $pageItems = null;
@@ -20,8 +22,8 @@ class UpdatePage extends ConnectDb
 
     function __construct()
     {
-        ConnectDb::__construct();
-        $this->conn = ConnectDb::getInstance();
+        $this->connectDb = new ConnectDb();
+        $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
     }
 

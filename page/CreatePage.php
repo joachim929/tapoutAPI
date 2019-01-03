@@ -12,7 +12,7 @@ require_once './../Objects/Page/BilingualItem.php';
 //Services
 require_once './../Services/Page/PageItemsService.php';
 
-class CreatePage extends ConnectDb
+class CreatePage
 {
     /**
      * @var ConnectDb|null
@@ -23,6 +23,8 @@ class CreatePage extends ConnectDb
      * @var mysqli
      */
     private $mysqli;
+
+    private $connectDb;
 
     //Repos
     private $pageRepo;
@@ -42,8 +44,8 @@ class CreatePage extends ConnectDb
 
     function __construct()
     {
-        ConnectDb::__construct();
-        $this->conn = ConnectDb::getInstance();
+        $this->connectDb = new ConnectDb();
+        $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
 
         //Repos
