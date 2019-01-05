@@ -8,11 +8,6 @@ class MenuCategory
     public $id;
 
     /**
-     * @var int
-     */
-    public $position;
-
-    /**
      * @var string
      */
     public $name;
@@ -20,19 +15,24 @@ class MenuCategory
     /**
      * @var string
      */
-    public $tag;
+    public $type;
 
     /**
-     * @var MenuItem[]
+     * @var int
+     */
+    public $position;
+
+    /**
+     * @var array
      */
     public $items;
 
-    function __construct($id, $position, $name, $tag)
+    function __construct($name, $type, $position, $id = null)
     {
-        $this->setId($id);
-        $this->setPosition($position);
         $this->setName($name);
-        $this->setTag($tag);
+        $this->setType($type);
+        $this->setPosition($position);
+        $this->setId($id);
     }
 
     /**
@@ -49,22 +49,6 @@ class MenuCategory
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPosition(): int
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param int $position
-     */
-    public function setPosition(int $position)
-    {
-        $this->position = $position;
     }
 
     /**
@@ -86,21 +70,37 @@ class MenuCategory
     /**
      * @return string
      */
-    public function getTag(): string
+    public function getType(): string
     {
-        return $this->tag;
+        return $this->type;
     }
 
     /**
-     * @param string $tag
+     * @param string $type
      */
-    public function setTag(string $tag)
+    public function setType(string $type)
     {
-        $this->tag = $tag;
+        $this->type = $type;
     }
 
     /**
-     * @return MenuItem[]
+     * @return int
+     */
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition(int $position)
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * @return array
      */
     public function getItems(): array
     {
@@ -108,17 +108,14 @@ class MenuCategory
     }
 
     /**
-     * @param MenuItem[] $items
+     * @param array $items
      */
     public function setItems(array $items)
     {
         $this->items = $items;
     }
 
-    /**
-     * @param MenuItem $item
-     */
-    public function addItem($item)
+    public function addItem(MenuItem $item)
     {
         $this->items[] = $item;
     }

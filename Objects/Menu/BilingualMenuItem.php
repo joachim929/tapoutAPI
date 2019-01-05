@@ -3,39 +3,29 @@
 class BilingualMenuItem
 {
     /**
-     * @var ?int
+     * @var  string
      */
-    public $enItemId;
+    public $caption;
 
     /**
-     * @var ?string
-     */
-    public $enTitle;
-
-    /**
-     * @var ?string
+     * @var string
      */
     public $enDescription;
 
     /**
      * @var ?int
      */
-    public $vnItemId;
-
-    /**
-     * @var ?string
-     */
-    public $vnTitle;
-
-    /**
-     * @var ?string;
-     */
-    public $vnDescription;
+    public $enId;
 
     /**
      * @var string
      */
-    public $price;
+    public $enTitle;
+
+    /**
+     * @var ?int
+     */
+    public $itemId;
 
     /**
      * @var int
@@ -45,123 +35,36 @@ class BilingualMenuItem
     /**
      * @var string
      */
-    public $tag;
+    public $price;
 
-    function __construct($price, $position, $tag)
+    /**
+     * @var string
+     */
+    public $vnDescription;
+
+    /**
+     * @var ?int
+     */
+    public $vnId;
+
+    /**
+     * @var string
+     */
+    public $vnTitle;
+
+    function __construct($price, $position, $caption, $enTitle, $enDescription,
+                         $vnTitle, $vnDescription, $enId = null, $vnId = null, $itemId = null)
     {
         $this->setPrice($price);
         $this->setPosition($position);
-        $this->setTag($tag);
-    }
-
-    public function setEnglish($id, $title, $description)
-    {
-        $this->setEnItemId($id);
-        $this->setEnTitle($title);
-        $this->setEnDescription($description);
-    }
-
-    public function setVietnamese($id, $title, $description)
-    {
-        $this->setVnItemId($id);
-        $this->setVnTitle($title);
-        $this->setVnDescription($description);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEnItemId()
-    {
-        return $this->enItemId;
-    }
-
-    /**
-     * @param mixed $enItemId
-     */
-    public function setEnItemId($enItemId)
-    {
-        $this->enItemId = $enItemId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEnTitle()
-    {
-        return $this->enTitle;
-    }
-
-    /**
-     * @param mixed $enTitle
-     */
-    public function setEnTitle($enTitle)
-    {
-        $this->enTitle = $enTitle;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEnDescription()
-    {
-        return $this->enDescription;
-    }
-
-    /**
-     * @param mixed $enDescription
-     */
-    public function setEnDescription($enDescription)
-    {
-        $this->enDescription = $enDescription;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVnItemId()
-    {
-        return $this->vnItemId;
-    }
-
-    /**
-     * @param mixed $vnItemId
-     */
-    public function setVnItemId($vnItemId)
-    {
-        $this->vnItemId = $vnItemId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVnTitle()
-    {
-        return $this->vnTitle;
-    }
-
-    /**
-     * @param mixed $vnTitle
-     */
-    public function setVnTitle($vnTitle)
-    {
-        $this->vnTitle = $vnTitle;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVnDescription()
-    {
-        return $this->vnDescription;
-    }
-
-    /**
-     * @param mixed $vnDescription
-     */
-    public function setVnDescription($vnDescription)
-    {
-        $this->vnDescription = $vnDescription;
+        $this->setCaption($caption);
+        $this->setEnTitle($enTitle);
+        $this->setEnDescription($enDescription);
+        $this->setVnTitle($vnTitle);
+        $this->setVnDescription($vnDescription);
+        $this->setEnId($enId);
+        $this->setVnId($vnId);
+        $this->setItemId($itemId);
     }
 
     /**
@@ -199,16 +102,129 @@ class BilingualMenuItem
     /**
      * @return string
      */
-    public function getTag(): string
+    public function getCaption(): string
     {
-        return $this->tag;
+        return $this->caption;
     }
 
     /**
-     * @param string $tag
+     * @param string $caption
      */
-    public function setTag(string $tag)
+    public function setCaption(string $caption)
     {
-        $this->tag = $tag;
+        $this->caption = $caption;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getItemId()
+    {
+        return $this->itemId;
+    }
+
+    /**
+     * @param mixed $itemId
+     */
+    public function setItemId($itemId)
+    {
+        $this->itemId = $itemId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnId()
+    {
+        return $this->enId;
+    }
+
+    /**
+     * @param mixed $enId
+     */
+    public function setEnId($enId)
+    {
+        $this->enId = $enId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnTitle(): string
+    {
+        return $this->enTitle;
+    }
+
+    /**
+     * @param string $enTitle
+     */
+    public function setEnTitle(string $enTitle)
+    {
+        $this->enTitle = $enTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnDescription(): string
+    {
+        return $this->enDescription;
+    }
+
+    /**
+     * @param string $enDescription
+     */
+    public function setEnDescription(string $enDescription)
+    {
+        $this->enDescription = $enDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVnId()
+    {
+        return $this->vnId;
+    }
+
+    /**
+     * @param mixed $vnId
+     */
+    public function setVnId($vnId)
+    {
+        $this->vnId = $vnId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVnTitle(): string
+    {
+        return $this->vnTitle;
+    }
+
+    /**
+     * @param string $vnTitle
+     */
+    public function setVnTitle(string $vnTitle)
+    {
+        $this->vnTitle = $vnTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVnDescription(): string
+    {
+        return $this->vnDescription;
+    }
+
+    /**
+     * @param string $vnDescription
+     */
+    public function setVnDescription(string $vnDescription)
+    {
+        $this->vnDescription = $vnDescription;
     }
 }

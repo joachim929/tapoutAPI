@@ -1,33 +1,26 @@
 <?php
 
-require_once __DIR__ . './BilingualMenuItem.php';
-
 class BilingualMenuCategory
 {
     /**
-     * @var string
+     * @var ?int
      */
-    public $categoryTag;
-
-    /**
-     * @var int
-     */
-    public $enCategoryId;
+    public $id;
 
     /**
      * @var string
      */
-    public $enCategoryName;
-
-    /**
-     * @var int
-     */
-    public $vnCategoryId;
+    public $enName;
 
     /**
      * @var string
      */
-    public $vnCategoryName;
+    public $vnName;
+
+    /**
+     * @var string
+     */
+    public $type;
 
     /**
      * @var int
@@ -35,149 +28,17 @@ class BilingualMenuCategory
     public $position;
 
     /**
-     * @var string
-     */
-    public $categoryType;
-
-    /**
      * @var array
      */
     public $items;
 
-    function __construct($tag, $position, $type)
+    function __construct($enName, $vnName, $type, $position, $id = null)
     {
-        $this->setDetails($tag, $position, $type);
-    }
-
-    public function setEnglish($id, $name)
-    {
-        $this->setEnCategoryId($id);
-        $this->setEnCategoryName($name);
-    }
-
-    public function setVietnamese($id, $name)
-    {
-        $this->setVnCategoryId($id);
-        $this->setVnCategoryName($name);
-    }
-
-    public function setDetails($tag, $position, $type)
-    {
-        $this->setCategoryTag($tag);
+        $this->setEnName($enName);
+        $this->setVnName($vnName);
+        $this->setType($type);
         $this->setPosition($position);
-        $this->setCategoryType($type);
-    }
-
-    /**
-     * @return string
-     */
-    public function getCategoryTag(): string
-    {
-        return $this->categoryTag;
-    }
-
-    /**
-     * @param string $categoryTag
-     */
-    public function setCategoryTag(string $categoryTag)
-    {
-        $this->categoryTag = $categoryTag;
-    }
-
-    /**
-     * @return int
-     */
-    public function getEnCategoryId(): int
-    {
-        return $this->enCategoryId;
-    }
-
-    /**
-     * @param int $enCategoryId
-     */
-    public function setEnCategoryId(int $enCategoryId)
-    {
-        $this->enCategoryId = $enCategoryId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEnCategoryName(): string
-    {
-        return $this->enCategoryName;
-    }
-
-    /**
-     * @param string $enCategoryName
-     */
-    public function setEnCategoryName(string $enCategoryName)
-    {
-        $this->enCategoryName = $enCategoryName;
-    }
-
-    /**
-     * @return int
-     */
-    public function getVnCategoryId(): int
-    {
-        return $this->vnCategoryId;
-    }
-
-    /**
-     * @param int $vnCategoryId
-     */
-    public function setVnCategoryId(int $vnCategoryId)
-    {
-        $this->vnCategoryId = $vnCategoryId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getVnCategoryName(): string
-    {
-        return $this->vnCategoryName;
-    }
-
-    /**
-     * @param string $vnCategoryName
-     */
-    public function setVnCategoryName(string $vnCategoryName)
-    {
-        $this->vnCategoryName = $vnCategoryName;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPosition(): int
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param int $position
-     */
-    public function setPosition(int $position)
-    {
-        $this->position = $position;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCategoryType(): string
-    {
-        return $this->categoryType;
-    }
-
-    /**
-     * @param string $categoryType
-     */
-    public function setCategoryType(string $categoryType)
-    {
-        $this->categoryType = $categoryType;
+        $this->setId($id);
     }
 
     /**
@@ -196,8 +57,88 @@ class BilingualMenuCategory
         $this->items = $items;
     }
 
-    public function addToItems(string $tag, BilingualMenuItem $item)
+    public function addItem(BilingualMenuItem $item)
     {
-        $this->items[$tag] = $item;
+        $this->items[] = $item;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnName(): string
+    {
+        return $this->enName;
+    }
+
+    /**
+     * @param string $enName
+     */
+    public function setEnName(string $enName)
+    {
+        $this->enName = $enName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVnName(): string
+    {
+        return $this->vnName;
+    }
+
+    /**
+     * @param string $vnName
+     */
+    public function setVnName(string $vnName)
+    {
+        $this->vnName = $vnName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition(int $position)
+    {
+        $this->position = $position;
     }
 }

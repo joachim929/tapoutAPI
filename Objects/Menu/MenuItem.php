@@ -3,24 +3,14 @@
 class MenuItem
 {
     /**
+     * @var string;
+     */
+    public $description;
+
+    /**
      * @var ?int
      */
     public $id;
-
-    /**
-     * @var string
-     */
-    public $title;
-
-    /**
-     * @var string
-     */
-    public $price;
-
-    /**
-     * @var ?string
-     */
-    public $description;
 
     /**
      * @var int
@@ -28,18 +18,38 @@ class MenuItem
     public $position;
 
     /**
-     * @var ?string
+     * @var string
      */
-    public $tag;
+    public $price;
 
-    function __construct($title, $price, $position, $id = null, $description = null, $tag = null)
+    /**
+     * @var string
+     */
+    public $title;
+
+    function __construct($description, $position, $price, $title, $id = null)
     {
-        $this->setTitle($title);
-        $this->setPrice($price);
-        $this->setPosition($position);
-        $this->setId($id);
         $this->setDescription($description);
-        $this->setTag($tag);
+        $this->setId($id);
+        $this->setPosition($position);
+        $this->setPrice($price);
+        $this->setTitle($title);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
     }
 
     /**
@@ -59,19 +69,19 @@ class MenuItem
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getTitle(): string
+    public function getPosition(): int
     {
-        return $this->title;
+        return $this->position;
     }
 
     /**
-     * @param string $title
+     * @param int $position
      */
-    public function setTitle(string $title)
+    public function setPosition(int $position)
     {
-        $this->title = $title;
+        $this->position = $position;
     }
 
     /**
@@ -91,50 +101,18 @@ class MenuItem
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getDescription()
+    public function getTitle(): string
     {
-        return $this->description;
+        return $this->title;
     }
 
     /**
-     * @param mixed $description
+     * @param string $title
      */
-    public function setDescription($description)
+    public function setTitle(string $title)
     {
-        $this->description = $description;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPosition(): int
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param int $position
-     */
-    public function setPosition(int $position)
-    {
-        $this->position = $position;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTag()
-    {
-        return $this->tag;
-    }
-
-    /**
-     * @param mixed $tag
-     */
-    public function setTag($tag)
-    {
-        $this->tag = $tag;
+        $this->title = $title;
     }
 }

@@ -2,15 +2,17 @@
 // Services
 require_once __DIR__ . '/../SortingService.php';
 
+// Objects
+
 // Repos
 require_once __DIR__ . '/../../Repository/Menu/MenuRepository.php';
 
-class BilingualMenuService
+class MenuService
 {
     // Services
     private $sortingService;
 
-    // Repos
+    //Repos
     private $menuRepo;
 
     function __construct()
@@ -22,9 +24,9 @@ class BilingualMenuService
         $this->menuRepo = new MenuRepository();
     }
 
-    public function getMenu()
+    public function getMenu($language)
     {
-        $rawResults = $this->menuRepo->getBilingualMenu();
-        return $this->sortingService->removeArrayKeys($rawResults);
+        $results = $this->menuRepo->getMenuByLanguage($language);
+        return $this->sortingService->removeArrayKeys($results);
     }
 }
