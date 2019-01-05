@@ -38,8 +38,10 @@ class ReadMenu
         if (isset($_GET['task']) && $_GET['task'] === 'read' || $_GET['task'] === 'edit' || $_GET['task'] === 'getCategories') {
             $this->task = $_GET['task'];
         }
-        if (isset($_GET['lang']) && $_GET['lang'] === 'vn' || $_GET['lang'] === 'en') {
-            $this->language = $_GET['lang'];
+        if (isset($_GET['lang'])) {
+            if($_GET['lang'] === 'vn' || $_GET['lang'] === 'en') {
+                $this->language = $_GET['lang'];
+            }
         }
         return $this->controlParams();
     }
