@@ -31,6 +31,13 @@ class MenuRepository
         $this->mysqli = $this->conn->getConnection();
     }
 
+    /**
+     * This function gets all menu categories, items and descriptions with a given language and
+     * returns them in an array of objects
+     *
+     * @param $language
+     * @return array|null
+     */
     public function getMenuByLanguage($language)
     {
         $results = array();
@@ -79,30 +86,10 @@ class MenuRepository
     }
 
     /**
-     * This function gets all distinct menu category tags and returns an array with null values
-     * @return array
-     */
-    public function getCategoryTags()
-    {
-        $categoryTags = array();
-
-        $stmt = $this->mysqli->prepare('SELECT DISTINCT tag FROM menu_category');
-
-        $stmt->execute();
-
-        $stmt->bind_result($tag);
-
-        while ($stmt->fetch()) {
-            $categoryTags[$tag] = null;
-        }
-
-        $stmt->close();
-        return $categoryTags;
-    }
-
-    /**
      * @todo: Might need to split call up, see how the database evolves to see if it makes more sense
      * @todo        to get categories AND/OR items separately
+     *
+     * This function gets all menu items, categories and descriptions and puts them in an array of objects
      * @return array|null
      */
     public function getBilingualMenu()

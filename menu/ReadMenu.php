@@ -5,6 +5,10 @@ require_once '../Services/Menu/BilingualMenuService.php';
 
 class ReadMenu
 {
+    private $page = null;
+    private $task = null;
+    private $language = null;
+
     function __construct()
     {}
 
@@ -28,22 +32,36 @@ class ReadMenu
      */
     private function checkParams()
     {
+        if (isset($_GET['page']) && $_GET['page'] === 'Menu') {
+            $this->page = $_GET['page'];
+        }
+        if (isset($_GET['task']) && $_GET['task'] === 'read' || $_GET['task'] === 'edit' || $_GET['task'] === 'getCategories') {
+            $this->task = $_GET['task'];
+        }
+        if (isset($_GET['lang']) && $_GET['lang'] === 'vn' || $_GET['lang'] === 'en') {
+            $this->language = $_GET['lang'];
+        }
+        return $this->controlParams();
+    }
+
+    private function controlParams()
+    {
         $results = null;
-        if (isset($_GET['page'], $_GET['task']) && $_GET['page'] === 'Menu') {
-            //Case for user web page
-            if (isset($_GET['lang']) && $_GET['task'] === 'read' &&
-                ($_GET['lang'] === 'en' || $_GET['lang'] === 'vn')
-            ) {
-                $language = $_GET['lang'];
-                $menuService = new MenuService();
-                $results = $menuService->getMenu($language);
-            }
-            //Case for editing web page
-            if (!isset($_GET['lang']) && $_GET['task'] === 'edit') {
-                $menuService = new BilingualMenuService();
+
+        if ($this->language === null) {
+            $menuService = new BilingualMenuService();
+            if ($this->task === 'edit') {
                 $results = $menuService->getMenu();
+            } elseif ($this->task === 'getCategories') {
+                $results = $menuService->getCategories();
+            }
+        } else {
+            if ($this->task === 'read') {
+                $menuService = new MenuService();
+                $results = $menuService->getMenu($this->language);
             }
         }
+
         return $results;
     }
 }
