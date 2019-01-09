@@ -59,7 +59,8 @@ class CreateMenuItem
     private function insertItem($data)
     {
         $result = [];
-        if(!$this->menuItemRepo->insertNewItem($data->category, $data->caption, $data->price, $data->position)) {
+        if(!$this->menuItemRepo->insertNewItem($data->category, $data->caption, $data->price,
+            $data->categoryPosition)) {
             $result[] = [
                 'error' => 'Failed to insert new item'
             ];
@@ -68,7 +69,7 @@ class CreateMenuItem
         }
         if ($result === []) {
             //    @todo: Update category positions
-            $result = $this->checkCategoryPosition($data->category);
+            $result = $this->checkCategoryPosition($data->categoryPosition);
         }
 
         return $result;
@@ -113,17 +114,30 @@ class CreateMenuItem
     {
         $results = [];
         $newItem = $this->menuItemRepo->getItemByCaption($data->caption);
-        if (isset($newItem['id'])) {
-            $data->itemId = $newItem['id'];
-            if(!$this->menuItemRepo->insertNewItemDetails($data->itemId, $data->enTitle, $data->enDescription, 'en')) {
-                $result[] = [
-                    'error' => 'Failed to insert new English details'
-                ];
-            }
-            if(!$this->menuItemRepo->insertNewItemDetails($data->itemId, $data->vnTitle, $data->vnDescription, 'vn')) {
-                $result[] = [
-                    'error' => 'Failed to insert new Vietnamese details'
-                ];
+        if (isset($newItem->id)) {
+            $data->itemId = $newItem->id;
+            if($data->enDescription === null) {
+                if(!$this->menuItemRepo->insertNewItemDetailsNoDesc($data->itemId, $data->enTitle, 'en')) {
+                    $result[] = [
+                        'error' => 'Failed to insert new English details, no description'
+                    ];
+                }
+                if(!$this->menuItemRepo->insertNewItemDetailsNoDesc($data->itemId, $data->vnTitle, 'vn')) {
+                    $result[] = [
+                        'error' => 'Failed to insert new Vietnamese details, no description'
+                    ];
+                }
+            } else {
+                if(!$this->menuItemRepo->insertNewItemDetails($data->itemId, $data->enTitle, $data->enDescription, 'en')) {
+                    $result[] = [
+                        'error' => 'Failed to insert new English details'
+                    ];
+                }
+                if(!$this->menuItemRepo->insertNewItemDetails($data->itemId, $data->vnTitle, $data->vnDescription, 'vn')) {
+                    $result[] = [
+                        'error' => 'Failed to insert new Vietnamese details'
+                    ];
+                }
             }
         }
         return $results;

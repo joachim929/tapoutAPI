@@ -33,10 +33,10 @@ class MenuItemRepository
 
     /**
      * This function creates a new menu item description
-     * @param int    $itemId
-     * @param string $title
-     * @param string $description
-     * @param string $language
+     * @param int           $itemId
+     * @param string        $title
+     * @param string   $description
+     * @param string        $language
      * @return bool
      */
     public function insertNewItemDetails(int $itemId, string $title, string $description, string $language)
@@ -49,6 +49,28 @@ class MenuItemRepository
         );
 
         $stmt->bind_param('isss', $itemId, $title, $description, $language);
+
+        $stmt->execute();
+
+        if ($stmt->errno) {
+            $result = false;
+        }
+
+        $stmt->close();
+
+        return $result;
+    }
+
+    public function insertNewItemDetailsNoDesc(int $itemId, string $title, string $language)
+    {
+        $result = true;
+
+        $stmt = $this->mysqli->prepare(
+            'INSERT INTO menu_item_details (item_id, title, language)
+            VALUES (?, ?, ?)'
+        );
+
+        $stmt->bind_param('iss', $itemId, $title, $language);
 
         $stmt->execute();
 

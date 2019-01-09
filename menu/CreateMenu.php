@@ -128,7 +128,7 @@ class CreateMenu
         if (!$this->checkString('Vietnamese Title', $this->data->vnTitle)) {
             $check = false;
         }
-        if (!$this->checkNumber('category position', $this->data->position)) {
+        if (!$this->checkNumber('category position', $this->data->categoryPosition)) {
             $check = false;
         }
         if (!$this->checkString('price', $this->data->price)) {
