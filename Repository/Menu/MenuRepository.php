@@ -118,7 +118,7 @@ class MenuRepository
 
         while ($stmt->fetch()) {
             $menuItem = new BilingualMenuItem($itemPrice, $catPosition, $itemCaption,
-                $enTitle, $enDescription, $vnTitle, $vnDescription, $enId, $vnId, $itemId);
+                $enTitle, $vnTitle, $enDescription, $vnDescription, $enId, $vnId, $itemId);
             if(!isset($results[$catId])) {
                 $results[$catId] = new BilingualMenuCategory($catEnName, $catVnName, $catType, $pagePosition, $catId);
             }
