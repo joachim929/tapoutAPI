@@ -8,7 +8,7 @@ class BilingualMenuItem
     public $caption;
 
     /**
-     * @var string
+     * @var ?string
      */
     public $enDescription;
 
@@ -38,7 +38,7 @@ class BilingualMenuItem
     public $price;
 
     /**
-     * @var string
+     * @var ?string
      */
     public $vnDescription;
 
@@ -52,8 +52,9 @@ class BilingualMenuItem
      */
     public $vnTitle;
 
-    function __construct($price, $position, $caption, $enTitle, $enDescription,
-                         $vnTitle, $vnDescription, $enId = null, $vnId = null, $itemId = null)
+    function __construct($price, $position, $caption, $enTitle, $vnTitle,
+                         $enDescription = null, $vnDescription = null,
+                         $enId = null, $vnId = null, $itemId = null)
     {
         $this->setPrice($price);
         $this->setPosition($position);
@@ -165,22 +166,6 @@ class BilingualMenuItem
     }
 
     /**
-     * @return string
-     */
-    public function getEnDescription(): string
-    {
-        return $this->enDescription;
-    }
-
-    /**
-     * @param string $enDescription
-     */
-    public function setEnDescription(string $enDescription)
-    {
-        $this->enDescription = $enDescription;
-    }
-
-    /**
      * @return mixed
      */
     public function getVnId()
@@ -213,17 +198,33 @@ class BilingualMenuItem
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getVnDescription(): string
+    public function getEnDescription()
+    {
+        return $this->enDescription;
+    }
+
+    /**
+     * @param mixed $enDescription
+     */
+    public function setEnDescription($enDescription)
+    {
+        $this->enDescription = $enDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVnDescription()
     {
         return $this->vnDescription;
     }
 
     /**
-     * @param string $vnDescription
+     * @param mixed $vnDescription
      */
-    public function setVnDescription(string $vnDescription)
+    public function setVnDescription($vnDescription)
     {
         $this->vnDescription = $vnDescription;
     }
