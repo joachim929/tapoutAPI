@@ -33,17 +33,18 @@ class EventCategoryRepository extends ConnectDb
         $categories = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT * FROM event_category
-                WHERE active =  1
-                AND language = ? 
-                ORDER BY page_position ASC'
+            'SELECT  id, name, type, language, tag, created_at, edited_at, page_position 
+            FROM event_category
+            WHERE active =  1
+            AND language = ? 
+            ORDER BY page_position ASC'
         );
 
         $stmt->bind_param('s', $lang);
 
         $stmt->execute();
 
-        $stmt->bind_result($id, $name, $type, $language, $tag, $createdAt, $editedAt, $active, $pagePosition);
+        $stmt->bind_result($id, $name, $type, $language, $tag, $createdAt, $editedAt, $pagePosition);
 
         while($stmt->fetch()) {
             $categories[] = new EventCategory($name, $type, $language, $tag, $pagePosition, $id, $createdAt, $editedAt);
@@ -67,14 +68,15 @@ class EventCategoryRepository extends ConnectDb
         $categories = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT * FROM event_category
-                WHERE active =  1
-                ORDER BY page_position ASC'
+            'SELECT id, name, type, language, tag, created_at, edited_at, page_position 
+            FROM event_category
+            WHERE active =  1
+            ORDER BY page_position ASC'
         );
 
         $stmt->execute();
 
-        $stmt->bind_result($id, $name, $type, $language, $tag, $createdAt, $editedAt, $active, $pagePosition);
+        $stmt->bind_result($id, $name, $type, $language, $tag, $createdAt, $editedAt, $pagePosition);
 
         while($stmt->fetch()) {
             $categories[] = new EventCategory($name, $type, $language, $tag, $pagePosition, $id, $createdAt, $editedAt);

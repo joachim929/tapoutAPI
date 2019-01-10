@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2019 at 12:36 AM
+-- Generation Time: Jan 10, 2019 at 11:46 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.13
 
@@ -208,10 +208,13 @@ CREATE TABLE `menu_item` (
 --
 
 INSERT INTO `menu_item` (`id`, `category_id`, `caption`, `price`, `category_position`) VALUES
-(14, 1, 'Spinach & Artichoke DipSpinach & Artichoke Dip', '85K', 28),
-(16, 1, 'Loaded Fries', '140K', 18),
-(32, 3, '250g Australian Grain fed Rib Eye Steak', '250K', 2),
-(84, 12, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 1);
+(14, 1, 'Spinach & Artichoke DipSpinach & Artichoke Dip', '85K', 1),
+(16, 1, 'Loaded Fries', '140K', 2),
+(32, 3, '250g Australian Grain fed Rib Eye Steak', '250K', 5),
+(84, 12, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 3),
+(102, 1, 'TestingFrontEnd', '125K', 9),
+(103, 1, 'TestingFrontEnd2', '125K', 2),
+(104, 1, 'Testing', '420K', 2);
 
 -- --------------------------------------------------------
 
@@ -239,7 +242,68 @@ INSERT INTO `menu_item_details` (`id`, `item_id`, `title`, `description`, `langu
 (5, 32, '250g Australian Grain fed Rib Eye Steak', 'Its a fooking burger alright', 'en'),
 (6, 32, 'chữ Quốc ngữ Australian burger', 'chữ Quốc ngữ Its a fooking burger alright', 'vn'),
 (7, 14, 'En Spinach innit', 'Hand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', 'en'),
-(8, 14, 'ở phíaServed Spinach with Two Choice of Sides', 'ở phíaServed with Two Choice of Sides', 'vn');
+(8, 14, 'ở phíaServed Spinach with Two Choice of Sides', 'ở phíaServed with Two Choice of Sides', 'vn'),
+(27, 102, 'EnTestingFrontEnd', '', 'en'),
+(28, 102, 'VnTestingFrontEnd', '', 'vn'),
+(29, 103, 'EnTestingFrontEnd', 'EnTestingFrontEnd', 'en'),
+(30, 103, 'VnTestingFrontEnd', 'VnTestingFrontEnd', 'vn');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `new_image_details`
+--
+
+CREATE TABLE `new_image_details` (
+  `id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `img_url` varchar(191) COLLATE utf8_bin NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `caption` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `alt` varchar(255) COLLATE utf8_bin NOT NULL,
+  `height` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `tag` varchar(255) COLLATE utf8_bin NOT NULL,
+  `language` set('en','vn') COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `new_page_item`
+--
+
+CREATE TABLE `new_page_item` (
+  `id` int(11) NOT NULL,
+  `page_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `edited_at` timestamp NULL DEFAULT NULL,
+  `caption` varchar(255) COLLATE utf8_bin NOT NULL,
+  `page_position` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `new_page_item`
+--
+
+INSERT INTO `new_page_item` (`id`, `page_id`, `created_at`, `edited_at`, `caption`, `page_position`) VALUES
+(80, 4, '2019-01-02 11:40:10', NULL, '4f', 12);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `new_page_item_details`
+--
+
+CREATE TABLE `new_page_item_details` (
+  `id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `heading` varchar(255) COLLATE utf8_bin NOT NULL,
+  `content` text COLLATE utf8_bin NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `edited_at` timestamp NULL DEFAULT NULL,
+  `language` set('en','vn') COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -351,12 +415,34 @@ ALTER TABLE `menu_category`
 --
 ALTER TABLE `menu_item`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `caption` (`caption`),
   ADD KEY `category_id` (`category_id`);
 
 --
 -- Indexes for table `menu_item_details`
 --
 ALTER TABLE `menu_item_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `item_id` (`item_id`);
+
+--
+-- Indexes for table `new_image_details`
+--
+ALTER TABLE `new_image_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `item_id` (`item_id`);
+
+--
+-- Indexes for table `new_page_item`
+--
+ALTER TABLE `new_page_item`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `page_id` (`page_id`);
+
+--
+-- Indexes for table `new_page_item_details`
+--
+ALTER TABLE `new_page_item_details`
   ADD PRIMARY KEY (`id`),
   ADD KEY `item_id` (`item_id`);
 
@@ -399,25 +485,43 @@ ALTER TABLE `image_details`
 -- AUTO_INCREMENT for table `image_list`
 --
 ALTER TABLE `image_list`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `menu_category`
 --
 ALTER TABLE `menu_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `menu_item`
 --
 ALTER TABLE `menu_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT for table `menu_item_details`
 --
 ALTER TABLE `menu_item_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `new_image_details`
+--
+ALTER TABLE `new_image_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `new_page_item`
+--
+ALTER TABLE `new_page_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+
+--
+-- AUTO_INCREMENT for table `new_page_item_details`
+--
+ALTER TABLE `new_page_item_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `page`
@@ -458,6 +562,18 @@ ALTER TABLE `menu_item`
 --
 ALTER TABLE `menu_item_details`
   ADD CONSTRAINT `menu_item_details_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `menu_item` (`id`);
+
+--
+-- Constraints for table `new_image_details`
+--
+ALTER TABLE `new_image_details`
+  ADD CONSTRAINT `new_image_details_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `new_page_item` (`id`);
+
+--
+-- Constraints for table `new_page_item_details`
+--
+ALTER TABLE `new_page_item_details`
+  ADD CONSTRAINT `new_page_item_details_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `new_page_item` (`id`);
 
 --
 -- Constraints for table `page_item`

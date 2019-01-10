@@ -36,7 +36,9 @@ class PageItemRepository
         $pageItems = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT * FROM page_item WHERE page_id = ?'
+            'SELECT id, page_id, heading, content, created_at, edited_at, language, tag, page_position
+            FROM page_item 
+            WHERE page_id = ?'
         );
 
         $stmt->bind_param('i', $pageId);
@@ -68,7 +70,9 @@ class PageItemRepository
         $pageImages = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT * FROM image_details WHERE page_id = ?'
+            'SELECT id, page_id, img_url, created_at, page_position, caption, alt, height, width, tag, language
+            FROM image_details 
+            WHERE page_id = ?'
         );
 
         $stmt->bind_param('i', $pageId);
@@ -101,7 +105,7 @@ class PageItemRepository
         $pageItems = array();
 
         $stmt = $this->mysqli->prepare(
-            'SELECT * 
+            'SELECT id, page_id, heading, content, created_at, edited_at, language, tag, page_position 
             FROM page_item'
         );
 
@@ -160,7 +164,7 @@ class PageItemRepository
 
         $stmt = $this->mysqli->prepare(
             'SELECT DISTINCT tag
-            FROM tapout_page_item'
+            FROM page_item'
         );
 
         $stmt->execute();
@@ -189,8 +193,8 @@ class PageItemRepository
     {
         $result = null;
         $stmt = $this->mysqli->prepare(
-            'SELECT * 
-          FROM tapout_page_item
+            'SELECT id, page_id, heading, content, created_at, edited_at, language, tag, page_position
+          FROM page_item
           WHERE tag = ?'
         );
 

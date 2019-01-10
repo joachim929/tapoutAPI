@@ -6,4 +6,4 @@ require_once './ReadEvent.php';
 
 $events = new ReadEvent();
 
-return $events->returnStatement();
+$events->returnStatement();
