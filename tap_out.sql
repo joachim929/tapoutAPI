@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2019 at 11:46 PM
+-- Generation Time: Jan 11, 2019 at 11:06 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.13
 
@@ -34,25 +34,25 @@ CREATE TABLE `event_category` (
   `type` set('unique','weekly') COLLATE utf8_bin NOT NULL,
   `language` set('en','vn') COLLATE utf8_bin NOT NULL,
   `tag` varchar(255) COLLATE utf8_bin NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `edited_at` timestamp NULL DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `page_position` int(11) NOT NULL
+  `page_position` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `edited_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `event_category`
 --
 
-INSERT INTO `event_category` (`id`, `name`, `type`, `language`, `tag`, `created_at`, `edited_at`, `active`, `page_position`) VALUES
-(1, 'ENWeekly', 'weekly', 'en', 'weekly', '2018-10-14 08:44:30', NULL, 1, 1),
-(2, 'VNUnique', 'unique', 'vn', 'football', '2018-10-14 08:53:03', NULL, 1, 4),
-(3, 'ENUnique', 'unique', 'en', 'football', '2018-10-14 08:53:03', NULL, 1, 4),
-(5, 'ENData', 'unique', 'en', 'data', '2018-10-14 08:53:03', NULL, 1, 2),
-(6, 'VNData', 'unique', 'vn', 'data', '2018-10-14 08:53:03', NULL, 1, 2),
-(10, 'VNWeekly', 'weekly', 'vn', 'weekly', '2018-10-14 08:44:30', NULL, 1, 1),
-(11, 'VNTest Active', 'weekly', 'vn', 'weekly', '2018-10-14 08:44:30', NULL, 0, 1),
-(12, 'ENTest Active', 'weekly', 'en', 'weekly', '2018-10-14 08:44:30', NULL, 0, 99);
+INSERT INTO `event_category` (`id`, `name`, `type`, `language`, `tag`, `active`, `page_position`, `created_at`, `edited_at`) VALUES
+(1, 'ENWeekly', 'weekly', 'en', 'weekly', 1, 1, '2018-10-14 08:44:30', NULL),
+(2, 'VNUnique', 'unique', 'vn', 'football', 1, 4, '2018-10-14 08:53:03', NULL),
+(3, 'ENUnique', 'unique', 'en', 'football', 1, 4, '2018-10-14 08:53:03', NULL),
+(5, 'ENData', 'unique', 'en', 'data', 1, 2, '2018-10-14 08:53:03', NULL),
+(6, 'VNData', 'unique', 'vn', 'data', 1, 2, '2018-10-14 08:53:03', NULL),
+(10, 'VNWeekly', 'weekly', 'vn', 'weekly', 1, 1, '2018-10-14 08:44:30', NULL),
+(11, 'VNTest Active', 'weekly', 'vn', 'weekly', 0, 1, '2018-10-14 08:44:30', NULL),
+(12, 'ENTest Active', 'weekly', 'en', 'weekly', 0, 99, '2018-10-14 08:44:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -69,29 +69,29 @@ CREATE TABLE `event_item` (
   `tag` varchar(255) COLLATE utf8_bin NOT NULL,
   `start_time` time DEFAULT NULL,
   `end_time` time DEFAULT NULL,
-  `created_at` int(11) NOT NULL,
   `start_date` int(11) NOT NULL,
-  `edited_at` int(11) DEFAULT NULL,
-  `category_position` int(11) NOT NULL
+  `category_position` int(11) NOT NULL,
+  `created_at` int(11) NOT NULL,
+  `edited_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `event_item`
 --
 
-INSERT INTO `event_item` (`id`, `category_id`, `heading`, `description`, `language`, `tag`, `start_time`, `end_time`, `created_at`, `start_date`, `edited_at`, `category_position`) VALUES
-(1, 1, 'Daily Happy Hour', 'Buy one Cocktail, get one free from 4pm-7pm', 'en', 'happyhour', '16:00:00', '19:00:00', 1541242800, 1641242800, NULL, 0),
-(2, 1, 'Tap Out Mondays', '6x wings any style, 1 medium Rooster bia - 130K ₫\r\n12x wings any style, 1 pint Rooster bia - 210K ₫\r\n24x wings any style, 4x medium Rooster bia 350K ₫\r\nBuy 2 get the 3rd FREE on Rooster Bia\'s all night', 'en', 'mondays', '16:00:00', '20:00:00', 1541242800, 1641242800, NULL, 2),
-(3, 1, 'Rooster Night, Tuesdays', '20% off all food items', 'en', 'tuesdays', '17:00:00', '21:00:00', 1541242800, 1641242800, NULL, 1),
-(4, 1, 'Why Wine? Wednesdays', '50% on all house wines by the glass', 'en', 'wednesdays', '18:00:00', '22:00:00', 1541242800, 1641242800, NULL, 4),
-(5, 1, 'Tap That Keg Thursdays', 'Half a rack of ribs, choice of two sides, and free flow Tiger draft!!!', 'en', 'thursdays', '19:00:00', '23:00:00', 1541242800, 1641240800, NULL, 3),
-(6, 3, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', 'en', '', '20:00:00', '00:00:00', 1541242800, 1641240800, NULL, 0),
-(7, 10, 'Daily Happy Hour', 'Buy one Cocktail, get one free from 4pm-7pm', 'vn', 'happyhour', '16:00:00', '19:00:00', 1541242800, 1641242800, NULL, 0),
-(8, 10, 'Tap Out Mondays', '6x wings any style, 1 medium Rooster bia - 130K ₫\r\n12x wings any style, 1 pint Rooster bia - 210K ₫\r\n24x wings any style, 4x medium Rooster bia 350K ₫\r\nBuy 2 get the 3rd FREE on Rooster Bia\'s all night', 'vn', 'mondays', '16:00:00', '20:00:00', 1541242800, 1641240800, NULL, 2),
-(9, 10, 'Rooster Night, Tuesdays', '20% off all food items', 'vn', 'tuesdays', '17:00:00', '21:00:00', 1541242800, 1641242800, NULL, 1),
-(10, 10, 'Why Wine? Wednesdays', '50% on all house wines by the glass', 'vn', 'wednesdays', '18:00:00', '22:00:00', 1541242800, 1641242800, NULL, 4),
-(11, 10, 'Tap That Keg Thursdays', 'Half a rack of ribs, choice of two sides, and free flow Tiger draft!!!', 'vn', 'thursdays', '19:00:00', '23:00:00', 1541242800, 1641240800, NULL, 3),
-(12, 2, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', 'en', '', '20:00:00', '00:00:00', 1541242800, 1641240800, NULL, 0);
+INSERT INTO `event_item` (`id`, `category_id`, `heading`, `description`, `language`, `tag`, `start_time`, `end_time`, `start_date`, `category_position`, `created_at`, `edited_at`) VALUES
+(1, 1, 'Daily Happy Hour', 'Buy one Cocktail, get one free from 4pm-7pm', 'en', 'happyhour', '16:00:00', '19:00:00', 1641242800, 0, 1541242800, NULL),
+(2, 1, 'Tap Out Mondays', '6x wings any style, 1 medium Rooster bia - 130K ₫\r\n12x wings any style, 1 pint Rooster bia - 210K ₫\r\n24x wings any style, 4x medium Rooster bia 350K ₫\r\nBuy 2 get the 3rd FREE on Rooster Bia\'s all night', 'en', 'mondays', '16:00:00', '20:00:00', 1641242800, 2, 1541242800, NULL),
+(3, 1, 'Rooster Night, Tuesdays', '20% off all food items', 'en', 'tuesdays', '17:00:00', '21:00:00', 1641242800, 1, 1541242800, NULL),
+(4, 1, 'Why Wine? Wednesdays', '50% on all house wines by the glass', 'en', 'wednesdays', '18:00:00', '22:00:00', 1641242800, 4, 1541242800, NULL),
+(5, 1, 'Tap That Keg Thursdays', 'Half a rack of ribs, choice of two sides, and free flow Tiger draft!!!', 'en', 'thursdays', '19:00:00', '23:00:00', 1641240800, 3, 1541242800, NULL),
+(6, 3, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', 'en', '', '20:00:00', '00:00:00', 1641240800, 0, 1541242800, NULL),
+(7, 10, 'Daily Happy Hour', 'Buy one Cocktail, get one free from 4pm-7pm', 'vn', 'happyhour', '16:00:00', '19:00:00', 1641242800, 0, 1541242800, NULL),
+(8, 10, 'Tap Out Mondays', '6x wings any style, 1 medium Rooster bia - 130K ₫\r\n12x wings any style, 1 pint Rooster bia - 210K ₫\r\n24x wings any style, 4x medium Rooster bia 350K ₫\r\nBuy 2 get the 3rd FREE on Rooster Bia\'s all night', 'vn', 'mondays', '16:00:00', '20:00:00', 1641240800, 2, 1541242800, NULL),
+(9, 10, 'Rooster Night, Tuesdays', '20% off all food items', 'vn', 'tuesdays', '17:00:00', '21:00:00', 1641242800, 1, 1541242800, NULL),
+(10, 10, 'Why Wine? Wednesdays', '50% on all house wines by the glass', 'vn', 'wednesdays', '18:00:00', '22:00:00', 1641242800, 4, 1541242800, NULL),
+(11, 10, 'Tap That Keg Thursdays', 'Half a rack of ribs, choice of two sides, and free flow Tiger draft!!!', 'vn', 'thursdays', '19:00:00', '23:00:00', 1641240800, 3, 1541242800, NULL),
+(12, 2, 'Du lịch ở Rạch Giá, ở phía Nam', 'Du lịch ở Rạch Giá, ở phía Nam', 'en', '', '20:00:00', '00:00:00', 1641240800, 0, 1541242800, NULL);
 
 -- --------------------------------------------------------
 
@@ -103,32 +103,33 @@ CREATE TABLE `image_details` (
   `id` int(11) NOT NULL,
   `page_id` int(11) NOT NULL,
   `img_url` varchar(191) COLLATE utf8_bin NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `page_position` int(11) NOT NULL,
   `caption` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `alt` varchar(255) COLLATE utf8_bin NOT NULL,
   `height` int(11) NOT NULL,
   `width` int(11) NOT NULL,
   `tag` varchar(255) COLLATE utf8_bin NOT NULL,
-  `language` set('en','vn') COLLATE utf8_bin NOT NULL
+  `language` set('en','vn') COLLATE utf8_bin NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `edited_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `image_details`
 --
 
-INSERT INTO `image_details` (`id`, `page_id`, `img_url`, `created_at`, `page_position`, `caption`, `alt`, `height`, `width`, `tag`, `language`) VALUES
-(25, 4, '/assets/photos/540/DSC07487.jpg', '2019-01-02 17:30:28', 3, NULL, '', 0, 0, '4', 'vn'),
-(26, 4, '/assets/photos/540/DSC07487.jpg', '2018-12-30 18:36:03', 10, NULL, '', 0, 0, '5', 'en'),
-(27, 4, '/assets/photos/540/DSC07487.jpg', '2018-12-30 18:36:03', 10, NULL, '', 0, 0, '5', 'vn'),
-(28, 4, '/assets/photos/540/DSC07494.jpg', '2018-12-30 18:36:03', 11, NULL, '', 0, 0, '6', 'en'),
-(29, 4, '/assets/photos/540/DSC07494.jpg', '2018-12-30 18:36:03', 11, NULL, '', 0, 0, '6', 'vn'),
-(30, 4, '/assets/photos/540/DSC07398.jpg', '2018-12-30 18:36:03', 7, NULL, '', 0, 0, '3', 'en'),
-(31, 4, '/assets/photos/540/DSC07494.jpg', '2019-01-02 11:40:10', 14, NULL, '', 0, 0, '2', 'en'),
-(32, 4, '/assets/photos/540/DSC07398.jpg', '2018-12-30 18:36:03', 7, NULL, '', 0, 0, '3', 'vn'),
-(33, 4, '/assets/photos/540/DSC07494.jpg', '2019-01-02 11:40:10', 14, NULL, '', 0, 0, '2', 'vn'),
-(34, 4, '/assets/photos/540/DSC07494.jpg', '2019-01-02 11:40:10', 13, NULL, '', 0, 0, '1', 'en'),
-(35, 4, '/assets/photos/540/DSC07494.jpg', '2019-01-02 11:40:10', 13, NULL, '', 0, 0, '1', 'vn');
+INSERT INTO `image_details` (`id`, `page_id`, `img_url`, `page_position`, `caption`, `alt`, `height`, `width`, `tag`, `language`, `created_at`, `edited_at`) VALUES
+(25, 4, '/assets/photos/540/DSC07487.jpg', 3, NULL, '', 0, 0, '4', 'vn', '2019-01-02 17:30:28', NULL),
+(26, 4, '/assets/photos/540/DSC07487.jpg', 10, NULL, '', 0, 0, '5', 'en', '2018-12-30 18:36:03', NULL),
+(27, 4, '/assets/photos/540/DSC07487.jpg', 10, NULL, '', 0, 0, '5', 'vn', '2018-12-30 18:36:03', NULL),
+(28, 4, '/assets/photos/540/DSC07494.jpg', 11, NULL, '', 0, 0, '6', 'en', '2018-12-30 18:36:03', NULL),
+(29, 4, '/assets/photos/540/DSC07494.jpg', 11, NULL, '', 0, 0, '6', 'vn', '2018-12-30 18:36:03', NULL),
+(30, 4, '/assets/photos/540/DSC07398.jpg', 7, NULL, '', 0, 0, '3', 'en', '2018-12-30 18:36:03', NULL),
+(31, 4, '/assets/photos/540/DSC07494.jpg', 14, NULL, '', 0, 0, '2', 'en', '2019-01-02 11:40:10', NULL),
+(32, 4, '/assets/photos/540/DSC07398.jpg', 7, NULL, '', 0, 0, '3', 'vn', '2018-12-30 18:36:03', NULL),
+(33, 4, '/assets/photos/540/DSC07494.jpg', 14, NULL, '', 0, 0, '2', 'vn', '2019-01-02 11:40:10', NULL),
+(34, 4, '/assets/photos/540/DSC07494.jpg', 13, NULL, '', 0, 0, '1', 'en', '2019-01-02 11:40:10', NULL),
+(35, 4, '/assets/photos/540/DSC07494.jpg', 13, NULL, '', 0, 0, '1', 'vn', '2019-01-02 11:40:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -140,30 +141,31 @@ CREATE TABLE `image_list` (
   `id` int(11) NOT NULL,
   `imgUrl` char(255) COLLATE utf8_bin NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `edited_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `image_list`
 --
 
-INSERT INTO `image_list` (`id`, `imgUrl`, `active`, `created_at`) VALUES
-(1, 'DSC07514.jpg', 1, '2018-12-30 22:18:28'),
-(2, 'IMG_0243.jpg', 1, '2018-12-30 22:18:28'),
-(3, 'ACP-1.jpg', 1, '2018-12-30 22:24:40'),
-(4, 'IMG_0282.jpg', 1, '2018-12-30 22:24:40'),
-(5, 'DSC07649-2.jpg', 1, '2018-12-30 22:24:55'),
-(6, 'DSC07506.jpg', 1, '2018-12-30 22:24:55'),
-(7, 'DSC08000.jpg', 1, '2018-12-30 22:27:23'),
-(8, 'IMG_0277.jpg', 1, '2018-12-30 22:27:23'),
-(9, 'ACP-5.jpg', 1, '2018-12-30 22:27:23'),
-(10, 'DSC07398.jpg', 1, '2018-12-30 22:27:23'),
-(11, 'DSC07595.jpg', 1, '2018-12-30 22:27:23'),
-(12, 'DSC07685-2.jpg', 1, '2018-12-30 22:27:23'),
-(13, 'DSC07571.jpg', 1, '2018-12-30 22:27:23'),
-(14, 'DSC07422.jpg', 1, '2018-12-30 22:27:23'),
-(15, 'IMG_0246.jpg', 1, '2018-12-30 22:27:23'),
-(16, 'DSC07657.jpg', 1, '2018-12-30 22:27:23');
+INSERT INTO `image_list` (`id`, `imgUrl`, `active`, `created_at`, `edited_at`) VALUES
+(1, 'DSC07514.jpg', 1, '2018-12-30 22:18:28', NULL),
+(2, 'IMG_0243.jpg', 1, '2018-12-30 22:18:28', NULL),
+(3, 'ACP-1.jpg', 1, '2018-12-30 22:24:40', NULL),
+(4, 'IMG_0282.jpg', 1, '2018-12-30 22:24:40', NULL),
+(5, 'DSC07649-2.jpg', 1, '2018-12-30 22:24:55', NULL),
+(6, 'DSC07506.jpg', 1, '2018-12-30 22:24:55', NULL),
+(7, 'DSC08000.jpg', 1, '2018-12-30 22:27:23', NULL),
+(8, 'IMG_0277.jpg', 1, '2018-12-30 22:27:23', NULL),
+(9, 'ACP-5.jpg', 1, '2018-12-30 22:27:23', NULL),
+(10, 'DSC07398.jpg', 1, '2018-12-30 22:27:23', NULL),
+(11, 'DSC07595.jpg', 1, '2018-12-30 22:27:23', NULL),
+(12, 'DSC07685-2.jpg', 1, '2018-12-30 22:27:23', NULL),
+(13, 'DSC07571.jpg', 1, '2018-12-30 22:27:23', NULL),
+(14, 'DSC07422.jpg', 1, '2018-12-30 22:27:23', NULL),
+(15, 'IMG_0246.jpg', 1, '2018-12-30 22:27:23', NULL),
+(16, 'DSC07657.jpg', 1, '2018-12-30 22:27:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -177,17 +179,19 @@ CREATE TABLE `menu_category` (
   `vn_name` varchar(255) COLLATE utf8_bin NOT NULL,
   `type` set('food','drink') COLLATE utf8_bin NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `page_position` int(11) NOT NULL
+  `page_position` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `edited_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `menu_category`
 --
 
-INSERT INTO `menu_category` (`id`, `en_name`, `vn_name`, `type`, `active`, `page_position`) VALUES
-(1, 'EN Breakfast', 'VN Breakfast', 'food', 1, 1),
-(3, 'EN Mains', 'VN Mains', 'food', 1, 30),
-(12, 'EN White Wine', 'VN White Wines', 'drink', 1, 11);
+INSERT INTO `menu_category` (`id`, `en_name`, `vn_name`, `type`, `active`, `page_position`, `created_at`, `edited_at`) VALUES
+(1, 'EN Breakfast', 'VN Breakfast', 'food', 1, 1, '2019-01-11 23:02:25', NULL),
+(3, 'EN Mains', 'VN Mains', 'food', 1, 30, '2019-01-11 23:02:25', NULL),
+(12, 'EN White Wine', 'VN White Wines', 'drink', 1, 11, '2019-01-11 23:02:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -200,21 +204,23 @@ CREATE TABLE `menu_item` (
   `category_id` int(11) NOT NULL,
   `caption` varchar(255) COLLATE utf8_bin NOT NULL,
   `price` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `category_position` int(11) NOT NULL
+  `category_position` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `edited_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `menu_item`
 --
 
-INSERT INTO `menu_item` (`id`, `category_id`, `caption`, `price`, `category_position`) VALUES
-(14, 1, 'Spinach & Artichoke DipSpinach & Artichoke Dip', '85K', 1),
-(16, 1, 'Loaded Fries', '140K', 2),
-(32, 3, '250g Australian Grain fed Rib Eye Steak', '250K', 5),
-(84, 12, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 3),
-(102, 1, 'TestingFrontEnd', '125K', 9),
-(103, 1, 'TestingFrontEnd2', '125K', 2),
-(104, 1, 'Testing', '420K', 2);
+INSERT INTO `menu_item` (`id`, `category_id`, `caption`, `price`, `category_position`, `created_at`, `edited_at`) VALUES
+(14, 1, 'Spinach & Artichoke DipSpinach & Artichoke Dip', '85K', 1, '2019-01-11 22:03:44', NULL),
+(16, 1, 'Loaded Fries', '140K', 2, '2019-01-11 22:03:44', NULL),
+(32, 3, '250g Australian Grain fed Rib Eye Steak', '250K', 5, '2019-01-11 22:03:44', NULL),
+(84, 12, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 3, '2019-01-11 22:03:44', NULL),
+(102, 1, 'TestingFrontEnd', '125K', 9, '2019-01-11 22:03:44', NULL),
+(103, 1, 'TestingFrontEnd2', '125K', 2, '2019-01-11 22:03:44', NULL),
+(104, 1, 'Testing', '420K', 2, '2019-01-11 22:03:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -226,27 +232,29 @@ CREATE TABLE `menu_item_details` (
   `id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8_bin NOT NULL,
-  `description` varchar(255) COLLATE utf8_bin NOT NULL,
-  `language` set('en','vn') COLLATE utf8_bin NOT NULL
+  `description` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `language` set('en','vn') COLLATE utf8_bin NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `edited_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `menu_item_details`
 --
 
-INSERT INTO `menu_item_details` (`id`, `item_id`, `title`, `description`, `language`) VALUES
-(1, 16, 'EN Loaded Fries', 'Hand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', 'en'),
-(2, 16, 'VN Loaded Fries', 'ở phíaServed with Two Choice of Sides', 'vn'),
-(3, 84, 'The Accomplice', 'EN Glass/Bottle', 'en'),
-(4, 84, 'VN chữ Quốc ngữ The Accomplice', 'chữ Quốc ngữ Glass/Bottle', 'vn'),
-(5, 32, '250g Australian Grain fed Rib Eye Steak', 'Its a fooking burger alright', 'en'),
-(6, 32, 'chữ Quốc ngữ Australian burger', 'chữ Quốc ngữ Its a fooking burger alright', 'vn'),
-(7, 14, 'En Spinach innit', 'Hand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', 'en'),
-(8, 14, 'ở phíaServed Spinach with Two Choice of Sides', 'ở phíaServed with Two Choice of Sides', 'vn'),
-(27, 102, 'EnTestingFrontEnd', '', 'en'),
-(28, 102, 'VnTestingFrontEnd', '', 'vn'),
-(29, 103, 'EnTestingFrontEnd', 'EnTestingFrontEnd', 'en'),
-(30, 103, 'VnTestingFrontEnd', 'VnTestingFrontEnd', 'vn');
+INSERT INTO `menu_item_details` (`id`, `item_id`, `title`, `description`, `language`, `created_at`, `edited_at`) VALUES
+(1, 16, 'EN Loaded Fries', 'Hand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', 'en', '2019-01-11 22:04:28', NULL),
+(2, 16, 'VN Loaded Fries', 'ở phíaServed with Two Choice of Sides', 'vn', '2019-01-11 22:04:28', NULL),
+(3, 84, 'The Accomplice', 'EN Glass/Bottle', 'en', '2019-01-11 22:04:28', NULL),
+(4, 84, 'VN chữ Quốc ngữ The Accomplice', 'chữ Quốc ngữ Glass/Bottle', 'vn', '2019-01-11 22:04:28', NULL),
+(5, 32, '250g Australian Grain fed Rib Eye Steak', 'Its a fooking burger alright', 'en', '2019-01-11 22:04:28', NULL),
+(6, 32, 'chữ Quốc ngữ Australian burger', 'chữ Quốc ngữ Its a fooking burger alright', 'vn', '2019-01-11 22:04:28', NULL),
+(7, 14, 'En Spinach innit', 'Hand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', 'en', '2019-01-11 22:04:28', NULL),
+(8, 14, 'ở phíaServed Spinach with Two Choice of Sides', 'ở phíaServed with Two Choice of Sides', 'vn', '2019-01-11 22:04:28', NULL),
+(27, 102, 'EnTestingFrontEnd', '', 'en', '2019-01-11 22:04:28', NULL),
+(28, 102, 'VnTestingFrontEnd', '', 'vn', '2019-01-11 22:04:28', NULL),
+(29, 103, 'EnTestingFrontEnd', 'EnTestingFrontEnd', 'en', '2019-01-11 22:04:28', NULL),
+(30, 103, 'VnTestingFrontEnd', 'VnTestingFrontEnd', 'vn', '2019-01-11 22:04:28', NULL);
 
 -- --------------------------------------------------------
 
@@ -258,13 +266,14 @@ CREATE TABLE `new_image_details` (
   `id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `img_url` varchar(191) COLLATE utf8_bin NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `caption` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `alt` varchar(255) COLLATE utf8_bin NOT NULL,
   `height` int(11) NOT NULL,
   `width` int(11) NOT NULL,
   `tag` varchar(255) COLLATE utf8_bin NOT NULL,
-  `language` set('en','vn') COLLATE utf8_bin NOT NULL
+  `language` set('en','vn') COLLATE utf8_bin NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `edited_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -276,18 +285,18 @@ CREATE TABLE `new_image_details` (
 CREATE TABLE `new_page_item` (
   `id` int(11) NOT NULL,
   `page_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `edited_at` timestamp NULL DEFAULT NULL,
   `caption` varchar(255) COLLATE utf8_bin NOT NULL,
-  `page_position` int(11) NOT NULL
+  `page_position` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `edited_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `new_page_item`
 --
 
-INSERT INTO `new_page_item` (`id`, `page_id`, `created_at`, `edited_at`, `caption`, `page_position`) VALUES
-(80, 4, '2019-01-02 11:40:10', NULL, '4f', 12);
+INSERT INTO `new_page_item` (`id`, `page_id`, `caption`, `page_position`, `created_at`, `edited_at`) VALUES
+(80, 4, '4f', 12, '2019-01-02 11:40:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -298,11 +307,11 @@ INSERT INTO `new_page_item` (`id`, `page_id`, `created_at`, `edited_at`, `captio
 CREATE TABLE `new_page_item_details` (
   `id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
-  `heading` varchar(255) COLLATE utf8_bin NOT NULL,
+  `heading` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `content` text COLLATE utf8_bin NOT NULL,
+  `language` set('en','vn') COLLATE utf8_bin NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `edited_at` timestamp NULL DEFAULT NULL,
-  `language` set('en','vn') COLLATE utf8_bin NOT NULL
+  `edited_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -485,7 +494,7 @@ ALTER TABLE `image_details`
 -- AUTO_INCREMENT for table `image_list`
 --
 ALTER TABLE `image_list`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `menu_category`
@@ -509,7 +518,7 @@ ALTER TABLE `menu_item_details`
 -- AUTO_INCREMENT for table `new_image_details`
 --
 ALTER TABLE `new_image_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `new_page_item`
@@ -521,7 +530,7 @@ ALTER TABLE `new_page_item`
 -- AUTO_INCREMENT for table `new_page_item_details`
 --
 ALTER TABLE `new_page_item_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `page`
