@@ -62,7 +62,7 @@ class EventItem
      */
     public $editedAt;
 
-    function __construct($categoryId, $heading, $description, $language, $tag, $categoryPosition, $startDate,
+    public function __construct($categoryId, $heading, $description, $language, $tag, $categoryPosition, $startDate,
                          $id = null, $createdAt = null, $editedAt = null, $startTime = null, $endTime = null)
     {
         $this->setCategoryId($categoryId);

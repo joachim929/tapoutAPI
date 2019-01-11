@@ -42,7 +42,7 @@ class CreatePage
      */
     private $pageItem = null;
 
-    function __construct()
+    public function __construct()
     {
         $this->connectDb = new ConnectDb();
         $this->conn = $this->connectDb->getInstance();

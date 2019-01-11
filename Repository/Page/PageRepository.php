@@ -13,44 +13,11 @@ class PageRepository extends ConnectDb
      */
     private $mysqli;
 
-    function __construct()
+    public function __construct()
     {
         ConnectDb::__construct();
         $this->conn = ConnectDb::getInstance();
         $this->mysqli = $this->conn->getConnection();
-    }
-
-    /**
-     * This function gets all info from tapout_page table
-     * @return array|null
-     */
-    public function getPages()
-    {
-        $pages = array();
-
-        $stmt = $this->mysqli->prepare(
-            'SELECT * 
-            FROM page'
-        );
-
-        $stmt->execute();
-
-        $stmt->bind_result($id, $name);
-
-        while($stmt->fetch()) {
-            $pages[] = [
-                'id' => $id,
-                'name' => $name
-            ];
-        }
-
-        if ($stmt->errno) {
-            $pages = null;
-        }
-
-        $stmt->close();
-
-        return $pages;
     }
 
     /**

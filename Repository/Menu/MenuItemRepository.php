@@ -24,7 +24,7 @@ class MenuItemRepository
      */
     private $mysqli;
 
-    function __construct()
+    public function __construct()
     {
         $this->connectDb = new ConnectDb();
         $this->conn = $this->connectDb->getInstance();
@@ -61,6 +61,7 @@ class MenuItemRepository
         return $result;
     }
 
+    // @todo: Should be possible to insert description as null, check database to confirm it is nullable
     public function insertNewItemDetailsNoDesc(int $itemId, string $title, string $language)
     {
         $result = true;
@@ -114,6 +115,7 @@ class MenuItemRepository
     }
 
     /**
+     * @todo: Replace this with get last id
      * This function gets a menu item using caption as an arguement
      * @param string $caption
      * @return bool|stdClass

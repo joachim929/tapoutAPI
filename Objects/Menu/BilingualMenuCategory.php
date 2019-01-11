@@ -32,7 +32,7 @@ class BilingualMenuCategory
      */
     public $items;
 
-    function __construct($enName, $vnName, $type, $position, $id = null)
+    public function __construct($enName, $vnName, $type, $position, $id = null)
     {
         $this->setEnName($enName);
         $this->setVnName($vnName);

@@ -18,7 +18,7 @@ class CreateMenu
     // Services
     private $createItemService;
 
-    function __construct()
+    public function __construct()
     {
         $this->createItemService = new CreateMenuItem;
         $this->message = [];

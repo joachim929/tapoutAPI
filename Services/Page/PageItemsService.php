@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../../ConnectDb.php';
 
 require_once __DIR__ . '/../../Repository/Page/PageItemRepository.php';
+require_once __DIR__ . '/../../Repository/Page/ImageRepository.php';
 
 //Services
 require_once '../SortingService.php';
@@ -26,22 +27,28 @@ class PageItemsService extends ConnectDb
     private $mysqli;
 
     private $pageItemRepo;
+    private $imageRepo;
 
     private $sortingService;
 
-    function __construct()
+    public function __construct()
     {
         ConnectDb::__construct();
         $this->conn = ConnectDb::getInstance();
         $this->mysqli = $this->conn->getConnection();
+
+        // Repos
         $this->pageItemRepo = new PageItemRepository();
+        $this->imageRepo = new ImageRepository();
+
+        // Services
         $this->sortingService = new SortingService();
     }
 
     public function reorderPagePositions(int $pageId)
     {
         $pageItems = $this->matchPageItemsByTag($this->pageItemRepo->getPageItemsByPage($pageId));
-        $pageImages = $this->matchPageImagesByTag($this->pageItemRepo->getPageImagesByPage($pageId));
+        $pageImages = $this->matchPageImagesByTag($this->imageRepo->getPageImagesByPage($pageId));
         $mergedItems =  $this->sortResults($pageItems, $pageImages);
         return $this->checkPagePositions($mergedItems);
     }
@@ -82,9 +89,9 @@ class PageItemsService extends ConnectDb
                         $i, $item->getPageId());
                 }
                 else {
-                    $this->pageItemRepo->updateImagePagePosition($item->getEnImageId(),
+                    $this->imageRepo->updateImagePagePosition($item->getEnImageId(),
                         $i, $item->getPageId());
-                    $this->pageItemRepo->updateImagePagePosition($item->getVnImageId(),
+                    $this->imageRepo->updateImagePagePosition($item->getVnImageId(),
                         $i, $item->getPageId());
                 }
             }

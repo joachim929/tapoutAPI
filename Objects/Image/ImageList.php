@@ -17,7 +17,7 @@ class ImageList
      */
     public $createdAt;
 
-    function __construct($id, $imgUrl, $createdAt)
+    public function __construct($id, $imgUrl, $createdAt)
     {
         $this->setId($id);
         $this->setImgUrl($imgUrl);

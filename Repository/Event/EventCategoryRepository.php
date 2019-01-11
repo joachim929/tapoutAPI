@@ -16,7 +16,7 @@ class EventCategoryRepository extends ConnectDb
      */
     private $mysqli;
 
-    function __construct()
+    public function __construct()
     {
         ConnectDb::__construct();
         $this->conn = ConnectDb::getInstance();
@@ -24,6 +24,7 @@ class EventCategoryRepository extends ConnectDb
     }
 
     /**
+     * @todo: Not in use yet 2019/01/11 2019/01/11
      * This function gets all categories with a given language
      * @param string $lang
      * @return array|null
@@ -60,6 +61,7 @@ class EventCategoryRepository extends ConnectDb
     }
 
     /**
+     * @todo: Not in use yet 2019/01/11
      * This function gets all event categories
      * @return array|null
      */
@@ -92,6 +94,7 @@ class EventCategoryRepository extends ConnectDb
     }
 
     /**
+     * @todo: Not in use yet 2019/01/11
      * This function gets all category names
      * @return array|null
      */
@@ -121,6 +124,7 @@ class EventCategoryRepository extends ConnectDb
     }
 
     /**
+     * @todo: Not in use yet 2019/01/11
      * This function gets all category ids
      * @return array|null
      */
@@ -150,6 +154,7 @@ class EventCategoryRepository extends ConnectDb
     }
 
     /**
+     * @todo: Not in use yet 2019/01/11
      * This function patches a categories page position
      * @param $id
      * @param $position
@@ -178,6 +183,7 @@ class EventCategoryRepository extends ConnectDb
     }
 
     /**
+     * @todo: Not in use yet 2019/01/11
      * This function sets a category to inactive "deleting it" with a given Id
      * @param $id
      * @return bool

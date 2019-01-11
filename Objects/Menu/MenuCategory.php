@@ -27,7 +27,7 @@ class MenuCategory
      */
     public $items;
 
-    function __construct($name, $type, $position, $id = null)
+    public function __construct($name, $type, $position, $id = null)
     {
         $this->setName($name);
         $this->setType($type);

@@ -9,7 +9,7 @@ class ReadMenu
     private $task = null;
     private $language = null;
 
-    function __construct()
+    public function __construct()
     {}
 
     /**

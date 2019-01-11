@@ -52,7 +52,7 @@ class BilingualMenuItem
      */
     public $vnTitle;
 
-    function __construct($price, $position, $caption, $enTitle, $vnTitle,
+    public function __construct($price, $position, $caption, $enTitle, $vnTitle,
                          $enDescription = null, $vnDescription = null,
                          $enId = null, $vnId = null, $itemId = null)
     {

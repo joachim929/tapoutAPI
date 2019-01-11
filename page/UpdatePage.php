@@ -20,7 +20,7 @@ class UpdatePage
     private $pageItems = null;
     private $pageItem = null;
 
-    function __construct()
+    public function __construct()
     {
         $this->connectDb = new ConnectDb();
         $this->conn = $this->connectDb->getInstance();
@@ -67,7 +67,7 @@ class UpdatePage
 
     private function pageImageValidationCheck()
     {
-//        @todo still needs to be written
+        // @todo still needs to be written
         return true;
     }
 

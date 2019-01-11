@@ -47,7 +47,7 @@ class EventCategory
      */
     public $categoryItems;
 
-    function __construct($name, $type, $language, $tag, $pagePosition,
+    public function __construct($name, $type, $language, $tag, $pagePosition,
                          $id = null, $createdAt = null, $editedAt = null)
     {
         $this->setName($name);

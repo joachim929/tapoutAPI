@@ -15,7 +15,7 @@ class EventItemRepository extends ConnectDb
      */
     private $mysqli;
 
-    function __construct()
+    public function __construct()
     {
         ConnectDb::__construct();
         $this->conn = ConnectDb::getInstance();
@@ -23,6 +23,7 @@ class EventItemRepository extends ConnectDb
     }
 
     /**
+     * @todo: Not in use yet!
      * This function gets category items by id makes sure it has a later start date than the one passed if its set
      * @param int $catId
      * @param null $minDate

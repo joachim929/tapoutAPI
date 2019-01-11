@@ -47,7 +47,7 @@ class pageItem
      */
     public $pagePosition;
 
-    function __construct($pageId, $heading, $content, $language, $tag, $pagePosition, $id = null, $createdAt = null, $editedAt = null)
+    public function __construct($pageId, $heading, $content, $language, $tag, $pagePosition, $id = null, $createdAt = null, $editedAt = null)
     {
         $this->setPageId($pageId);
         $this->setHeading($heading);

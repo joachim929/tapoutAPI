@@ -18,7 +18,7 @@ class CreateMenuItem
     private $menuItemRepo;
     private $menuCatRepo;
 
-    function __construct()
+    public function __construct()
     {
         // Services
         $this->sortingService = new SortingService();

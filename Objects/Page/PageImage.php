@@ -57,7 +57,7 @@ class PageImage
      */
     public $id;
 
-    function __construct(
+    public function __construct(
         $pageId, $imageUrl, $pagePosition, $height, $width, $tag, $language,
         $caption = null, $alt = null, $createdAt = null, $id = null
     )

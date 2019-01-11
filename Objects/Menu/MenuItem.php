@@ -27,7 +27,7 @@ class MenuItem
      */
     public $title;
 
-    function __construct($description, $position, $price, $title, $id = null)
+    public function __construct($description, $position, $price, $title, $id = null)
     {
         $this->setDescription($description);
         $this->setId($id);
