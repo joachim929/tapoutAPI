@@ -8,6 +8,11 @@ class BilingualMenuItem
     public $caption;
 
     /**
+     * @var int
+     */
+    public $categoryId;
+
+    /**
      * @var ?string
      */
     public $enDescription;
@@ -114,6 +119,23 @@ class BilingualMenuItem
     public function setCaption(string $caption)
     {
         $this->caption = $caption;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getCategoryId(): int
+    {
+        return $this->categoryId;
+    }
+
+    /**
+     * @param int $categoryId
+     */
+    public function setCategoryId(int $categoryId)
+    {
+        $this->categoryId = $categoryId;
     }
 
 
