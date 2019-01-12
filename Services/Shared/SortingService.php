@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../../Objects/Shared/Message.php';
+
 class SortingService
 {
     /**

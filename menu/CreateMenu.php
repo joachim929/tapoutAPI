@@ -1,19 +1,31 @@
 <?php
 
-// Repos
-
 // Objects
 require_once '../Objects/Menu/BilingualMenuItem.php';
+require_once '../Objects/Shared/Message.php';
+require_once '../Objects/Shared/Response.php';
 
 // Services
 require_once '../Services/Menu/CreateMenuItem.php';
 
 class CreateMenu
 {
+
     // Variables
+    /**
+     * @var Message
+     */
     private $message;
 
+    /**
+     * @var BilingualMenuItem|null
+     */
     private $data;
+
+    /**
+     * @var Response
+     */
+    private $response;
 
     // Services
     private $createItemService;
@@ -21,17 +33,14 @@ class CreateMenu
     public function __construct()
     {
         $this->createItemService = new CreateMenuItem;
-        $this->message = [];
+        $this->message = new Message();
+        $this->response = new Response();
     }
 
     public function returnStatement()
     {
-        $this->checkParams();
-        if($this->message !== []) {
-            echo json_encode($this->message);
-        } else {
-            echo (true);
-        }
+        //$response->setMessage($this->message);
+        echo json_encode($this->checkParams());
     }
 
     /**
@@ -40,14 +49,12 @@ class CreateMenu
      */
     private function checkParams()
     {
-        if ($this->checktask() && $this->checkPage() && $this->checkNewItem()) {
+        $result = null;
+        if ($this->checktask() && $this->checkPage() && $this->checkNewItem() &&
+            $this->checkModule()) {
             $result = $this->createItemService->addNewItem($this->data);
-            if(count($result) > 0) {
-                foreach($result as $message) {
-                    $this->message[] = $message;
-                }
-            }
         }
+        return $result;
     }
 
     /**
@@ -57,19 +64,32 @@ class CreateMenu
     private function checkPage(): bool
     {
         $check = true;
-        if(isset($_POST['page'])) {
+        if (isset($_POST['page'])) {
             $page = $_POST['page'];
-            if($page !== 'Menu') {
+            if ($page !== 'Menu') {
                 $check = false;
-                $this->message[] = [
-                    'error' => 'Invalid page given'
-                ];
+                $this->message->addError('Invalid page given');
             }
         } else {
             $check = false;
-            $this->message[] = [
-                'error' => 'Page not set'
-            ];
+            $this->message->addError('Page not set');
+        }
+
+        return $check;
+    }
+
+    private function checkModule(): bool
+    {
+        $check = true;
+        if (isset($_POST['module'])) {
+            $module = $_POST['module'];
+            if ($module !== 'Admin') {
+                $check = false;
+                $this->message->addError('Invalid module given');
+            }
+        } else {
+            $check = false;
+            $this->message->addError('Module not set');
         }
 
         return $check;
@@ -82,19 +102,15 @@ class CreateMenu
     private function checkTask(): bool
     {
         $check = true;
-        if(isset($_POST['task'])) {
+        if (isset($_POST['task'])) {
             $task = $_POST['task'];
-            if($task !== 'createMenuItem') {
+            if ($task !== 'createMenuItem') {
                 $check = false;
-                $this->message[] = [
-                    'error' => 'Invalid task given'
-                ];
+                $this->message->addError('Invalid task given');
             }
         } else {
             $check = false;
-            $this->message[] = [
-                'error' => 'Page not set'
-            ];
+            $this->message->addError('Page not set');
         }
 
         return $check;
@@ -107,35 +123,39 @@ class CreateMenu
     private function checkNewItem(): bool
     {
         $check = true;
-        if(isset($_POST['newMenuItem'])) {
-            $this->data = json_decode($_POST['newMenuItem']);
+        if (isset($_POST['newMenuItem'])) {
+            $temp  = json_decode($_POST['newMenuItem']);
+
+            if (!$this->checkNumber('category', $temp->category)) {
+                $check = false;
+            }
+            if (!$this->checkString('caption', $temp->caption)) {
+                $check = false;
+            }
+            if (!$this->checkString('English Title', $temp->enTitle)) {
+                $check = false;
+            }
+            if (!$this->checkString('Vietnamese Title', $temp->vnTitle)) {
+                $check = false;
+            }
+            if (!$this->checkNumber('category position', $temp->position)) {
+                $check = false;
+            }
+            if (!$this->checkString('price', $temp->price)) {
+                $check = false;
+            }
+            if (!$this->checkDescriptions($temp->enDescription, $temp->vnDescription)) {
+                $check = false;
+            }
+            if ($check === true) {
+                $this->data = new BilingualMenuItem($temp->price, $temp->position, $temp->caption,
+                    $temp->enTitle, $temp->vnTitle, $temp->enDescription, $temp->vnDescription);
+                $this->data->setCategoryId($temp->category);
+            }
         } else {
             $check = false;
-            $this->message[] = [
-                'error' => 'No item found in the expected place'
-            ];
+            $this->message->addError('No item found in the expected place');
             $this->data = null;
-        }
-        if (!$this->checkNumber('category', $this->data->category)) {
-            $check = false;
-        }
-        if (!$this->checkString('caption', $this->data->caption)) {
-            $check = false;
-        }
-        if (!$this->checkString('English Title', $this->data->enTitle)) {
-            $check = false;
-        }
-        if (!$this->checkString('Vietnamese Title', $this->data->vnTitle)) {
-            $check = false;
-        }
-        if (!$this->checkNumber('category position', $this->data->categoryPosition)) {
-            $check = false;
-        }
-        if (!$this->checkString('price', $this->data->price)) {
-            $check = false;
-        }
-        if (!$this->checkDescriptions($this->data->enDescription, $this->data->vnDescription)) {
-            $check = false;
         }
 
         return $check;
@@ -154,34 +174,25 @@ class CreateMenu
         if (isset($enDescription, $vnDescription)) {
             if (!(is_string($enDescription) && is_string($vnDescription))) {
                 $check = false;
-                $this->message[] = [
-                    'error' => 'English and Vietnamese descriptions need to be strings'
-                ];
+                $this->message->addError('English and Vietnamese descriptions need to be strings');
             } else {
-                if(strlen($enDescription) < 4) {
+                if (strlen($enDescription) < 4) {
                     $check = false;
-                    $this->message[] = [
-                        'error' => 'English description is too short'
-                    ];
+                    $this->message->addError('English description is too short');
                 }
-                if(strlen($vnDescription) < 4) {
+                if (strlen($vnDescription) < 4) {
                     $check = false;
-                    $this->message[] = [
-                        'error' => 'Vietnamese description is too short'
-                    ];
+                    $this->message->addError('Vietnamese description is too short');
                 }
             }
         } elseif (!isset($enDescription) && isset($vnDescription)) {
             $check = false;
-            $this->message[] = [
-                'error' => 'Only got a value for Vietnamese description, not English description'
-            ];
+            $this->message->addError('Only got a value for Vietnamese description, not English description');
         } elseif (!isset($vnDescription) && isset($enDescription)) {
             $check = false;
-            $this->message[] = [
-                'error' => 'Only got a value for English description, not Vietnamese description'
-            ];
+            $this->message->addError('Only got a value for English description, not Vietnamese description');
         }
+
         return $check;
     }
 
@@ -196,14 +207,10 @@ class CreateMenu
         $check = true;
         if (!isset($value)) {
             $check = false;
-            $this->message[] = [
-                'error' => "No value for $type given"
-            ];
+            $this->message->addError("No value for $type given");
         } elseif (!is_string($value)) {
             $check = false;
-            $this->message[] = [
-                'error' => "No valid value given for $value"
-            ];
+            $this->message->addError("No valid value given for $value");
         }
 
         return $check;
@@ -220,16 +227,13 @@ class CreateMenu
         $check = true;
         if (!isset($value)) {
             $check = false;
-            $this->message[] = [
-                'error' => "No value for $type given"
-            ];
+            $this->message->addError("No value for $type given");
         } elseif (!is_int($value)) {
             $check = false;
-            $this->message[] = [
-                'error' => "No valid value given for $value"
-            ];
+            $this->message->addError("No valid value given for $value");
         }
 
         return $check;
     }
+
 }

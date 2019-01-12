@@ -1,6 +1,6 @@
 <?php
 // Services
-require_once __DIR__ . '/../SortingService.php';
+require_once __DIR__ . '/../Shared/SortingService.php';
 
 // Repos
 require_once __DIR__ . '/../../Repository/Menu/MenuRepository.php';

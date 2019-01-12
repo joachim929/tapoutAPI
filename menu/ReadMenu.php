@@ -8,6 +8,7 @@ class ReadMenu
     private $page = null;
     private $task = null;
     private $language = null;
+    private $module = null;
 
     public function __construct()
     {}
@@ -35,6 +36,9 @@ class ReadMenu
         if (isset($_GET['page']) && $_GET['page'] === 'Menu') {
             $this->page = $_GET['page'];
         }
+        if (isset($_GET['module']) && ($_GET['module'] === 'Admin' || $_GET['module'] === 'Guest')) {
+            $this->module = $_GET['module'];
+        }
         if (isset($_GET['task']) && $_GET['task'] === 'read' || $_GET['task'] === 'edit' || $_GET['task'] === 'getCategories') {
             $this->task = $_GET['task'];
         }
@@ -50,7 +54,7 @@ class ReadMenu
     {
         $results = null;
 
-        if ($this->language === null) {
+        if ($this->language === null && $this->module === 'Admin') {
             $menuService = new BilingualMenuService();
             if ($this->task === 'edit') {
                 $results = $menuService->getMenu();
@@ -58,7 +62,7 @@ class ReadMenu
                 $results = $menuService->getCategories();
             }
         } else {
-            if ($this->task === 'read') {
+            if ($this->task === 'read' && $this->module === 'Guest') {
                 $menuService = new MenuService();
                 $results = $menuService->getMenu($this->language);
             }

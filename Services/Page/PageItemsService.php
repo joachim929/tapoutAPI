@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../Repository/Page/PageItemRepository.php';
 require_once __DIR__ . '/../../Repository/Page/ImageRepository.php';
 
 //Services
-require_once '../SortingService.php';
+require_once '../Shared/SortingService.php';
 
 //Objects
 require_once __DIR__ . '/../../Objects/Page/PageItem.php';
