@@ -33,6 +33,11 @@ class Response
         $this->data = $data;
     }
 
+    public function addData($data)
+    {
+        $this->data[] = $data;
+    }
+
     /**
      * @return Message
      */
@@ -74,7 +79,11 @@ class Response
         if ($this->success === true) {
             $this->setSuccess($response->success);
         }
-        $this->setData($response->data);
+        if (isset($this->data)) {
+            $this->addData($response->data);
+        } else {
+            $this->setData($response->data);
+        }
 
         if ($this->hasMessages()) {
             $this->message->mergeMessages($response->message);
@@ -90,13 +99,13 @@ class Response
     public function hasMessages()
     {
         $check = false;
-        if (count($this->message->warnings) > 0) {
+        if (isset($this->message)) {
             $check = true;
         }
-        if (count($this->message->errors) > 0) {
+        if (isset($this->message)) {
             $check = true;
         }
-        if (count($this->message->additional) > 0) {
+        if (isset($this->message)) {
             $check = true;
         }
 

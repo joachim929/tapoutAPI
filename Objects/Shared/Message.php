@@ -96,17 +96,52 @@ class Message
      */
     public function mergeMessages(Message $message)
     {
-        foreach ($message->additional as $additional) {
-            $this->addAdditional($additional);
-        }
-
-        foreach ($message->errors as $error) {
-            $this->addError($error);
-        }
-
-        foreach ($message->warnings as $warning) {
-            $this->addWarning($warning);
+        if($message->hasMessage()) {
+            $this->mergeAdditional($message);
+            $this->mergeErrors($message);
+            $this->mergeWarnings($message);
         }
     }
 
+    public function hasMessage()
+    {
+        $check = false;
+
+        if(isset($this->warnings) && count($this->warnings) > 0) {
+            $check = true;
+        }
+        if(isset($this->additional) && count($this->additional) > 0) {
+            $check = true;
+        }
+        if(isset($this->errors) && count($this->errors) > 0) {
+            $check = true;
+        }
+
+
+        return $check;
+    }
+
+    private function mergeAdditional(Message $message) {
+        if (isset($message->additional) && count($message->additional) > 0) {
+            foreach ($message->additional as $additional) {
+                $this->addAdditional($additional);
+            }
+        }
+    }
+
+    private function mergeErrors(Message $message) {
+        if (isset($message->errors) && count($message->errors) > 0) {
+            foreach ($message->errors as $error) {
+                $this->addError($error);
+            }
+        }
+    }
+
+    private function mergeWarnings(Message $message){
+        if (isset($message->warnings) && count($message->warnings) > 0) {
+            foreach ($message->warnings as $warnings) {
+                $this->addWarning($warnings);
+            }
+        }
+    }
 }
