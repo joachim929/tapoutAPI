@@ -3,6 +3,7 @@ require_once __DIR__ . '/../../ConnectDb.php';
 
 class MenuCategoryRepository
 {
+
     /**
      * @var
      */
@@ -31,7 +32,7 @@ class MenuCategoryRepository
      */
     public function getCategories()
     {
-        $categories= array();
+        $categories = array();
 
         $stmt = $this->mysqli->prepare(
             'SELECT id, en_name, vn_name, type, page_position 
@@ -49,36 +50,8 @@ class MenuCategoryRepository
         }
 
         $stmt->close();
+
         return $categories;
     }
 
-    /**
-     * This function selects category information with a given Id
-     * @param $id
-     * @return BilingualMenuCategory|null
-     */
-    public function getCategoryById($id)
-    {
-        $stmt = $this->mysqli->prepare(
-            'SELECT id, en_name, vn_name, type, page_position
-            FROM menu_category
-            WHERE active = 1
-            AND id = ?'
-        );
-
-        $stmt->bind_param('i', $id);
-
-        $stmt->execute();
-
-        $stmt->bind_result($id, $enName, $vnName, $type, $pagePosition);
-
-        $stmt->fetch();
-
-        if($stmt->errno) {
-            $category = null;
-        } else {
-            $category = new BilingualMenuCategory($enName, $vnName, $type, $pagePosition, $id);
-        }
-        return $category;
-    }
 }

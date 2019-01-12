@@ -9,6 +9,7 @@ require_once __DIR__ . '/../../Objects/Menu/BilingualMenuItem.php';
 
 class MenuRepository
 {
+
     /**
      * @var
      */
@@ -48,7 +49,7 @@ class MenuRepository
             item.id AS itemId, item.price AS itemPrice, item.category_position AS catPosition,
             detail.id AS detailId, detail.title AS detailTitle, detail.description AS detailDescription
             FROM menu_category AS cat 
-            LEFT JOIN menu_item as item ON cat.id = item.category_id
+            LEFT JOIN menu_item AS item ON cat.id = item.category_id
             LEFT JOIN menu_item_details AS detail ON item.id = detail.item_id AND detail.language = ?
             WHERE cat.active = 1
             ORDER BY pagePosition, catPosition'
@@ -63,13 +64,13 @@ class MenuRepository
 
         while ($stmt->fetch()) {
             $menuItem = new MenuItem($detailDescription, $catPosition, $itemPrice, $detailTitle, $detailId);
-            if($language === 'en') {
-                if(!isset($results[$catId])) {
+            if ($language === 'en') {
+                if (!isset($results[$catId])) {
                     $results[$catId] = new MenuCategory($catEnName, $catType, $pagePosition, $catId);
                 }
                 $results[$catId]->addItem($menuItem);
             } elseif ($language === 'vn') {
-                if(!isset($results[$catId])) {
+                if (!isset($results[$catId])) {
                     $results[$catId] = new MenuCategory($catVnName, $catType, $pagePosition, $catId);
                 }
                 $results[$catId]->addItem($menuItem);
@@ -86,7 +87,7 @@ class MenuRepository
     }
 
     /**
-     * @todo: Might need to split call up, see how the database evolves to see if it makes more sense
+     * @todo        : Might need to split call up, see how the database evolves to see if it makes more sense
      * @todo        to get categories AND/OR items separately
      *
      * This function gets all menu items, categories and descriptions and puts them in an array of objects
@@ -100,11 +101,11 @@ class MenuRepository
             'SELECT cat.id AS catId, cat.en_name AS catEnName, cat.vn_name AS catVnName, cat.type AS catType, cat.page_position AS pagePosition,
             item.id AS itemId, item.caption AS itemCaption, item.price AS itemPrice, item.category_position AS catPosition,
             enDetails.id AS enDetailId, enDetails.title AS enDetailTitle, enDetails.description AS enDetailDescription, 
-            vnDetails.id AS vnDetailId, vnDetails.title as vnDetailTitle, vnDetails.description AS vnDetailDescription
+            vnDetails.id AS vnDetailId, vnDetails.title AS vnDetailTitle, vnDetails.description AS vnDetailDescription
             FROM menu_category AS cat
-            LEFT JOIN menu_item as item ON cat.id = item.category_id
-            LEFT JOIN menu_item_details as enDetails ON item.id = enDetails.item_id AND enDetails.language = "en"
-            LEFT JOIN menu_item_details as vnDetails ON item.id = vnDetails.item_id AND vnDetails.language = "vn"
+            LEFT JOIN menu_item AS item ON cat.id = item.category_id
+            LEFT JOIN menu_item_details AS enDetails ON item.id = enDetails.item_id AND enDetails.language = "en"
+            LEFT JOIN menu_item_details AS vnDetails ON item.id = vnDetails.item_id AND vnDetails.language = "vn"
             WHERE enDetails.id IS NOT NULL 
             AND vnDetails.id IS NOT NULL
             AND cat.active = 1
@@ -119,7 +120,7 @@ class MenuRepository
         while ($stmt->fetch()) {
             $menuItem = new BilingualMenuItem($itemPrice, $catPosition, $itemCaption,
                 $enTitle, $vnTitle, $enDescription, $vnDescription, $enId, $vnId, $itemId);
-            if(!isset($results[$catId])) {
+            if (!isset($results[$catId])) {
                 $results[$catId] = new BilingualMenuCategory($catEnName, $catVnName, $catType, $pagePosition, $catId);
             }
             $results[$catId]->addItem($menuItem);
@@ -133,4 +134,5 @@ class MenuRepository
 
         return $results;
     }
+
 }
