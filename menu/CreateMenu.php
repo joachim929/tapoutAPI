@@ -12,9 +12,6 @@ require_once '../Services/Menu/CreateMenuCategoryService.php';
 
 class CreateMenu
 {
-
-    // @todo: After inserting re-order all of them again
-
     // Services
     /**
      * @var CreateMenuItemService

@@ -63,17 +63,20 @@ class MenuRepository
             $itemId, $itemPrice, $catPosition, $detailId, $detailTitle, $detailDescription);
 
         while ($stmt->fetch()) {
-            $menuItem = new MenuItem($detailDescription, $catPosition, $itemPrice, $detailTitle, $detailId);
-            if ($language === 'en') {
-                if (!isset($results[$catId])) {
-                    $results[$catId] = new MenuCategory($catEnName, $catType, $pagePosition, $catId);
+            if ($catPosition !== null && $detailId !== null && $detailTitle !== null &&
+            $itemId !== null && $itemPrice !== null) {
+                $menuItem = new MenuItem($detailDescription, $catPosition, $itemPrice, $detailTitle, $detailId);
+                if ($language === 'en') {
+                    if (!isset($results[$catId])) {
+                        $results[$catId] = new MenuCategory($catEnName, $catType, $pagePosition, $catId);
+                    }
+                    $results[$catId]->addItem($menuItem);
+                } elseif ($language === 'vn') {
+                    if (!isset($results[$catId])) {
+                        $results[$catId] = new MenuCategory($catVnName, $catType, $pagePosition, $catId);
+                    }
+                    $results[$catId]->addItem($menuItem);
                 }
-                $results[$catId]->addItem($menuItem);
-            } elseif ($language === 'vn') {
-                if (!isset($results[$catId])) {
-                    $results[$catId] = new MenuCategory($catVnName, $catType, $pagePosition, $catId);
-                }
-                $results[$catId]->addItem($menuItem);
             }
         }
 
@@ -87,9 +90,6 @@ class MenuRepository
     }
 
     /**
-     * @todo        : Might need to split call up, see how the database evolves to see if it makes more sense
-     * @todo        to get categories AND/OR items separately
-     *
      * This function gets all menu items, categories and descriptions and puts them in an array of objects
      * @return array|null
      */
@@ -99,7 +99,8 @@ class MenuRepository
 
         $stmt = $this->mysqli->prepare(
             'SELECT cat.id AS catId, cat.en_name AS catEnName, cat.vn_name AS catVnName, cat.type AS catType, cat.page_position AS pagePosition,
-            item.id AS itemId, item.price AS itemPrice, item.category_position AS catPosition,
+            cat.created_at AS catCreatedAt, cat.edited_at AS catEditedAt,
+            item.id AS itemId, item.price AS itemPrice, item.category_position AS catPosition, item.created_at AS itemCreatedAt, item.edited_at AS itemEditedAt,
             enDetails.id AS enDetailId, enDetails.title AS enDetailTitle, enDetails.description AS enDetailDescription, 
             vnDetails.id AS vnDetailId, vnDetails.title AS vnDetailTitle, vnDetails.description AS vnDetailDescription
             FROM menu_category AS cat
@@ -114,14 +115,20 @@ class MenuRepository
 
         $stmt->execute();
 
-        $stmt->bind_result($catId, $catEnName, $catVnName, $catType, $pagePosition, $itemId, $itemPrice, $catPosition,
+        $stmt->bind_result($catId, $catEnName, $catVnName, $catType, $pagePosition, $catCreatedAt, $catEditedAt,
+            $itemId, $itemPrice, $catPosition, $itemCreatedAt, $itemEditedAt,
             $enId, $enTitle, $enDescription, $vnId, $vnTitle, $vnDescription);
 
         while ($stmt->fetch()) {
             $menuItem = new BilingualMenuItem($itemPrice, $catPosition,
                 $enTitle, $vnTitle, $enDescription, $vnDescription, $enId, $vnId, $itemId);
+            $menuItem->setCategoryId($catId);
+            $menuItem->setCreatedAt($itemCreatedAt);
+            $menuItem->setEditedAt($itemEditedAt);
             if (!isset($results[$catId])) {
                 $results[$catId] = new BilingualMenuCategory($catEnName, $catVnName, $catType, $pagePosition, $catId);
+                $results[$catId]->setCreatedAt($catCreatedAt);
+                $results[$catId]->setEditedAt($catEditedAt);
             }
             $results[$catId]->addItem($menuItem);
         }

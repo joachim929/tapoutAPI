@@ -52,6 +52,16 @@ class BilingualMenuItem
      */
     public $vnTitle;
 
+    /**
+     * @var ?DateTime
+     */
+    public $createdAt;
+
+    /**
+     * @var ?DateTime
+     */
+    public $editedAt;
+
     public function __construct($price, $position, $enTitle, $vnTitle,
                          $enDescription = null, $vnDescription = null,
                          $enId = null, $vnId = null, $itemId = null)
@@ -65,6 +75,38 @@ class BilingualMenuItem
         $this->setEnId($enId);
         $this->setVnId($vnId);
         $this->setItemId($itemId);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEditedAt()
+    {
+        return $this->editedAt;
+    }
+
+    /**
+     * @param mixed $editedAt
+     */
+    public function setEditedAt($editedAt)
+    {
+        $this->editedAt = $editedAt;
     }
 
     /**

@@ -5,4 +5,4 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
 require_once './ReadMenu.php';
 
 $menu = new ReadMenu();
-echo json_encode($menu->returnStatement());
+$menu->returnStatement();

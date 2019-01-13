@@ -1,17 +1,34 @@
 <?php
+
+// Objects
+require_once '../Objects/Menu/MenuItem.php';
+require_once '../Objects/Menu/MenuCategory.php';
+require_once '../Objects/Menu/BilingualMenuItem.php';
+require_once '../Objects/Menu/BilingualMenuCategory.php';
+require_once '../Objects/Shared/Message.php';
+require_once '../Objects/Shared/Response.php';
+
 // Services
-require_once '../Services/Menu/MenuService.php';
-require_once '../Services/Menu/BilingualMenuService.php';
+require_once '../Services/Menu/GuestReadMenuService.php';
+require_once '../Services/Menu/AdminReadMenuService.php';
 
 class ReadMenu
 {
-    private $page = null;
-    private $task = null;
-    private $language = null;
-    private $module = null;
+    // Services
+    private $guestMenuService;
+    private $adminMenuService;
+
+    // Variables
+    private $page;
+    private $task;
+    private $language;
+    private $module;
 
     public function __construct()
-    {}
+    {
+        $this->guestMenuService = new GuestReadMenuService();
+        $this->adminMenuService = new AdminReadMenuService();
+    }
 
     /**
      * This function is the entry point of the class
@@ -24,7 +41,7 @@ class ReadMenu
             $results = null;
         }
 
-        return $results;
+        echo json_encode($results);
     }
 
     /**
@@ -39,7 +56,7 @@ class ReadMenu
         if (isset($_GET['module']) && ($_GET['module'] === 'Admin' || $_GET['module'] === 'Guest')) {
             $this->module = $_GET['module'];
         }
-        if (isset($_GET['task']) && $_GET['task'] === 'read' || $_GET['task'] === 'edit' || $_GET['task'] === 'getCategories') {
+        if (isset($_GET['task']) && $_GET['task'] === 'read' || $_GET['task'] === 'edit') {
             $this->task = $_GET['task'];
         }
         if (isset($_GET['lang'])) {
@@ -55,16 +72,12 @@ class ReadMenu
         $results = null;
 
         if ($this->language === null && $this->module === 'Admin') {
-            $menuService = new BilingualMenuService();
             if ($this->task === 'edit') {
-                $results = $menuService->getMenu();
-            } elseif ($this->task === 'getCategories') {
-                $results = $menuService->getCategories();
+                $results = $this->adminMenuService->getMenu();
             }
         } else {
             if ($this->task === 'read' && $this->module === 'Guest') {
-                $menuService = new MenuService();
-                $results = $menuService->getMenu($this->language);
+                $results = $this->guestMenuService->getMenu($this->language);
             }
         }
 

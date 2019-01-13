@@ -3,7 +3,7 @@
 class MenuItem
 {
     /**
-     * @var string;
+     * @var ?string;
      */
     public $description;
 
@@ -37,17 +37,17 @@ class MenuItem
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
+     * @param mixed $description
      */
-    public function setDescription(string $description)
+    public function setDescription($description)
     {
         $this->description = $description;
     }

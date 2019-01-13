@@ -6,7 +6,7 @@ require_once __DIR__ . '/../Shared/SortingService.php';
 require_once __DIR__ . '/../../Repository/Menu/MenuRepository.php';
 require_once __DIR__ . '/../../Repository/Menu/MenuCategoryRepository.php';
 
-class BilingualMenuService
+class AdminReadMenuService
 {
     // Services
     private $sortingService;
