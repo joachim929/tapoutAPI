@@ -6,4 +6,4 @@ require_once './ReadPage.php';
 
 $page = new ReadPage();
 
-return $page->returnStatement();
+$page->returnStatement();

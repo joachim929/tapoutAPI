@@ -12,6 +12,7 @@ require_once '../Services/Menu/CreateMenuCategoryService.php';
 
 class CreateMenu
 {
+
     // Services
     /**
      * @var CreateMenuItemService
@@ -273,7 +274,6 @@ class CreateMenu
      */
     private function checkTask(): bool
     {
-
         $check = true;
         if (isset($_POST['task'])) {
             $task = $_POST['task'];

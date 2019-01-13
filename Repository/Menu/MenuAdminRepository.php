@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../../ConnectDb.php';
 
 // Objects
+require_once __DIR__ . '/../../Objects/Menu/BilingualMenuCategory.php';
 require_once __DIR__ . '/../../Objects/Menu/BilingualMenuItem.php';
 require_once __DIR__ . '/../../Objects/Menu/RawMenuItem.php';
 

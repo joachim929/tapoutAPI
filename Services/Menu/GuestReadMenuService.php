@@ -5,7 +5,7 @@ require_once __DIR__ . '/../Shared/SortingService.php';
 // Objects
 
 // Repos
-require_once __DIR__ . '/../../Repository/Menu/MenuRepository.php';
+require_once __DIR__ . '/../../Repository/Menu/MenuReadRepository.php';
 
 class GuestReadMenuService
 {
@@ -13,7 +13,7 @@ class GuestReadMenuService
     private $sortingService;
 
     //Repos
-    private $menuRepo;
+    private $guestRepo;
 
     public function __construct()
     {
@@ -21,12 +21,12 @@ class GuestReadMenuService
         $this->sortingService = new SortingService();
 
         // Repos
-        $this->menuRepo = new MenuRepository();
+        $this->guestRepo = new MenuReadRepository();
     }
 
     public function getMenu($language)
     {
-        $results = $this->menuRepo->getMenuByLanguage($language);
+        $results = $this->guestRepo->getMenuByLanguage($language);
         return $this->sortingService->removeArrayKeys($results);
     }
 }

@@ -3,8 +3,8 @@
 require_once __DIR__ . '/../Shared/SortingService.php';
 
 // Repos
-require_once __DIR__ . '/../../Repository/Menu/MenuRepository.php';
 require_once __DIR__ . '/../../Repository/Menu/MenuCategoryRepository.php';
+require_once __DIR__ . '/../../Repository/Menu/MenuReadRepository.php';
 
 class AdminReadMenuService
 {
@@ -12,7 +12,7 @@ class AdminReadMenuService
     private $sortingService;
 
     // Repos
-    private $menuRepo;
+    private $guestRepo;
     private $menuCatRepo;
 
     public function __construct()
@@ -21,13 +21,13 @@ class AdminReadMenuService
         $this->sortingService = new SortingService();
 
         // Repos
-        $this->menuRepo = new MenuRepository();
+        $this->guestRepo = new MenuReadRepository();
         $this->menuCatRepo = new MenuCategoryRepository();
     }
 
     public function getMenu()
     {
-        $rawResults = $this->menuRepo->getBilingualMenu();
+        $rawResults = $this->guestRepo->getBilingualMenu();
         return $this->sortingService->removeArrayKeys($rawResults);
     }
 
