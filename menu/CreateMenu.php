@@ -159,9 +159,6 @@ class CreateMenu
             if (!$this->checkNumber('category', $temp->category)) {
                 $check = false;
             }
-            if (!$this->checkString('caption', $temp->caption)) {
-                $check = false;
-            }
             if (!$this->checkString('English Title', $temp->enTitle)) {
                 $check = false;
             }
@@ -178,8 +175,8 @@ class CreateMenu
                 $check = false;
             }
             if ($check === true) {
-                $this->data = new BilingualMenuItem($temp->price, $temp->position, $temp->caption,
-                    $temp->enTitle, $temp->vnTitle, $temp->enDescription, $temp->vnDescription);
+                $this->data = new BilingualMenuItem($temp->price, $temp->position, $temp->enTitle,
+                    $temp->vnTitle, $temp->enDescription, $temp->vnDescription);
                 $this->data->setCategoryId($temp->category);
             }
         } else {

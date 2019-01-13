@@ -4,11 +4,6 @@ class RawMenuItem
 {
 
     /**
-     * @var string
-     */
-    public $caption;
-
-    /**
      * @var int
      */
     public $categoryId;
@@ -38,9 +33,8 @@ class RawMenuItem
      */
     public $position;
 
-    public function __construct($caption, $categoryId, $price, $position, $createdAt = null, $editedAt = null, $id = null)
+    public function __construct($categoryId, $price, $position, $createdAt = null, $editedAt = null, $id = null)
     {
-        $this->setCaption($caption);
         $this->setCategoryId($categoryId);
         $this->setCreatedAt($createdAt);
         $this->setEditedAt($editedAt);
@@ -79,22 +73,6 @@ class RawMenuItem
     public function setCategoryId(int $categoryId)
     {
         $this->categoryId = $categoryId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCaption(): string
-    {
-        return $this->caption;
-    }
-
-    /**
-     * @param string $caption
-     */
-    public function setCaption(string $caption)
-    {
-        $this->caption = $caption;
     }
 
     /**

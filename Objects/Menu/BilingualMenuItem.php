@@ -3,11 +3,6 @@
 class BilingualMenuItem
 {
     /**
-     * @var  string
-     */
-    public $caption;
-
-    /**
      * @var int
      */
     public $categoryId;
@@ -57,13 +52,12 @@ class BilingualMenuItem
      */
     public $vnTitle;
 
-    public function __construct($price, $position, $caption, $enTitle, $vnTitle,
+    public function __construct($price, $position, $enTitle, $vnTitle,
                          $enDescription = null, $vnDescription = null,
                          $enId = null, $vnId = null, $itemId = null)
     {
         $this->setPrice($price);
         $this->setPosition($position);
-        $this->setCaption($caption);
         $this->setEnTitle($enTitle);
         $this->setEnDescription($enDescription);
         $this->setVnTitle($vnTitle);
@@ -106,23 +100,6 @@ class BilingualMenuItem
     }
 
     /**
-     * @return string
-     */
-    public function getCaption(): string
-    {
-        return $this->caption;
-    }
-
-    /**
-     * @param string $caption
-     */
-    public function setCaption(string $caption)
-    {
-        $this->caption = $caption;
-    }
-
-
-    /**
      * @return int
      */
     public function getCategoryId(): int
@@ -137,7 +114,6 @@ class BilingualMenuItem
     {
         $this->categoryId = $categoryId;
     }
-
 
     /**
      * @return mixed

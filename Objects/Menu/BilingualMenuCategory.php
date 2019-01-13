@@ -32,13 +32,26 @@ class BilingualMenuCategory
      */
     public $items;
 
-    public function __construct($enName, $vnName, $type, $position, $id = null)
+    /**
+     * @var ?DateTime
+     */
+    public $createdAt;
+
+    /**
+     * @var ?DateTime
+     */
+    public $editedAt;
+
+    public function __construct($enName, $vnName, $type, $position,
+                                $id = null, $createdAt = null, $editedAt = null)
     {
         $this->setEnName($enName);
         $this->setVnName($vnName);
         $this->setType($type);
         $this->setPosition($position);
         $this->setId($id);
+        $this->setCreatedAt($createdAt);
+        $this->setEditedAt($editedAt);
     }
 
     /**
@@ -140,5 +153,37 @@ class BilingualMenuCategory
     public function setPosition(int $position)
     {
         $this->position = $position;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEditedAt()
+    {
+        return $this->editedAt;
+    }
+
+    /**
+     * @param mixed $editedAt
+     */
+    public function setEditedAt($editedAt)
+    {
+        $this->editedAt = $editedAt;
     }
 }

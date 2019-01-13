@@ -80,12 +80,12 @@ class MenuAdminRepository
 
         $stmt = $this->mysqli->prepare(
             'INSERT INTO menu_item
-                (category_id, caption, price, category_position)
-                 VALUES (?, ?, ?, ?)'
+                (category_id, price, category_position)
+                 VALUES (?, ?, ?)'
         );
 
-        $stmt->bind_param('issi',
-            $item->categoryId, $item->caption, $item->price, $item->position);
+        $stmt->bind_param('isi',
+            $item->categoryId, $item->price, $item->position);
 
         $stmt->execute();
 
@@ -141,7 +141,7 @@ class MenuAdminRepository
         $results = false;
 
         $stmt = $this->mysqli->prepare(
-            'SELECT id, category_id, caption, price, category_position, created_at, edited_at
+            'SELECT id, category_id, price, category_position, created_at, edited_at
             FROM menu_item
             WHERE category_id = ?
             ORDER BY category_position ASC'
@@ -151,11 +151,11 @@ class MenuAdminRepository
 
         $stmt->execute();
 
-        $stmt->bind_result($id, $categoryId, $caption, $price, $categoryPosition, $createdAt, $editedAt);
+        $stmt->bind_result($id, $categoryId, $price, $categoryPosition, $createdAt, $editedAt);
 
-        while($stmt->fetch()) {
-            $results[] = new RawMenuItem($caption, $categoryId, $price, $categoryPosition,
-                $createdAt, $editedAt, $id);
+        while ($stmt->fetch()) {
+            $results[] = new RawMenuItem($categoryId, $price, $categoryPosition,
+                new DateTime($createdAt), new DateTime($editedAt), $id);
         }
 
         if ($stmt->errno) {
@@ -170,19 +170,21 @@ class MenuAdminRepository
      * @param RawMenuItem $item
      * @return bool
      */
-    public function patchMenuItem(RawMenuItem $item)
+    public function patchMenuItemPosition(RawMenuItem $item)
     {
         $this->mysqli->autocommit(FALSE);
+
+        $editedAt = date('Y-m-d H:i:s');
 
         $result = false;
 
         $stmt = $this->mysqli->prepare(
             'UPDATE menu_item
-            SET category_position = ?
+            SET category_position = ?, edited_at = ?
             WHERE id = ?'
         );
 
-        $stmt->bind_param('ii', $item->position, $item->id);
+        $stmt->bind_param('isi', $item->position, $editedAt, $item->id);
 
         $stmt->execute();
 
@@ -196,5 +198,66 @@ class MenuAdminRepository
         $stmt->close();
 
         return $result;
+    }
+
+    /**
+     * This function gets all active categories and on success returns them in an array of BilingualMenuCategory
+     * @return BilingualMenuCategory[]|bool
+     */
+    public function getAllCategories()
+    {
+        $categories = [];
+
+        $stmt = $this->mysqli->prepare(
+            'SELECT id, en_name, vn_name, type, page_position, created_at, edited_at
+            FROM menu_category
+            WHERE active = 1
+            ORDER BY page_position ASC'
+        );
+
+        $stmt->execute();
+
+        $stmt->bind_result($id, $enName, $vnName, $type, $pagePosition, $createdAt, $editedAt);
+
+        while ($stmt->fetch()) {
+            $categories[] = new BilingualMenuCategory($enName, $vnName, $type, $pagePosition,
+                $id, $createdAt, $editedAt);
+        }
+
+        if ($stmt->errno) {
+            $categories = false;
+        }
+
+        return $categories;
+    }
+
+    /**
+     * This function patches a menu category position in a category
+     * @param BilingualMenuCategory $category
+     * @return bool
+     */
+    public function patchCategoryPosition(BilingualMenuCategory $category)
+    {
+        $check = true;
+
+        $editedAt = date('Y-m-d H:i:s');
+
+        $stmt = $this->mysqli->prepare(
+            'UPDATE menu_category
+            SET page_position = ?, edited_at = ?
+            WHERE id = ?'
+        );
+
+        $stmt->bind_param('isi', $category->position, $editedAt, $category->id);
+
+        $stmt->execute();
+
+        if ($stmt->errno) {
+            $check = false;
+        }
+
+        $stmt->close();
+
+        return $check;
     }
 }

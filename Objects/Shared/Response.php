@@ -51,7 +51,9 @@ class Response
      */
     public function setMessage(Message $message)
     {
-        $this->message = $message;
+        if($message->hasMessage()) {
+            $this->message = $message;
+        }
     }
 
     /**
@@ -76,9 +78,14 @@ class Response
      */
     public function mergeResponse(Response $response)
     {
-        if ($this->success === true) {
+        if (isset($this->success)) {
+            if ($this->success === true) {
+                $this->setSuccess($response->success);
+            }
+        } elseif (isset($response->success)) {
             $this->setSuccess($response->success);
         }
+
         if (isset($this->data)) {
             $this->addData($response->data);
         } else {
@@ -87,7 +94,7 @@ class Response
 
         if ($this->hasMessages()) {
             $this->message->mergeMessages($response->message);
-        } else {
+        } elseif($response->hasMessages()) {
             $this->setMessage($response->message);
         }
     }

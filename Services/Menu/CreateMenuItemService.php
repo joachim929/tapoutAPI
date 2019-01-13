@@ -50,6 +50,12 @@ class CreateMenuItemService
         $this->response = new Response();
     }
 
+    /**
+     * This function adds a new menu item into the database and on success calls functions that will insert
+     * the menu item details. It returns Response which should contain data, and any warning/error messages
+     * @param BilingualMenuItem $data
+     * @return Response
+     */
     public function addNewItem(BilingualMenuItem $data)
     {
         $itemId = $this->adminRepo->newItem($data);
@@ -70,8 +76,13 @@ class CreateMenuItemService
         return $this->response;
     }
 
-    // @todo: Test this, also curious to see how it reacts when adding an item, which gets the 'correct' position
-    // @todo -      Will it be the new item or the pre-existing item
+    /**
+     * @todo: Fix so that if a newly assigned item has been added that it retains the category position,
+     * @todo -      older items should all move up one position
+     * This function assigns a new page position if it isn't the same as index
+     * This is so that there are no duplicate category positions
+     * @param BilingualMenuItem $data
+     */
     private function reorderMenuItems(BilingualMenuItem $data)
     {
         $menuItems = $this->adminRepo->getAllMenuItemsByCategory($data->categoryId);
@@ -81,21 +92,22 @@ class CreateMenuItemService
             foreach ($menuItems as $key => $menuItem) {
                 if ($menuItem->position !== $index) {
                     $menuItem->setPosition($index);
-                    if(!$this->adminRepo->patchMenuItem($menuItem)) {
+                    if(!$this->adminRepo->patchMenuItemPosition($menuItem)) {
                         $this->message->addWarning('Was an error updating menu item with caption: '
                             . $menuItem->getCaption());
                     }
                 }
+                $index++;
             }
         } else {
             $this->message->addWarning('Failed to get menu items by category, therefore couldn\'t reorder');
         }
-
-
-
-        return $menuItems;
     }
 
+    /**
+     * This function insert menu item details into the database and checks that it succeeded in doing so
+     * @param BilingualMenuItem $data
+     */
     private function addNewItemDetails(BilingualMenuItem $data)
     {
         $enItemId = $this->adminRepo->newItemDetails($data->itemId, $data->enTitle,

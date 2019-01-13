@@ -99,7 +99,7 @@ class MenuRepository
 
         $stmt = $this->mysqli->prepare(
             'SELECT cat.id AS catId, cat.en_name AS catEnName, cat.vn_name AS catVnName, cat.type AS catType, cat.page_position AS pagePosition,
-            item.id AS itemId, item.caption AS itemCaption, item.price AS itemPrice, item.category_position AS catPosition,
+            item.id AS itemId, item.price AS itemPrice, item.category_position AS catPosition,
             enDetails.id AS enDetailId, enDetails.title AS enDetailTitle, enDetails.description AS enDetailDescription, 
             vnDetails.id AS vnDetailId, vnDetails.title AS vnDetailTitle, vnDetails.description AS vnDetailDescription
             FROM menu_category AS cat
@@ -114,11 +114,11 @@ class MenuRepository
 
         $stmt->execute();
 
-        $stmt->bind_result($catId, $catEnName, $catVnName, $catType, $pagePosition, $itemId, $itemCaption, $itemPrice, $catPosition,
+        $stmt->bind_result($catId, $catEnName, $catVnName, $catType, $pagePosition, $itemId, $itemPrice, $catPosition,
             $enId, $enTitle, $enDescription, $vnId, $vnTitle, $vnDescription);
 
         while ($stmt->fetch()) {
-            $menuItem = new BilingualMenuItem($itemPrice, $catPosition, $itemCaption,
+            $menuItem = new BilingualMenuItem($itemPrice, $catPosition,
                 $enTitle, $vnTitle, $enDescription, $vnDescription, $enId, $vnId, $itemId);
             if (!isset($results[$catId])) {
                 $results[$catId] = new BilingualMenuCategory($catEnName, $catVnName, $catType, $pagePosition, $catId);
