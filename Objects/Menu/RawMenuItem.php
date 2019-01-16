@@ -33,8 +33,9 @@ class RawMenuItem
      */
     public $position;
 
-    public function __construct($categoryId, $price, $position, $createdAt = null, $editedAt = null, $id = null)
+    public function __construct ($categoryId, $price, $position, $createdAt = null, $editedAt = null, $id = null)
     {
+
         $this->setCategoryId($categoryId);
         $this->setCreatedAt($createdAt);
         $this->setEditedAt($editedAt);
@@ -46,96 +47,109 @@ class RawMenuItem
     /**
      * @return int|null
      */
-    public function getId()
+    public function getId ()
     {
+
         return $this->id;
     }
 
     /**
      * @param int|null $id
      */
-    public function setId($id)
+    public function setId ($id)
     {
+
         $this->id = $id;
     }
 
     /**
      * @return int
      */
-    public function getCategoryId(): int
+    public function getCategoryId () : int
     {
+
         return $this->categoryId;
     }
 
     /**
      * @param int $categoryId
      */
-    public function setCategoryId(int $categoryId)
+    public function setCategoryId (int $categoryId)
     {
+
         $this->categoryId = $categoryId;
     }
 
     /**
      * @return string
      */
-    public function getPrice(): string
+    public function getPrice () : string
     {
+
         return $this->price;
     }
 
     /**
      * @param string $price
      */
-    public function setPrice(string $price)
+    public function setPrice (string $price)
     {
+
         $this->price = $price;
     }
 
     /**
      * @return int
      */
-    public function getPosition(): int
+    public function getPosition () : int
     {
+
         return $this->position;
     }
 
     /**
      * @param int $position
      */
-    public function setPosition(int $position)
+    public function setPosition (int $position)
     {
+
         $this->position = $position;
     }
 
     /**
      * @return DateTime|null
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt () : DateTime
     {
+
         return $this->createdAt;
     }
 
     /**
      * @param DateTime|null $createdAt
      */
-    public function setCreatedAt(DateTime $createdAt)
+    public function setCreatedAt (DateTime $createdAt)
     {
+
         $this->createdAt = $createdAt;
     }
 
     /**
      * @return DateTime|null
      */
-    public function getEditedAt()
+    public function getEditedAt ()
     {
+
         return $this->editedAt;
     }
 
     /**
      * @param DateTime|null $editedAt
      */
-    public function setEditedAt($editedAt)
+    public function setEditedAt ($editedAt)
     {
+
         $this->editedAt = $editedAt;
     }
+
 }

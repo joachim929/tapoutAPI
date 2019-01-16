@@ -1,6 +1,4 @@
 <?php
-// Services
-require_once __DIR__ . '/../Shared/SortingService.php';
 
 // Objects
 require_once __DIR__ . '/../../Objects/Shared/Message.php';
@@ -8,6 +6,9 @@ require_once __DIR__ . '/../../Objects/Shared/Message.php';
 // Repos
 require_once __DIR__ . '/../../Repository/Menu/MenuDeleteRepository.php';
 require_once __DIR__ . '/../../Repository/Menu/MenuReadRepository.php';
+
+// Services
+require_once __DIR__ . '/../Shared/SortingService.php';
 
 class MenuDeleteService
 {

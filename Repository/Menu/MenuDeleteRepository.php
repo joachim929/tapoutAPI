@@ -9,23 +9,24 @@ require_once __DIR__ . '/../../Objects/Menu/BilingualMenuItem.php';
 class MenuDeleteRepository
 {
 
+    // Variables
+
     /**
      * @var
      */
     private $connectDb;
-
     /**
      * @var ConnectDb|null
      */
     private $conn;
-
     /**
      * @var mysqli
      */
     private $mysqli;
 
-    public function __construct()
+    public function __construct ()
     {
+
         $this->connectDb = new ConnectDb();
         $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
@@ -36,8 +37,9 @@ class MenuDeleteRepository
      * @param int $id
      * @return bool
      */
-    public function deleteDescription(int $id)
+    public function deleteDescription (int $id)
     {
+
         $result = true;
 
         $this->mysqli->autocommit(FALSE);
@@ -68,8 +70,9 @@ class MenuDeleteRepository
      * @param int $id
      * @return bool
      */
-    public function deleteItem(int $id)
+    public function deleteItem (int $id)
     {
+
         $result = true;
 
         $this->mysqli->autocommit(FALSE);
@@ -99,8 +102,9 @@ class MenuDeleteRepository
      * @param int $id
      * @return bool
      */
-    public function deleteCategory(int $id)
+    public function deleteCategory (int $id)
     {
+
         $result = true;
 
         $this->mysqli->autocommit(FALSE);

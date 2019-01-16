@@ -2,6 +2,7 @@
 
 class MenuItem
 {
+
     /**
      * @var ?string;
      */
@@ -27,8 +28,9 @@ class MenuItem
      */
     public $title;
 
-    public function __construct($description, $position, $price, $title, $id = null)
+    public function __construct ($description, $position, $price, $title, $id = null)
     {
+
         $this->setDescription($description);
         $this->setId($id);
         $this->setPosition($position);
@@ -39,80 +41,91 @@ class MenuItem
     /**
      * @return mixed
      */
-    public function getDescription()
+    public function getDescription ()
     {
+
         return $this->description;
     }
 
     /**
      * @param mixed $description
      */
-    public function setDescription($description)
+    public function setDescription ($description)
     {
+
         $this->description = $description;
     }
 
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId ()
     {
+
         return $this->id;
     }
 
     /**
      * @param mixed $id
      */
-    public function setId($id)
+    public function setId ($id)
     {
+
         $this->id = $id;
     }
 
     /**
      * @return int
      */
-    public function getPosition(): int
+    public function getPosition () : int
     {
+
         return $this->position;
     }
 
     /**
      * @param int $position
      */
-    public function setPosition(int $position)
+    public function setPosition (int $position)
     {
+
         $this->position = $position;
     }
 
     /**
      * @return string
      */
-    public function getPrice(): string
+    public function getPrice () : string
     {
+
         return $this->price;
     }
 
     /**
      * @param string $price
      */
-    public function setPrice(string $price)
+    public function setPrice (string $price)
     {
+
         $this->price = $price;
     }
 
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle () : string
     {
+
         return $this->title;
     }
 
     /**
      * @param string $title
      */
-    public function setTitle(string $title)
+    public function setTitle (string $title)
     {
+
         $this->title = $title;
     }
+
 }

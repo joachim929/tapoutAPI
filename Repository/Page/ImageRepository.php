@@ -1,24 +1,32 @@
 <?php
 require_once __DIR__ . '/../../ConnectDb.php';
 
+// Objects
 require_once __DIR__ . '/../../Objects/Image/ImageList.php';
+
+// Services
 
 class ImageRepository
 {
+
+    // Variables
+
     /**
      * @var ConnectDb
      */
     private $conn;
-
     /**
      * @var mysqli
      */
     private $mysqli;
-
+    /**
+     * @var ConnectDb
+     */
     private $connectDb;
 
-    public function __construct()
+    public function __construct ()
     {
+
         $this->connectDb = new ConnectDb();
         $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
@@ -29,8 +37,9 @@ class ImageRepository
      * @param int $pageId
      * @return array
      */
-    public function getPageImagesByPage(int $pageId)
+    public function getPageImagesByPage (int $pageId)
     {
+
         $pageImages = array();
 
         $stmt = $this->mysqli->prepare(
@@ -67,8 +76,9 @@ class ImageRepository
      * @param int $pageId
      * @return bool
      */
-    public function updateImagePagePosition(int $id, int $pagePosition, int $pageId)
+    public function updateImagePagePosition (int $id, int $pagePosition, int $pageId)
     {
+
         $result = true;
 
         $stmt = $this->mysqli->prepare(
@@ -92,8 +102,9 @@ class ImageRepository
     /** @todo: not in use
      * @return array|null
      */
-    public function getImageList()
+    public function getImageList ()
     {
+
         $imageList = array();
 
         $stmt = $this->mysqli->prepare(
@@ -106,11 +117,11 @@ class ImageRepository
 
         $stmt->bind_result($id, $imgUrl, $createdAt);
 
-        while($stmt->fetch()) {
+        while ($stmt->fetch()) {
             $imageList[] = new ImageList($id, $imgUrl, $createdAt);
         }
 
-        if($stmt->errno) {
+        if ($stmt->errno) {
             $imageList = null;
         }
 
@@ -118,4 +129,5 @@ class ImageRepository
 
         return $imageList;
     }
+
 }

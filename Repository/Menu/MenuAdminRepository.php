@@ -10,23 +10,24 @@ require_once __DIR__ . '/../../Objects/Menu/RawMenuItem.php';
 class MenuAdminRepository
 {
 
+    // Variables
+
     /**
      * @var
      */
     private $connectDb;
-
     /**
      * @var ConnectDb|null
      */
     private $conn;
-
     /**
      * @var mysqli
      */
     private $mysqli;
 
-    public function __construct()
+    public function __construct ()
     {
+
         $this->connectDb = new ConnectDb();
         $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
@@ -41,8 +42,9 @@ class MenuAdminRepository
      * @param string $language
      * @return bool|int
      */
-    public function newItemDetails(int $itemId, string $title, string $description, string $language)
+    public function newItemDetails (int $itemId, string $title, string $description, string $language)
     {
+
         $this->mysqli->autocommit(FALSE);
 
         $stmt = $this->mysqli->prepare(
@@ -75,8 +77,9 @@ class MenuAdminRepository
      * @param $item
      * @return bool|int
      */
-    public function newItem(BilingualMenuItem $item)
+    public function newItem (BilingualMenuItem $item)
     {
+
         $this->mysqli->autocommit(FALSE);
 
         $stmt = $this->mysqli->prepare(
@@ -109,8 +112,9 @@ class MenuAdminRepository
      * @param BilingualMenuCategory $params
      * @return bool|int
      */
-    public function newCategory(BilingualMenuCategory $params)
+    public function newCategory (BilingualMenuCategory $params)
     {
+
         $stmt = $this->mysqli->prepare(
             'INSERT INTO menu_category
             (en_name, vn_name, type, page_position)
@@ -137,8 +141,9 @@ class MenuAdminRepository
      * @param $catId
      * @return RawMenuItem[]|bool
      */
-    public function getAllMenuItemsByCategory($catId)
+    public function getAllMenuItemsByCategory ($catId)
     {
+
         $results = false;
 
         $stmt = $this->mysqli->prepare(
@@ -171,8 +176,9 @@ class MenuAdminRepository
      * @param RawMenuItem $item
      * @return bool
      */
-    public function patchMenuItemPosition(RawMenuItem $item)
+    public function patchMenuItemPosition (RawMenuItem $item)
     {
+
         $this->mysqli->autocommit(FALSE);
 
         $editedAt = date('Y-m-d H:i:s');
@@ -205,8 +211,9 @@ class MenuAdminRepository
      * This function gets all active categories and on success returns them in an array of BilingualMenuCategory
      * @return BilingualMenuCategory[]|bool
      */
-    public function getAllCategories()
+    public function getAllCategories ()
     {
+
         $categories = [];
 
         $stmt = $this->mysqli->prepare(
@@ -237,8 +244,9 @@ class MenuAdminRepository
      * @param BilingualMenuCategory $category
      * @return bool
      */
-    public function patchCategoryPosition(BilingualMenuCategory $category)
+    public function patchCategoryPosition (BilingualMenuCategory $category)
     {
+
         $check = true;
 
         $editedAt = date('Y-m-d H:i:s');

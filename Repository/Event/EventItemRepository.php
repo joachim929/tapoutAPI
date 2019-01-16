@@ -1,22 +1,25 @@
 <?php
 require_once __DIR__ . '/../../ConnectDb.php';
 
+// Objects
 require_once __DIR__ . '/../../Objects/Events/EventItem.php';
 
 class EventItemRepository extends ConnectDb
 {
+
+    // Variables
     /**
      * @var ConnectDb|null
      */
     private $conn;
-
     /**
      * @var mysqli
      */
     private $mysqli;
 
-    public function __construct()
+    public function __construct ()
     {
+
         ConnectDb::__construct();
         $this->conn = ConnectDb::getInstance();
         $this->mysqli = $this->conn->getConnection();
@@ -25,15 +28,16 @@ class EventItemRepository extends ConnectDb
     /**
      * @todo: Not in use yet!
      * This function gets category items by id makes sure it has a later start date than the one passed if its set
-     * @param int $catId
+     * @param int  $catId
      * @param null $minDate
      * @return array|null
      */
-    public function getItemsByCategoryId(int $catId, $minDate = null)
+    public function getItemsByCategoryId (int $catId, $minDate = null)
     {
+
         $items = array();
 
-        if($minDate === null) {
+        if ($minDate === null) {
             $minDate = 0;
         }
 
@@ -52,12 +56,12 @@ class EventItemRepository extends ConnectDb
         $stmt->bind_result($id, $categoryId, $heading, $description, $language, $tag, $startTime, $endTime,
             $createdAt, $startDate, $editedAt, $categoryPosition);
 
-        while($stmt->fetch()) {
+        while ($stmt->fetch()) {
             $items[] = new EventItem($categoryId, $heading, $description, $language, $tag, $categoryPosition, $startDate,
                 $id, $createdAt, $editedAt, $startTime, $endTime);
         }
 
-        if($stmt->errno) {
+        if ($stmt->errno) {
             $items = null;
         }
 

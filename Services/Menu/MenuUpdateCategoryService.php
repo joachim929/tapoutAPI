@@ -10,13 +10,12 @@ require_once __DIR__ . '/../Shared/SortingService.php';
 
 class MenuUpdateCategoryService
 {
+
     // Services
     /**
      * @var SortingService
      */
     private $sortingService;
-
-    // Repos
 
     // Variables
     /**
@@ -38,4 +37,5 @@ class MenuUpdateCategoryService
         $this->message = new Message();
         $this->response = new Response();
     }
+
 }

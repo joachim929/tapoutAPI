@@ -1,19 +1,21 @@
 <?php
-// Services
-require_once __DIR__ . '/../Shared/SortingService.php';
 
 // Objects
 
 // Repos
 require_once __DIR__ . '/../../Repository/Menu/MenuReadRepository.php';
 
+// Services
+require_once __DIR__ . '/../Shared/SortingService.php';
+
 class MenuGuestService
 {
-    // Services
-    private $sortingService;
 
     //Repos
     private $guestRepo;
+
+    // Services
+    private $sortingService;
 
     public function __construct()
     {
@@ -29,4 +31,5 @@ class MenuGuestService
         $results = $this->guestRepo->getMenuByLanguage($language);
         return $this->sortingService->removeArrayKeys($results);
     }
+
 }

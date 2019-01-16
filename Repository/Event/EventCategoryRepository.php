@@ -1,23 +1,25 @@
 <?php
 require_once __DIR__ . '/../../ConnectDb.php';
 
-//Objects
+// Objects
 require_once __DIR__ . '/../../Objects/Events/EventCategory.php';
 
 class EventCategoryRepository extends ConnectDb
 {
+
+    // Variables
     /**
      * @var ConnectDb|null
      */
     private $conn;
-
     /**
      * @var mysqli
      */
     private $mysqli;
 
-    public function __construct()
+    public function __construct ()
     {
+
         ConnectDb::__construct();
         $this->conn = ConnectDb::getInstance();
         $this->mysqli = $this->conn->getConnection();
@@ -29,8 +31,9 @@ class EventCategoryRepository extends ConnectDb
      * @param string $lang
      * @return array|null
      */
-    public function getCategoriesByLang(string $lang)
+    public function getCategoriesByLang (string $lang)
     {
+
         $categories = array();
 
         $stmt = $this->mysqli->prepare(
@@ -47,11 +50,11 @@ class EventCategoryRepository extends ConnectDb
 
         $stmt->bind_result($id, $name, $type, $language, $tag, $createdAt, $editedAt, $pagePosition);
 
-        while($stmt->fetch()) {
+        while ($stmt->fetch()) {
             $categories[] = new EventCategory($name, $type, $language, $tag, $pagePosition, $id, $createdAt, $editedAt);
         }
 
-        if($stmt->errno) {
+        if ($stmt->errno) {
             $categories = null;
         }
 
@@ -65,8 +68,9 @@ class EventCategoryRepository extends ConnectDb
      * This function gets all event categories
      * @return array|null
      */
-    public function cGetCategories()
+    public function cGetCategories ()
     {
+
         $categories = array();
 
         $stmt = $this->mysqli->prepare(
@@ -80,11 +84,11 @@ class EventCategoryRepository extends ConnectDb
 
         $stmt->bind_result($id, $name, $type, $language, $tag, $createdAt, $editedAt, $pagePosition);
 
-        while($stmt->fetch()) {
+        while ($stmt->fetch()) {
             $categories[] = new EventCategory($name, $type, $language, $tag, $pagePosition, $id, $createdAt, $editedAt);
         }
 
-        if($stmt->errno) {
+        if ($stmt->errno) {
             $categories = null;
         }
 
@@ -98,8 +102,9 @@ class EventCategoryRepository extends ConnectDb
      * This function gets all category names
      * @return array|null
      */
-    public function getNames()
+    public function getNames ()
     {
+
         $names = array();
 
         $stmt = $this->mysqli->prepare(
@@ -128,8 +133,9 @@ class EventCategoryRepository extends ConnectDb
      * This function gets all category ids
      * @return array|null
      */
-    public function getIds()
+    public function getIds ()
     {
+
         $ids = array();
 
         $stmt = $this->mysqli->prepare(
@@ -160,8 +166,9 @@ class EventCategoryRepository extends ConnectDb
      * @param $position
      * @return bool
      */
-    public function patchCategoryPosition(int $id, int $position)
+    public function patchCategoryPosition (int $id, int $position)
     {
+
         $check = true;
 
         $stmt = $this->mysqli->prepare(
@@ -173,7 +180,7 @@ class EventCategoryRepository extends ConnectDb
 
         $stmt->execute();
 
-        if($stmt->errno) {
+        if ($stmt->errno) {
             $check = false;
         }
 
@@ -188,8 +195,9 @@ class EventCategoryRepository extends ConnectDb
      * @param $id
      * @return bool
      */
-    public function setInactive(int $id)
+    public function setInactive (int $id)
     {
+
         $check = true;
 
         $stmt = $this->mysqli->prepare(
@@ -201,7 +209,7 @@ class EventCategoryRepository extends ConnectDb
 
         $stmt->execute();
 
-        if($stmt->errno) {
+        if ($stmt->errno) {
             $check = false;
         }
 

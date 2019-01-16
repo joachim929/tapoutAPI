@@ -1,26 +1,32 @@
 <?php
 require_once __DIR__ . '/../../ConnectDb.php';
 
+// Objects
 require_once __DIR__ . '/../../Objects/Page/PageItem.php';
 require_once __DIR__ . '/../../Objects/Page/PageImage.php';
 
 //@todo split into image and page item?
 class PageItemRepository
 {
+
+    // Variables
+
     /**
      * @var ConnectDb|null
      */
     private $conn;
-
+    /**
+     * @var ConnectDb
+     */
     private $connectDb;
-
     /**
      * @var mysqli
      */
     private $mysqli;
 
-    public function __construct()
+    public function __construct ()
     {
+
         $this->connectDb = new ConnectDb();
         $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
@@ -31,8 +37,9 @@ class PageItemRepository
      * @param int $pageId
      * @return array|null
      */
-    public function getPageItemsByPage(int $pageId)
+    public function getPageItemsByPage (int $pageId)
     {
+
         $pageItems = array();
 
         $stmt = $this->mysqli->prepare(
@@ -64,8 +71,9 @@ class PageItemRepository
      * This function gets all info from tapout_page_item table
      * @return array|null
      */
-    public function getPageItems()
+    public function getPageItems ()
     {
+
         $pageItems = array();
 
         $stmt = $this->mysqli->prepare(
@@ -95,8 +103,9 @@ class PageItemRepository
      * Finds highest id value and returns it
      * @return int|null
      */
-    public function getLastId()
+    public function getLastId ()
     {
+
         $id = null;
 
         $stmt = $this->mysqli->prepare(
@@ -123,8 +132,9 @@ class PageItemRepository
      * @param $tag
      * @return array|null
      */
-    public function getItemsByTag($tag)
+    public function getItemsByTag ($tag)
     {
+
         $result = null;
         $stmt = $this->mysqli->prepare(
             'SELECT id, page_id, heading, content, created_at, edited_at, language, tag, page_position
@@ -164,8 +174,9 @@ class PageItemRepository
      * @param $tag
      * @return bool
      */
-    public function deleteByTag($tag)
+    public function deleteByTag ($tag)
     {
+
         $result = true;
         $stmt = $this->mysqli->prepare(
             'DELETE FROM tapout_page_item WHERE tag = ?'
@@ -191,8 +202,9 @@ class PageItemRepository
      * @param int $pageId
      * @return bool
      */
-    public function updateItemPagePosition(int $id, int $pagePosition, int $pageId)
+    public function updateItemPagePosition (int $id, int $pagePosition, int $pageId)
     {
+
         $result = true;
 
         $stmt = $this->mysqli->prepare(

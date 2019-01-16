@@ -48,8 +48,9 @@ class MenuUpdateItemService
      */
     private $response;
 
-    public function __construct()
+    public function __construct ()
     {
+
         // Services
         $this->sortingService = new SortingService();
 
@@ -62,13 +63,15 @@ class MenuUpdateItemService
         $this->response = new Response();
     }
 
-    public function updateItem(BilingualMenuItem $item)
+    public function updateItem (BilingualMenuItem $item)
     {
+
         $this->item = $item;
     }
 
-    private function checkPosition()
+    private function checkPosition ()
     {
+
         $positionItems = $this->readRepo->getItemsByCategoryAndPosition($this->item->categoryId, $this->item->position);
         if ($positionItems === false) {
             $this->message->addWarning('Something went wrong checking other item\'s category position');
@@ -77,7 +80,7 @@ class MenuUpdateItemService
         }
     }
 
-    private function updatePosition()
+    private function updatePosition ()
     {
 
     }

@@ -5,23 +5,24 @@ require_once __DIR__ . '/../../ConnectDb.php';
 class MenuReadRepository
 {
 
+    // Variables
+
     /**
      * @var
      */
     private $connectDb;
-
     /**
      * @var ConnectDb|null
      */
     private $conn;
-
     /**
      * @var mysqli
      */
     private $mysqli;
 
-    public function __construct()
+    public function __construct ()
     {
+
         $this->connectDb = new ConnectDb();
         $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
@@ -32,8 +33,9 @@ class MenuReadRepository
      * @param int $itemId
      * @return bool|BilingualMenuItem
      */
-    public function getItemById(int $itemId)
+    public function getItemById (int $itemId)
     {
+
         $result = false;
 
         $stmt = $this->mysqli->prepare(
@@ -52,7 +54,7 @@ class MenuReadRepository
 
         $stmt->bind_result($itemId, $itemPrice, $catPosition, $enId, $enTitle, $enDescription, $vnId, $vnTitle, $vnDescription);
 
-        while($stmt->fetch()) {
+        while ($stmt->fetch()) {
             $result[] = new BilingualMenuItem($itemPrice, $catPosition, $enTitle, $vnTitle,
                 $enDescription, $vnDescription, $enId, $vnId, $itemId);
         }
@@ -79,8 +81,9 @@ class MenuReadRepository
      * @param $language
      * @return array|null
      */
-    public function getMenuByLanguage(string $language)
+    public function getMenuByLanguage (string $language)
     {
+
         $results = array();
 
         $stmt = $this->mysqli->prepare(
@@ -104,7 +107,8 @@ class MenuReadRepository
 
         while ($stmt->fetch()) {
             if ($catPosition !== null && $detailId !== null && $detailTitle !== null &&
-                $itemId !== null && $itemPrice !== null) {
+                $itemId !== null && $itemPrice !== null
+            ) {
                 $menuItem = new MenuItem($detailDescription, $catPosition, $itemPrice, $detailTitle, $detailId);
                 if ($language === 'en') {
                     if (!isset($results[$catId])) {
@@ -133,8 +137,9 @@ class MenuReadRepository
      * @param $categoryId
      * @return BilingualMenuCategory|null
      */
-    public function getAllItemsByCategory(int $categoryId)
+    public function getAllItemsByCategory (int $categoryId)
     {
+
         $result = false;
 
         $stmt = $this->mysqli->prepare(
@@ -186,8 +191,9 @@ class MenuReadRepository
      * This function gets all menu items, categories and descriptions and puts them in an array of objects
      * @return array|null
      */
-    public function getBilingualMenu()
+    public function getBilingualMenu ()
     {
+
         $results = array();
 
         $stmt = $this->mysqli->prepare(
@@ -241,8 +247,9 @@ class MenuReadRepository
      * @param int $categoryPosition
      * @return RawMenuItem[]|bool
      */
-    public function getItemsByCategoryAndPosition(int $categoryId, int $categoryPosition)
+    public function getItemsByCategoryAndPosition (int $categoryId, int $categoryPosition)
     {
+
         $result = false;
 
         $stmt = $this->mysqli->prepare(
@@ -258,7 +265,7 @@ class MenuReadRepository
 
         $stmt->bind_result($id, $catId, $price, $catPosition, $createdAt, $editedAt);
 
-        while($stmt->fetch()) {
+        while ($stmt->fetch()) {
             $result[] = new RawMenuItem($catId, $price, $catPosition, $createdAt, $editedAt, $id);
         }
 

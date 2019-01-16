@@ -1,5 +1,6 @@
 <?php
 
+// Objects
 require_once __DIR__ . '/../../Objects/Shared/Message.php';
 
 class Response
@@ -20,38 +21,43 @@ class Response
     /**
      * @return mixed
      */
-    public function getData()
+    public function getData ()
     {
+
         return $this->data;
     }
 
     /**
      * @param mixed $data
      */
-    public function setData($data)
+    public function setData ($data)
     {
+
         $this->data = $data;
     }
 
-    public function addData($data)
+    public function addData ($data)
     {
+
         $this->data[] = $data;
     }
 
     /**
      * @return Message
      */
-    public function getMessage(): Message
+    public function getMessage () : Message
     {
+
         return $this->message;
     }
 
     /**
      * @param Message $message
      */
-    public function setMessage(Message $message)
+    public function setMessage (Message $message)
     {
-        if($message->hasMessage()) {
+
+        if ($message->hasMessage()) {
             $this->message = $message;
         }
     }
@@ -59,16 +65,18 @@ class Response
     /**
      * @return bool
      */
-    public function isSuccess(): bool
+    public function isSuccess () : bool
     {
+
         return $this->success;
     }
 
     /**
      * @param bool $success
      */
-    public function setSuccess(bool $success)
+    public function setSuccess (bool $success)
     {
+
         $this->success = $success;
     }
 
@@ -76,8 +84,9 @@ class Response
      * This function merges two Response objects
      * @param Response $response
      */
-    public function mergeResponse(Response $response)
+    public function mergeResponse (Response $response)
     {
+
         if (isset($this->success)) {
             if ($this->success === true) {
                 $this->setSuccess($response->success);
@@ -94,7 +103,7 @@ class Response
 
         if ($this->hasMessages()) {
             $this->message->mergeMessages($response->message);
-        } elseif($response->hasMessages()) {
+        } elseif ($response->hasMessages()) {
             $this->setMessage($response->message);
         }
     }
@@ -103,8 +112,9 @@ class Response
      * This function checks if Message has any messages
      * @return bool
      */
-    public function hasMessages()
+    public function hasMessages ()
     {
+
         $check = false;
         if (isset($this->message)) {
             $check = true;

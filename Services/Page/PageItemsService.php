@@ -2,39 +2,58 @@
 
 require_once __DIR__ . '/../../ConnectDb.php';
 
-require_once __DIR__ . '/../../Repository/Page/PageItemRepository.php';
-require_once __DIR__ . '/../../Repository/Page/ImageRepository.php';
-
-//Services
-require_once '../Shared/SortingService.php';
-
-//Objects
+// Objects
 require_once __DIR__ . '/../../Objects/Page/PageItem.php';
 require_once __DIR__ . '/../../Objects/Page/PageImage.php';
 require_once __DIR__ . '/../../Objects/Page/BilingualItem.php';
 require_once __DIR__ . '/../../Objects/Page/BilingualImage.php';
 
-class PageItemsService extends ConnectDb
+// Repos
+require_once __DIR__ . '/../../Repository/Page/PageItemRepository.php';
+require_once __DIR__ . '/../../Repository/Page/ImageRepository.php';
+
+// Services
+require_once '../Shared/SortingService.php';
+
+class PageItemsService
 {
+    // Repos
+
+    /**
+     * @var PageItemRepository
+     */
+    private $pageItemRepo;
+    /**
+     * @var ImageRepository
+     */
+    private $imageRepo;
+
+
+    // Services
+    /**
+     * @var SortingService
+     */
+    private $sortingService;
+
+
+    // Variables
+    /**
+     * @var
+     */
+    private $connectDb;
     /**
      * @var ConnectDb|null
      */
     private $conn;
-
     /**
      * @var mysqli
      */
     private $mysqli;
 
-    private $pageItemRepo;
-    private $imageRepo;
-
-    private $sortingService;
-
     public function __construct()
     {
-        ConnectDb::__construct();
-        $this->conn = ConnectDb::getInstance();
+        $this->connectDb = new ConnectDb();
+        $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
 
         // Repos

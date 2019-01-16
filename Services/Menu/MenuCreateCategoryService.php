@@ -5,11 +5,11 @@ require_once __DIR__ . '/../../Objects/Menu/BilingualMenuCategory.php';
 require_once __DIR__ . '/../../Objects/Shared/Message.php';
 require_once __DIR__ . '/../../Objects/Shared/Response.php';
 
-// Services
-require_once __DIR__ . '/../Shared/SortingService.php';
-
 // Repos
 require_once __DIR__ . '/../../Repository/Menu/MenuAdminRepository.php';
+
+// Services
+require_once __DIR__ . '/../Shared/SortingService.php';
 
 class MenuCreateCategoryService
 {
@@ -111,4 +111,5 @@ class MenuCreateCategoryService
 
         return $newCategory;
     }
+
 }

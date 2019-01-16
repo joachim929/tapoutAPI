@@ -1,19 +1,30 @@
 <?php
-// Services
-require_once __DIR__ . '/../Shared/SortingService.php';
 
 // Repos
 require_once __DIR__ . '/../../Repository/Menu/MenuCategoryRepository.php';
 require_once __DIR__ . '/../../Repository/Menu/MenuReadRepository.php';
 
+// Services
+require_once __DIR__ . '/../Shared/SortingService.php';
+
 class MenuAdminReadService
 {
-    // Services
-    private $sortingService;
 
     // Repos
+    /**
+     * @var MenuReadRepository
+     */
     private $guestRepo;
+    /**
+     * @var MenuCategoryRepository
+     */
     private $menuCatRepo;
+
+    // Services
+    /**
+     * @var SortingService
+     */
+    private $sortingService;
 
     public function __construct()
     {
@@ -35,4 +46,5 @@ class MenuAdminReadService
     {
         return $this->menuCatRepo->getCategories();
     }
+
 }
