@@ -79,7 +79,7 @@ class MenuReadRepository
      * @param $language
      * @return array|null
      */
-    public function getMenuByLanguage($language)
+    public function getMenuByLanguage(string $language)
     {
         $results = array();
 
@@ -133,7 +133,7 @@ class MenuReadRepository
      * @param $categoryId
      * @return BilingualMenuCategory|null
      */
-    public function getAllItemsByCategory($categoryId)
+    public function getAllItemsByCategory(int $categoryId)
     {
         $result = false;
 
@@ -233,6 +233,40 @@ class MenuReadRepository
         $stmt->close();
 
         return $results;
+    }
+
+    /**
+     * This function gets all menu items by Category Id and Category Position or greater
+     * @param int $categoryId
+     * @param int $categoryPosition
+     * @return RawMenuItem[]|bool
+     */
+    public function getItemsByCategoryAndPosition(int $categoryId, int $categoryPosition)
+    {
+        $result = false;
+
+        $stmt = $this->mysqli->prepare(
+            'SELECT id, category_id, price, category_position, created_at, edited_at
+            FROM menu_item
+            WHERE category_id = ?
+            AND category_position >= ?'
+        );
+
+        $stmt->bind_param('ii', $categoryId, $categoryPosition);
+
+        $stmt->execute();
+
+        $stmt->bind_result($id, $catId, $price, $catPosition, $createdAt, $editedAt);
+
+        while($stmt->fetch()) {
+            $result[] = new RawMenuItem($catId, $price, $catPosition, $createdAt, $editedAt, $id);
+        }
+
+        if ($stmt->errno) {
+            $result = false;
+        }
+
+        return $result;
     }
 
 }

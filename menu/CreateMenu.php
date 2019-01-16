@@ -7,20 +7,20 @@ require_once '../Objects/Shared/Message.php';
 require_once '../Objects/Shared/Response.php';
 
 // Services
-require_once '../Services/Menu/CreateMenuItemService.php';
-require_once '../Services/Menu/CreateMenuCategoryService.php';
+require_once '../Services/Menu/MenuCreateItemService.php';
+require_once '../Services/Menu/MenuCreateCategoryService.php';
 
 class CreateMenu
 {
 
     // Services
     /**
-     * @var CreateMenuItemService
+     * @var MenuCreateItemService
      */
     private $createItemService;
 
     /**
-     * @var CreateMenuCategoryService
+     * @var MenuCreateCategoryService
      */
     private $createCatService;
 
@@ -47,8 +47,8 @@ class CreateMenu
 
     public function __construct()
     {
-        $this->createItemService = new CreateMenuItemService();
-        $this->createCatService = new CreateMenuCategoryService();
+        $this->createItemService = new MenuCreateItemService();
+        $this->createCatService = new MenuCreateCategoryService();
         $this->message = new Message();
         $this->response = new Response();
     }
@@ -244,7 +244,6 @@ class CreateMenu
             $this->response->setMessage($this->message);
         }
 
-
         return $this->response;
     }
 
@@ -283,11 +282,11 @@ class CreateMenu
                 $this->task = $task;
             } else {
                 $check = false;
-                $this->message->addError('Invalid task given');
+                $this->message->addWarning('Invalid task given');
             }
         } else {
             $check = false;
-            $this->message->addError('Task is not set');
+            $this->message->addWarning('Task is not set');
         }
 
         return $check;

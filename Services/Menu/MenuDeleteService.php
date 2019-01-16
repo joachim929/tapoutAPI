@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../Objects/Shared/Message.php';
 require_once __DIR__ . '/../../Repository/Menu/MenuDeleteRepository.php';
 require_once __DIR__ . '/../../Repository/Menu/MenuReadRepository.php';
 
-class DeleteMenuService
+class MenuDeleteService
 {
 
     // Services

@@ -9,8 +9,8 @@ require_once '../Objects/Shared/Message.php';
 require_once '../Objects/Shared/Response.php';
 
 // Services
-require_once '../Services/Menu/GuestReadMenuService.php';
-require_once '../Services/Menu/AdminReadMenuService.php';
+require_once '../Services/Menu/MenuGuestService.php';
+require_once '../Services/Menu/MenuAdminReadService.php';
 
 class ReadMenu
 {
@@ -26,8 +26,8 @@ class ReadMenu
 
     public function __construct()
     {
-        $this->guestMenuService = new GuestReadMenuService();
-        $this->adminMenuService = new AdminReadMenuService();
+        $this->guestMenuService = new MenuGuestService();
+        $this->adminMenuService = new MenuAdminReadService();
     }
 
     /**

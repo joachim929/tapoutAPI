@@ -11,7 +11,7 @@ require_once __DIR__ . '/../../Objects/Shared/Response.php';
 // Repos
 require_once __DIR__ . '/../../Repository/Menu/MenuAdminRepository.php';
 
-class CreateMenuItemService
+class MenuCreateItemService
 {
 
     // Services

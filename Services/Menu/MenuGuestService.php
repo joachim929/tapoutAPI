@@ -7,7 +7,7 @@ require_once __DIR__ . '/../Shared/SortingService.php';
 // Repos
 require_once __DIR__ . '/../../Repository/Menu/MenuReadRepository.php';
 
-class GuestReadMenuService
+class MenuGuestService
 {
     // Services
     private $sortingService;

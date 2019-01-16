@@ -4,14 +4,14 @@
 require_once '../Objects/Shared/Message.php';
 
 // Services
-require_once '../Services/Menu/DeleteMenuService.php';
+require_once '../Services/Menu/MenuDeleteService.php';
 
 class DeleteMenu
 {
 
     // Services
     /**
-     * @var DeleteMenuService
+     * @var MenuDeleteService
      */
     private $deleteMenuService;
 
@@ -22,9 +22,8 @@ class DeleteMenu
 
     public function __construct()
     {
-        $this->deleteMenuService = new DeleteMenuService();
+        $this->deleteMenuService = new MenuDeleteService();
         $this->message = new Message();
-        $this->response = new Response();
     }
 
     public function returnStatement()
