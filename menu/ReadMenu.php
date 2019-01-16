@@ -14,18 +14,39 @@ require_once '../Services/Menu/MenuAdminReadService.php';
 
 class ReadMenu
 {
+
     // Services
+
+    /**
+     * @var MenuGuestService
+     */
     private $guestMenuService;
+    /**
+     * @var MenuAdminReadService
+     */
     private $adminMenuService;
 
     // Variables
+    /**
+     * @var string;
+     */
     private $page;
+    /**
+     * @var string
+     */
     private $task;
+    /**
+     * @var string
+     */
     private $language;
+    /**
+     * @var string
+     */
     private $module;
 
-    public function __construct()
+    public function __construct ()
     {
+
         $this->guestMenuService = new MenuGuestService();
         $this->adminMenuService = new MenuAdminReadService();
     }
@@ -33,11 +54,12 @@ class ReadMenu
     /**
      * This function is the entry point of the class
      */
-    public function returnStatement()
+    public function returnStatement ()
     {
+
         $results = $this->checkParams();
 
-        if($results === []) {
+        if ($results === []) {
             $results = null;
         }
 
@@ -48,8 +70,9 @@ class ReadMenu
      * This function checks the $_GET params and calls functions depending on the params
      * @return array|null
      */
-    private function checkParams()
+    private function checkParams ()
     {
+
         if (isset($_GET['page']) && $_GET['page'] === 'Menu') {
             $this->page = $_GET['page'];
         }
@@ -60,15 +83,17 @@ class ReadMenu
             $this->task = $_GET['task'];
         }
         if (isset($_GET['lang'])) {
-            if($_GET['lang'] === 'vn' || $_GET['lang'] === 'en') {
+            if ($_GET['lang'] === 'vn' || $_GET['lang'] === 'en') {
                 $this->language = $_GET['lang'];
             }
         }
+
         return $this->controlParams();
     }
 
-    private function controlParams()
+    private function controlParams ()
     {
+
         $results = null;
 
         if ($this->language === null && $this->module === 'Admin') {
@@ -83,4 +108,5 @@ class ReadMenu
 
         return $results;
     }
+
 }

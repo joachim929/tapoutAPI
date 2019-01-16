@@ -11,6 +11,7 @@ class MenuAdminReadService
 {
 
     // Repos
+
     /**
      * @var MenuReadRepository
      */
@@ -26,8 +27,9 @@ class MenuAdminReadService
      */
     private $sortingService;
 
-    public function __construct()
+    public function __construct ()
     {
+
         // Services
         $this->sortingService = new SortingService();
 
@@ -36,14 +38,17 @@ class MenuAdminReadService
         $this->menuCatRepo = new MenuCategoryRepository();
     }
 
-    public function getMenu()
+    public function getMenu ()
     {
+
         $rawResults = $this->guestRepo->getBilingualMenu();
+
         return $this->sortingService->removeArrayKeys($rawResults);
     }
 
-    public function getCategories()
+    public function getCategories ()
     {
+
         return $this->menuCatRepo->getCategories();
     }
 

@@ -17,8 +17,9 @@ class MenuGuestService
     // Services
     private $sortingService;
 
-    public function __construct()
+    public function __construct ()
     {
+
         // Services
         $this->sortingService = new SortingService();
 
@@ -26,9 +27,11 @@ class MenuGuestService
         $this->guestRepo = new MenuReadRepository();
     }
 
-    public function getMenu($language)
+    public function getMenu ($language)
     {
+
         $results = $this->guestRepo->getMenuByLanguage($language);
+
         return $this->sortingService->removeArrayKeys($results);
     }
 

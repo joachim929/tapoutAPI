@@ -14,6 +14,22 @@ require_once '../Services/Shared/SortingService.php';
 class UpdateMenu
 {
 
+    // Services
+    /**
+     * @var MenuUpdateCategoryService
+     */
+    private $categoryService;
+
+    /**
+     * @var MenuUpdateItemService
+     */
+    private $itemService;
+
+    /**
+     * @var SortingService
+     */
+    private $sortingService;
+
     // Variables
 
     /**
@@ -36,24 +52,9 @@ class UpdateMenu
      */
     private $task;
 
-    // Services
-    /**
-     * @var MenuUpdateCategoryService
-     */
-    private $categoryService;
-
-    /**
-     * @var MenuUpdateItemService
-     */
-    private $itemService;
-
-    /**
-     * @var SortingService
-     */
-    private $sortingService;
-
-    public function __construct()
+    public function __construct ()
     {
+
         $this->categoryService = new MenuUpdateCategoryService();
         $this->itemService = new MenuUpdateItemService();
         $this->sortingService = new SortingService();
@@ -62,13 +63,15 @@ class UpdateMenu
         $this->response = new Response();
     }
 
-    public function returnStatement()
+    public function returnStatement ()
     {
+
         echo json_encode($this->checkParams());
     }
 
-    private function checkParams()
+    private function checkParams ()
     {
+
         if ($this->checkPage() && $this->checkModule() && $this->checkTask()) {
             if ($this->task === 'updateCategory') {
                 $this->categoryService->updateCategory($this->updateItem);
@@ -91,8 +94,9 @@ class UpdateMenu
      * This function checks all post params are valid for updating a menu item
      * @return bool
      */
-    private function checkItem()
+    private function checkItem ()
     {
+
         $check = true;
         if (isset($_POST['item'])) {
             $item = json_decode($_POST['item']);
@@ -153,8 +157,9 @@ class UpdateMenu
      * This function checks all post params are valid for updating a menu category
      * @return bool
      */
-    private function checkCategory()
+    private function checkCategory ()
     {
+
         $check = true;
         if (isset($_POST['item'])) {
             $item = json_decode($_POST['item']);
@@ -196,8 +201,9 @@ class UpdateMenu
      * This function checks to see if module param has been set and is valid
      * @return bool
      */
-    private function checkModule()
+    private function checkModule ()
     {
+
         $check = true;
         if (isset($_POST['module'])) {
             $module = $_POST['module'];
@@ -217,8 +223,9 @@ class UpdateMenu
      * This function checks to see if the page param has been set and is valid
      * @return bool
      */
-    private function checkPage()
+    private function checkPage ()
     {
+
         $check = true;
         if (isset($_POST['page'])) {
             $page = $_POST['page'];
@@ -243,8 +250,9 @@ class UpdateMenu
      * This function checks to see if the task param has been set and is valid
      * @return bool
      */
-    private function checkTask()
+    private function checkTask ()
     {
+
         $check = true;
         if (isset($_POST['task']) && is_string($_POST['task'])) {
             $this->task = $_POST['task'];
@@ -273,6 +281,5 @@ class UpdateMenu
 
         return $check;
     }
-
 
 }

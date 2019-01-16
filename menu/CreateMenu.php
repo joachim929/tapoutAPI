@@ -14,6 +14,7 @@ class CreateMenu
 {
 
     // Services
+
     /**
      * @var MenuCreateItemService
      */
@@ -45,16 +46,18 @@ class CreateMenu
      */
     private $task;
 
-    public function __construct()
+    public function __construct ()
     {
+
         $this->createItemService = new MenuCreateItemService();
         $this->createCatService = new MenuCreateCategoryService();
         $this->message = new Message();
         $this->response = new Response();
     }
 
-    public function returnStatement()
+    public function returnStatement ()
     {
+
         echo json_encode($this->checkParams());
     }
 
@@ -65,8 +68,9 @@ class CreateMenu
      * @param $vnDescription
      * @return bool
      */
-    private function checkDescriptions($enDescription, $vnDescription)
+    private function checkDescriptions ($enDescription, $vnDescription)
     {
+
         $check = true;
         if (isset($enDescription, $vnDescription)) {
             if (!(is_string($enDescription) && is_string($vnDescription))) {
@@ -97,8 +101,9 @@ class CreateMenu
      * This function checks that the post param module is valid
      * @return bool
      */
-    private function checkModule(): bool
+    private function checkModule () : bool
     {
+
         $check = true;
         if (isset($_POST['module'])) {
             $module = $_POST['module'];
@@ -114,8 +119,9 @@ class CreateMenu
         return $check;
     }
 
-    private function checkNewCategory(): bool
+    private function checkNewCategory () : bool
     {
+
         $check = true;
         if (isset($_POST['newMenuCategory'])) {
             $temp = json_decode($_POST['newMenuCategory']);
@@ -148,8 +154,9 @@ class CreateMenu
      * This function checks all expected post parameters and returns a value on its findings
      * @return bool
      */
-    private function checkNewItem(): bool
+    private function checkNewItem () : bool
     {
+
         $check = true;
         if (isset($_POST['newMenuItem'])) {
             $temp = json_decode($_POST['newMenuItem']);
@@ -192,8 +199,9 @@ class CreateMenu
      * @param        $value
      * @return bool
      */
-    private function checkNumber(string $type, $value): bool
+    private function checkNumber (string $type, $value) : bool
     {
+
         $check = true;
         if (!isset($value)) {
             $check = false;
@@ -210,8 +218,9 @@ class CreateMenu
      * This function checks that page param is set and the correct value
      * @return bool
      */
-    private function checkPage(): bool
+    private function checkPage () : bool
     {
+
         $check = true;
         if (isset($_POST['page'])) {
             $page = $_POST['page'];
@@ -231,8 +240,9 @@ class CreateMenu
      * This function makes sure all post params are good and if that is the case,
      * calls the create menu service
      */
-    private function checkParams()
+    private function checkParams ()
     {
+
         if ($this->checktask() && $this->checkPage() && $this->checkModule()) {
 
             $this->routeAction();
@@ -253,8 +263,9 @@ class CreateMenu
      * @param        $value
      * @return bool
      */
-    private function checkString(string $type, $value): bool
+    private function checkString (string $type, $value) : bool
     {
+
         $check = true;
         if (!isset($value)) {
             $check = false;
@@ -271,8 +282,9 @@ class CreateMenu
      * This function checks that the page task is of expected value
      * @return bool
      */
-    private function checkTask(): bool
+    private function checkTask () : bool
     {
+
         $check = true;
         if (isset($_POST['task'])) {
             $task = $_POST['task'];
@@ -295,8 +307,9 @@ class CreateMenu
     /**
      * This function calls the service corresponding to the task
      */
-    private function routeAction()
+    private function routeAction ()
     {
+
         if ($this->task === 'createMenuItem') {
             $this->response->mergeResponse($this->createItemService->addNewItem($this->data));
         } elseif ($this->task === 'createMenuCategory') {

@@ -14,6 +14,7 @@ class MenuDeleteService
 {
 
     // Services
+
     /**
      * @var SortingService
      */
@@ -36,8 +37,9 @@ class MenuDeleteService
      */
     private $message;
 
-    public function __construct()
+    public function __construct ()
     {
+
         // Services
         $this->sortingService = new SortingService();
 
@@ -49,8 +51,9 @@ class MenuDeleteService
         $this->message = new Message();
     }
 
-    public function initializeCategoryDelete($categoryId)
+    public function initializeCategoryDelete ($categoryId)
     {
+
         $data = $this->readRepo->getAllItemsByCategory($categoryId);
         if ($data !== false) {
             $this->deleteCategory($data);
@@ -61,8 +64,9 @@ class MenuDeleteService
         return $this->message;
     }
 
-    public function initializeItemDelete(int $itemId)
+    public function initializeItemDelete (int $itemId)
     {
+
         $data = $this->readRepo->getItemById($itemId);
 
         if ($data !== false) {
@@ -78,8 +82,9 @@ class MenuDeleteService
     /**
      * @param BilingualMenuCategory $category
      */
-    private function deleteCategory(BilingualMenuCategory $category)
+    private function deleteCategory (BilingualMenuCategory $category)
     {
+
         $check = true;
 
         if ($category->items !== null) {
@@ -103,8 +108,9 @@ class MenuDeleteService
      * @param BilingualMenuItem $item
      * @return bool
      */
-    private function deleteItem(BilingualMenuItem $item)
+    private function deleteItem (BilingualMenuItem $item)
     {
+
         $check = true;
 
         if ($this->deleteDescription($item->enId) && $this->deleteDescription($item->vnId)) {
@@ -123,11 +129,12 @@ class MenuDeleteService
      * @param int $id
      * @return bool
      */
-    private function deleteDescription(int $id)
+    private function deleteDescription (int $id)
     {
+
         $check = true;
 
-        if(!$this->deleteRepo->deleteDescription($id)) {
+        if (!$this->deleteRepo->deleteDescription($id)) {
             $check = false;
             $this->message->addError('Failed to delete menu item description: ' . $id);
         }

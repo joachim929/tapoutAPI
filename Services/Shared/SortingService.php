@@ -4,13 +4,15 @@ require_once __DIR__ . '/../../Objects/Shared/Message.php';
 
 class SortingService
 {
+
     /**
      * This function removes array keys and returns said array
      * @param $array
      * @return array
      */
-    public function removeArrayKeys($array)
+    public function removeArrayKeys ($array)
     {
+
         $noKeysArray = array();
 
         foreach ($array as $item) {
@@ -25,11 +27,13 @@ class SortingService
      * @param $b
      * @return int
      */
-    public function comparisonPosition($a, $b)
+    public function comparisonPosition ($a, $b)
     {
+
         if ($a->position === $b->position) {
             return 0;
         }
+
         return ($a->position < $b->position) ? -1 : 1;
     }
 
@@ -39,8 +43,9 @@ class SortingService
      * @param        $value
      * @return bool
      */
-    public function checkString(string $type, $value): bool
+    public function checkString (string $type, $value) : bool
     {
+
         $check = true;
         if (!isset($value)) {
             $check = "No value for $type given";
@@ -57,8 +62,9 @@ class SortingService
      * @param        $value
      * @return bool|string
      */
-    public function checkNumber(string $type, $value)
+    public function checkNumber (string $type, $value)
     {
+
         $check = true;
         if (!isset($value)) {
             $check = "No value for $type given";
@@ -76,8 +82,9 @@ class SortingService
      * @param string|null $vnDescription
      * @return bool|string
      */
-    public function checkDescriptions(string $enDescription = null, string $vnDescription = null)
+    public function checkDescriptions (string $enDescription = null, string $vnDescription = null)
     {
+
         $check = true;
         if (isset($enDescription, $vnDescription)) {
             if (!(is_string($enDescription) && is_string($vnDescription))) {
@@ -93,7 +100,7 @@ class SortingService
         } elseif (!isset($enDescription) && isset($vnDescription)) {
             $check = 'Only got a value for Vietnamese description, not English description';
         } elseif (!isset($vnDescription) && isset($enDescription)) {
-            $check =  'Only got a value for English description, not Vietnamese description';
+            $check = 'Only got a value for English description, not Vietnamese description';
         }
 
         return $check;
@@ -104,12 +111,14 @@ class SortingService
      * @param string|null $type
      * @return bool|string
      */
-    public function checkMenuCategoryType(string $type = null) {
+    public function checkMenuCategoryType (string $type = null)
+    {
+
         $check = true;
 
         if (isset($type)) {
             if (is_string($type)) {
-                if($type !== 'food' && $type !== 'drink') {
+                if ($type !== 'food' && $type !== 'drink') {
                     $check = 'Invalid value given for category type';
                 }
             } else {

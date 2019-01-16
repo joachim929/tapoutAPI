@@ -10,29 +10,34 @@ class DeleteMenu
 {
 
     // Services
+
     /**
      * @var MenuDeleteService
      */
     private $deleteMenuService;
 
+    // Variables
     /**
      * @var Message
      */
     private $message;
 
-    public function __construct()
+    public function __construct ()
     {
+
         $this->deleteMenuService = new MenuDeleteService();
         $this->message = new Message();
     }
 
-    public function returnStatement()
+    public function returnStatement ()
     {
+
         echo json_encode($this->checkParams());
     }
 
-    private function checkParams()
+    private function checkParams ()
     {
+
         if ($this->checkpage() && $this->checkModule() && $this->checkTask()) {
             $this->checkItem();
         }
@@ -43,8 +48,9 @@ class DeleteMenu
     /**
      * This function checks the item and routes to the correct service method depending on the variables
      */
-    private function checkItem()
+    private function checkItem ()
     {
+
         if (isset($_POST['item'])) {
             $item = json_decode($_POST['item']);
             if (isset($item->id)) {
@@ -67,8 +73,9 @@ class DeleteMenu
      * This function checks to see if module param has been set and is valid
      * @return bool
      */
-    private function checkModule()
+    private function checkModule ()
     {
+
         $check = true;
         if (isset($_POST['module'])) {
             $module = $_POST['module'];
@@ -88,8 +95,9 @@ class DeleteMenu
      * This function checks to see if the page param has been set and is valid
      * @return bool
      */
-    private function checkPage()
+    private function checkPage ()
     {
+
         $check = true;
         if (isset($_POST['page'])) {
             $page = $_POST['page'];
@@ -106,6 +114,7 @@ class DeleteMenu
             $this->message->addError('Page wasn\'t set');
             $check = false;
         }
+
         return $check;
     }
 
@@ -113,12 +122,13 @@ class DeleteMenu
      * This function checks to see if the task param has been set and is valid
      * @return bool
      */
-    private function checkTask()
+    private function checkTask ()
     {
+
         $check = true;
         if (isset($_POST['task'])) {
             $task = $_POST['task'];
-            if(!is_string($task) || ($task !== 'deleteCategory' && $task !== 'deleteItem')) {
+            if (!is_string($task) || ($task !== 'deleteCategory' && $task !== 'deleteItem')) {
                 $this->message->addError('Incorrect task set');
                 $check = false;
             }
@@ -129,4 +139,5 @@ class DeleteMenu
 
         return $check;
     }
+
 }

@@ -12,6 +12,7 @@ class MenuUpdateCategoryService
 {
 
     // Services
+
     /**
      * @var SortingService
      */
@@ -28,8 +29,9 @@ class MenuUpdateCategoryService
      */
     private $response;
 
-    public function __construct()
+    public function __construct ()
     {
+
         // Services
         $this->sortingService = new SortingService();
 

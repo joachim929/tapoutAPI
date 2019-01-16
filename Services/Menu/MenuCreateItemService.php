@@ -17,6 +17,7 @@ class MenuCreateItemService
 {
 
     // Services
+
     /**
      * @var SortingService
      */
@@ -39,8 +40,9 @@ class MenuCreateItemService
      */
     private $response;
 
-    public function __construct()
+    public function __construct ()
     {
+
         // Services
         $this->sortingService = new SortingService();
 
@@ -58,8 +60,9 @@ class MenuCreateItemService
      * @param BilingualMenuItem $data
      * @return Response
      */
-    public function addNewItem(BilingualMenuItem $data)
+    public function addNewItem (BilingualMenuItem $data)
     {
+
         $itemId = $this->adminRepo->newItem($data);
         if ($itemId !== false) {
             $data->setItemId($itemId);
@@ -75,26 +78,28 @@ class MenuCreateItemService
         }
         $this->response->setData($data);
         $this->response->setMessage($this->message);
+
         return $this->response;
     }
 
     /**
-     * @todo: Fix so that if a newly assigned item has been added that it retains the category position,
+     * @todo : Fix so that if a newly assigned item has been added that it retains the category position,
      * @todo -      older items should all move up one position
      * This function assigns a new page position if it isn't the same as index
      * This is so that there are no duplicate category positions
      * @param BilingualMenuItem $data
      */
-    private function reorderMenuItems(BilingualMenuItem $data)
+    private function reorderMenuItems (BilingualMenuItem $data)
     {
+
         $menuItems = $this->adminRepo->getAllMenuItemsByCategory($data->categoryId);
 
-        if($menuItems !== false) {
+        if ($menuItems !== false) {
             $index = 1;
             foreach ($menuItems as $key => $menuItem) {
                 if ($menuItem->position !== $index) {
                     $menuItem->setPosition($index);
-                    if(!$this->adminRepo->patchMenuItemPosition($menuItem)) {
+                    if (!$this->adminRepo->patchMenuItemPosition($menuItem)) {
                         $this->message->addWarning('Was an error updating menu item with caption: '
                             . $menuItem->getCaption());
                     }
@@ -110,11 +115,12 @@ class MenuCreateItemService
      * This function insert menu item details into the database and checks that it succeeded in doing so
      * @param BilingualMenuItem $data
      */
-    private function addNewItemDetails(BilingualMenuItem $data)
+    private function addNewItemDetails (BilingualMenuItem $data)
     {
+
         $enItemId = $this->adminRepo->newItemDetails($data->itemId, $data->enTitle,
             $data->enDescription, 'en');
-        if($enItemId === false) {
+        if ($enItemId === false) {
             $this->response->setSuccess(false);
             $this->message->addError('Failed to insert English menu item details');
         } else {
@@ -123,7 +129,7 @@ class MenuCreateItemService
             $vnItemId = $this->adminRepo->newItemDetails($data->itemId, $data->vnTitle,
                 $data->vnDescription, 'vn');
 
-            if($vnItemId === false) {
+            if ($vnItemId === false) {
                 $this->message->addError('Failed to insert Vietnamese menu item details');
                 $this->response->setSuccess(false);
             } else {

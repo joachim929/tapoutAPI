@@ -15,6 +15,7 @@ class MenuCreateCategoryService
 {
 
     // Services
+
     /**
      * @var SortingService
      */
@@ -37,8 +38,9 @@ class MenuCreateCategoryService
      */
     private $response;
 
-    public function __construct()
+    public function __construct ()
     {
+
         // Services
         $this->sortingService = new SortingService();
 
@@ -55,8 +57,9 @@ class MenuCreateCategoryService
      * @param BilingualMenuCategory $data
      * @return Response
      */
-    public function addNewCategory(BilingualMenuCategory $data)
+    public function addNewCategory (BilingualMenuCategory $data)
     {
+
         $categoryId = $this->adminRepo->newCategory($data);
         $newCategory = $data;
 
@@ -72,18 +75,20 @@ class MenuCreateCategoryService
             $this->response->setData($newCategory);
         }
         $this->response->setMessage($this->message);
+
         return $this->response;
     }
 
     /**
-     * @todo: Fix so that if a newly assigned item has been added that it retains the page position,
+     * @todo : Fix so that if a newly assigned item has been added that it retains the page position,
      * @todo -      older items should all move up one position
      * This function reorders all menu categories if their position doesn't line up with their index
      * @param BilingualMenuCategory $data
      * @return BilingualMenuCategory|bool
      */
-    private function reorderCategories(BilingualMenuCategory $data)
+    private function reorderCategories (BilingualMenuCategory $data)
     {
+
         $categories = $this->adminRepo->getAllCategories();
         $newCategory = false;
 
@@ -92,11 +97,11 @@ class MenuCreateCategoryService
         } else {
             $index = 1;
             foreach ($categories as $category) {
-                if($category->position !== $index) {
+                if ($category->position !== $index) {
                     $category->setPosition($index);
                     if (!$this->adminRepo->patchCategoryPosition($category)) {
                         $this->message->addWarning('Failed to update category position with name: ' .
-                        $category->enName);
+                            $category->enName);
                     }
                 }
                 if ($data->id === $category->id) {

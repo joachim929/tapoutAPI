@@ -17,6 +17,7 @@ require_once '../Shared/SortingService.php';
 
 class PageItemsService
 {
+
     // Repos
 
     /**
@@ -50,8 +51,9 @@ class PageItemsService
      */
     private $mysqli;
 
-    public function __construct()
+    public function __construct ()
     {
+
         $this->connectDb = new ConnectDb();
         $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
@@ -64,11 +66,13 @@ class PageItemsService
         $this->sortingService = new SortingService();
     }
 
-    public function reorderPagePositions(int $pageId)
+    public function reorderPagePositions (int $pageId)
     {
+
         $pageItems = $this->matchPageItemsByTag($this->pageItemRepo->getPageItemsByPage($pageId));
         $pageImages = $this->matchPageImagesByTag($this->imageRepo->getPageImagesByPage($pageId));
-        $mergedItems =  $this->sortResults($pageItems, $pageImages);
+        $mergedItems = $this->sortResults($pageItems, $pageImages);
+
         return $this->checkPagePositions($mergedItems);
     }
 
@@ -78,8 +82,9 @@ class PageItemsService
      * @param $pageImages
      * @return array
      */
-    public function sortResults($pageItems, $pageImages)
+    public function sortResults ($pageItems, $pageImages)
     {
+
         $sortedResults = $pageItems;
         foreach ($pageImages as $pageImage) {
             $sortedResults[] = $pageImage;
@@ -93,21 +98,21 @@ class PageItemsService
      * @param array() $mergedItems
      * @return mixed
      */
-    private function checkPagePositions($mergedItems)
+    private function checkPagePositions ($mergedItems)
     {
+
         $i = 1;
         foreach ($mergedItems as $key => $item) {
 
-            if($item->getPagePosition() !== $i) {
+            if ($item->getPagePosition() !== $i) {
                 $item->setPagePosition($i);
-                if(get_class($item) === 'BilingualItem'){
+                if (get_class($item) === 'BilingualItem') {
 
                     $this->pageItemRepo->updateItemPagePosition($item->getEnItemId(),
                         $i, $item->getPageId());
                     $this->pageItemRepo->updateItemPagePosition($item->getVnItemId(),
                         $i, $item->getPageId());
-                }
-                else {
+                } else {
                     $this->imageRepo->updateImagePagePosition($item->getEnImageId(),
                         $i, $item->getPageId());
                     $this->imageRepo->updateImagePagePosition($item->getVnImageId(),
@@ -125,8 +130,9 @@ class PageItemsService
      * @param PageItem[] $pageItems
      * @return array
      */
-    private function matchPageItemsByTag(array $pageItems)
+    private function matchPageItemsByTag (array $pageItems)
     {
+
         $sortedItems = array();
 
         foreach ($pageItems as $pageItem) {
@@ -142,13 +148,14 @@ class PageItemsService
 
     /**
      * This function sets BilingualItem variables
-     * @param PageItem $pageItem
+     * @param PageItem           $pageItem
      * @param BilingualItem|null $sortedItem
      * @return BilingualItem
      */
-    private function setPageItem(PageItem $pageItem, BilingualItem $sortedItem = null)
+    private function setPageItem (PageItem $pageItem, BilingualItem $sortedItem = null)
     {
-        if($sortedItem === null) {
+
+        if ($sortedItem === null) {
             $sortedItem = new BilingualItem();
             $sortedItem->setPageId($pageItem->getPageId());
             $sortedItem->setTag($pageItem->getTag());
@@ -156,7 +163,7 @@ class PageItemsService
             $sortedItem->setCreatedAt($pageItem->getCreatedAt());
             $sortedItem->setEditedAt($pageItem->getEditedAt());
         }
-        if($pageItem->getLanguage() === 'en') {
+        if ($pageItem->getLanguage() === 'en') {
             $sortedItem->setEnItemId($pageItem->getId());
             $sortedItem->setEnHeading($pageItem->getHeading());
             $sortedItem->setEnContent($pageItem->getContent());
@@ -175,8 +182,9 @@ class PageItemsService
      * @param array $pageImages
      * @return array
      */
-    public function matchPageImagesByTag(array $pageImages)
+    public function matchPageImagesByTag (array $pageImages)
     {
+
         $sortedImages = array();
 
         foreach ($pageImages as $pageImage) {
@@ -192,13 +200,14 @@ class PageItemsService
 
     /**
      * This function sets BilingualImage variables
-     * @param PageImage $pageImage
+     * @param PageImage           $pageImage
      * @param BilingualImage|null $sortedImage
      * @return BilingualImage
      */
-    private function setPageImage(PageImage $pageImage, BilingualImage $sortedImage = null)
+    private function setPageImage (PageImage $pageImage, BilingualImage $sortedImage = null)
     {
-        if($sortedImage === null) {
+
+        if ($sortedImage === null) {
             $sortedImage = new BilingualImage();
             $sortedImage->setPageId($pageImage->getPageId());
             $sortedImage->setPagePosition($pageImage->getPagePosition());
@@ -208,7 +217,7 @@ class PageItemsService
             $sortedImage->setTag($pageImage->getTag());
             $sortedImage->setCreatedAt($pageImage->getCreatedAt());
         }
-        if($pageImage->getLanguage() === 'en') {
+        if ($pageImage->getLanguage() === 'en') {
             $sortedImage->setEnImageId($pageImage->getId());
             $sortedImage->setEnCaption($pageImage->getCaption());
             $sortedImage->setEnAlt($pageImage->getAlt());
