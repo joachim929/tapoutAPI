@@ -117,6 +117,14 @@ class RawMenuItem
     }
 
     /**
+     * This function increases the position by one
+     */
+    public function incrementPosition()
+    {
+        $this->position++;
+    }
+
+    /**
      * @return DateTime|null
      */
     public function getCreatedAt () : DateTime

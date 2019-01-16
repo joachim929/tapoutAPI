@@ -244,10 +244,9 @@ class MenuReadRepository
     /**
      * This function gets all menu items by Category Id and Category Position or greater
      * @param int $categoryId
-     * @param int $categoryPosition
      * @return RawMenuItem[]|bool
      */
-    public function getItemsByCategoryAndPosition (int $categoryId, int $categoryPosition)
+    public function getItemsByCategory (int $categoryId)
     {
 
         $result = false;
@@ -256,10 +255,10 @@ class MenuReadRepository
             'SELECT id, category_id, price, category_position, created_at, edited_at
             FROM menu_item
             WHERE category_id = ?
-            AND category_position >= ?'
+            ORDER BY category_position ASC'
         );
 
-        $stmt->bind_param('ii', $categoryId, $categoryPosition);
+        $stmt->bind_param('i', $categoryId);
 
         $stmt->execute();
 
@@ -272,6 +271,8 @@ class MenuReadRepository
         if ($stmt->errno) {
             $result = false;
         }
+
+        $stmt->close();
 
         return $result;
     }
