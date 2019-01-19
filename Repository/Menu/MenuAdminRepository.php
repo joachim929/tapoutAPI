@@ -38,11 +38,11 @@ class MenuAdminRepository
      * On failure it returns false
      * @param int    $itemId
      * @param string $title
-     * @param string $description
+     * @param string|null $description
      * @param string $language
      * @return bool|int
      */
-    public function newItemDetails (int $itemId, string $title, string $description, string $language)
+    public function newItemDetails (int $itemId, string $title, $description, string $language)
     {
 
         $this->mysqli->autocommit(FALSE);
