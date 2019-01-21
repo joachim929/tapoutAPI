@@ -15,6 +15,7 @@ class UpdateMenu
 {
 
     // Services
+
     /**
      * @var MenuUpdateCategoryService
      */
@@ -74,6 +75,7 @@ class UpdateMenu
 
         if ($this->checkPage() && $this->checkModule() && $this->checkTask()) {
             if ($this->task === 'updateCategory') {
+                // todo Create update Category service
                 $this->categoryService->updateCategory($this->updateItem);
 
             } elseif ($this->task === 'updateItem') {
@@ -267,6 +269,10 @@ class UpdateMenu
                 $item = json_decode($_POST['item']);
                 $this->updateItem = new BilingualMenuCategory($item->enName, $item->vnName, $item->type, $item->position,
                     $item->id);
+
+            } elseif ($this->task === 'updateItemPosition') {
+
+            } elseif ($this->task === 'updateCategoryPosition') {
 
             } else {
                 $check = false;
