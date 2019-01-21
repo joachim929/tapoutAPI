@@ -153,7 +153,9 @@ class MenuReadRepository
             LEFT JOIN menu_item_details AS enDetails ON item.id = enDetails.item_id AND enDetails.language = "en"
             LEFT JOIN menu_item_details AS vnDetails ON item.id = vnDetails.item_id AND vnDetails.language = "vn"
             WHERE cat.id = ?
-            AND cat.active = 1'
+            AND cat.active = 1
+            AND enDetails.id IS NOT NULL
+            AND vnDetails.id IS NOT NULL'
         );
 
         $stmt->bind_param('i', $categoryId);
