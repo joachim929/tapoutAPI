@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../../Objects/Shared/Message.php';
-
 class SortingService
 {
 
@@ -10,7 +8,7 @@ class SortingService
      * @param $array
      * @return array
      */
-    public function removeArrayKeys ($array)
+    public function removeArrayKeys($array)
     {
 
         $noKeysArray = array();
@@ -27,7 +25,7 @@ class SortingService
      * @param $b
      * @return int
      */
-    public function comparisonPosition ($a, $b)
+    public function comparisonPosition($a, $b)
     {
 
         if ($a->position === $b->position) {
@@ -43,14 +41,14 @@ class SortingService
      * @param        $value
      * @return bool
      */
-    public function checkString (string $type, $value) : bool
+    public function checkString(?string $value) : bool
     {
 
         $check = true;
         if (!isset($value)) {
-            $check = "No value for $type given";
+            $check = false;
         } elseif (!is_string($value)) {
-            $check = "No valid value given for $value";
+            $check = false;
         }
 
         return $check;
@@ -62,14 +60,14 @@ class SortingService
      * @param        $value
      * @return bool|string
      */
-    public function checkNumber (string $type, $value)
+    public function checkNumber(?int $value)
     {
 
         $check = true;
         if (!isset($value)) {
-            $check = "No value for $type given";
+            $check = false;
         } elseif (!is_int($value)) {
-            $check = "No valid value type given for $value";
+            $check = false;
         }
 
         return $check;
@@ -82,25 +80,25 @@ class SortingService
      * @param string|null $vnDescription
      * @return bool|string
      */
-    public function checkDescriptions (string $enDescription = null, string $vnDescription = null)
+    public function checkDescriptions(?string $enDescription, ?string $vnDescription)
     {
 
         $check = true;
         if (isset($enDescription, $vnDescription)) {
             if (!(is_string($enDescription) && is_string($vnDescription))) {
-                $check = 'English and Vietnamese descriptions need to be strings';
+                $check = false;
             } else {
                 if (strlen($enDescription) < 4) {
-                    $check = 'English description is too short';
+                    $check = false;
                 }
                 if (strlen($vnDescription) < 4) {
-                    $check = 'Vietnamese description is too short';
+                    $check = false;
                 }
             }
         } elseif (!isset($enDescription) && isset($vnDescription)) {
-            $check = 'Only got a value for Vietnamese description, not English description';
+            $check = false;
         } elseif (!isset($vnDescription) && isset($enDescription)) {
-            $check = 'Only got a value for English description, not Vietnamese description';
+            $check = false;
         }
 
         return $check;
@@ -111,7 +109,7 @@ class SortingService
      * @param string|null $type
      * @return bool|string
      */
-    public function checkMenuCategoryType (string $type = null)
+    public function checkMenuCategoryType(?string $type)
     {
 
         $check = true;
@@ -119,15 +117,33 @@ class SortingService
         if (isset($type)) {
             if (is_string($type)) {
                 if ($type !== 'food' && $type !== 'drink') {
-                    $check = 'Invalid value given for category type';
+                    $check = false;
                 }
             } else {
-                $check = 'Category type isn\'t a string variable';
+                $check = false;
             }
         } else {
-            $check = 'Category type wasn\'t set';
+            $check = false;
         }
 
         return $check;
     }
+
+    public function checkPage(?string $page): bool
+    {
+        $check = true;
+
+        if (isset($page) && is_string($page)) {
+            if(!($page !== 'Home' || $page === 'Menu' || $page === 'Gallery' ||
+                $page === 'Events' || $page === 'Contact' ||
+                $page === 'About' || $page === 'Delivery') ){
+                $check = false;
+            }
+        } else {
+            $check = false;
+        }
+
+        return $check;
+    }
+
 }

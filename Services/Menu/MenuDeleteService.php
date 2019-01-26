@@ -1,7 +1,6 @@
 <?php
 
 // Objects
-require_once __DIR__ . '/../../Objects/Shared/Message.php';
 
 // Repos
 require_once __DIR__ . '/../../Repository/Menu/MenuDeleteRepository.php';
@@ -37,7 +36,7 @@ class MenuDeleteService
      */
     private $message;
 
-    public function __construct ()
+    public function __construct()
     {
 
         // Services
@@ -51,20 +50,19 @@ class MenuDeleteService
         $this->message = new Message();
     }
 
-    public function initializeCategoryDelete ($categoryId)
+    public function initializeCategoryDelete($categoryId)
     {
 
         $data = $this->readRepo->getAllItemsByCategory($categoryId);
         if ($data !== false) {
             $this->deleteCategory($data);
         } else {
-            $this->message->addWarning('Couldn\'t find any results with given category Id');
         }
 
         return $this->message;
     }
 
-    public function initializeItemDelete (int $itemId)
+    public function initializeItemDelete(int $itemId)
     {
 
         $data = $this->readRepo->getItemById($itemId);
@@ -73,7 +71,6 @@ class MenuDeleteService
             if ($this->deleteItem($data)) {
             }
         } else {
-            $this->message->addWarning('Couldn\'t find any results with given item Id');
         }
 
         return $this->message;
@@ -82,7 +79,7 @@ class MenuDeleteService
     /**
      * @param BilingualMenuCategory $category
      */
-    private function deleteCategory (BilingualMenuCategory $category)
+    private function deleteCategory(BilingualMenuCategory $category)
     {
 
         $check = true;
@@ -95,11 +92,9 @@ class MenuDeleteService
             }
         } else {
             $check = false;
-            $this->message->addWarning('Category doesn\'t have any items to delete');
         }
         if ($check === true) {
             if (!$this->deleteRepo->deleteCategory($category->id)) {
-                $this->message->addError('Failed to delete category: ' . $category->id);
             }
         }
     }
@@ -108,7 +103,7 @@ class MenuDeleteService
      * @param BilingualMenuItem $item
      * @return bool
      */
-    private function deleteItem (BilingualMenuItem $item)
+    private function deleteItem(BilingualMenuItem $item)
     {
 
         $check = true;
@@ -116,7 +111,6 @@ class MenuDeleteService
         if ($this->deleteDescription($item->enId) && $this->deleteDescription($item->vnId)) {
             if (!$this->deleteRepo->deleteItem($item->itemId)) {
                 $check = false;
-                $this->message->addError('Failed to delete menu item: ' . $item->itemId);
             }
         } else {
             $check = false;
@@ -129,14 +123,13 @@ class MenuDeleteService
      * @param int $id
      * @return bool
      */
-    private function deleteDescription (int $id)
+    private function deleteDescription(int $id)
     {
 
         $check = true;
 
         if (!$this->deleteRepo->deleteDescription($id)) {
             $check = false;
-            $this->message->addError('Failed to delete menu item description: ' . $id);
         }
 
         return $check;

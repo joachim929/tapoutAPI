@@ -8,6 +8,7 @@ require_once '../Objects/Shared/Response.php';
 // Services
 require_once '../Services/Menu/MenuCreateItemService.php';
 require_once '../Services/Menu/MenuCreateCategoryService.php';
+require_once '../Services/Shared/SortingService.php';
 
 class CreateMenu
 {
@@ -23,6 +24,11 @@ class CreateMenu
      * @var MenuCreateCategoryService
      */
     private $createCatService;
+
+    /**
+     * @var SortingService
+     */
+    private $sortingService;
 
     // Variables
 
@@ -46,7 +52,7 @@ class CreateMenu
 
         $this->createItemService = new MenuCreateItemService();
         $this->createCatService = new MenuCreateCategoryService();
-        $this->message = new Message();
+        $this->sortingService = new SortingService();
         $this->response = new Response();
     }
 
@@ -114,20 +120,21 @@ class CreateMenu
         if (isset($_POST['newMenuCategory'])) {
             $temp = json_decode($_POST['newMenuCategory']);
 
-            if (!$this->checkString($temp->enName)) {
+            if (!$this->sortingService->checkString($temp->enName)) {
                 $check = false;
             }
-            if (!$this->checkString($temp->vnName)) {
+            if (!$this->sortingService->checkString($temp->vnName)) {
                 $check = false;
             }
-            if (!$this->checkString($temp->type)) {
+            if (!$this->sortingService->checkString($temp->type)) {
                 $check = false;
             }
-            if (!$this->checkNumber($temp->position)) {
+            if (!$this->sortingService->checkNumber($temp->position)) {
                 $check = false;
             }
             if ($check === true) {
-                $this->data = new BilingualMenuCategory($temp->enName, $temp->vnName, $temp->type, $temp->position);
+                $this->data = new BilingualMenuCategory(
+                    $temp->enName, $temp->vnName, $temp->type, $temp->position);
             }
         } else {
             $check = false;
@@ -148,27 +155,29 @@ class CreateMenu
         if (isset($_POST['newMenuItem'])) {
             $temp = json_decode($_POST['newMenuItem']);
 
-            if (!$this->checkNumber($temp->category)) {
+            if (!$this->sortingService->checkNumber($temp->category)) {
                 $check = false;
             }
-            if (!$this->checkString($temp->enTitle)) {
+            if (!$this->sortingService->checkString($temp->enTitle)) {
                 $check = false;
             }
-            if (!$this->checkString($temp->vnTitle)) {
+            if (!$this->sortingService->checkString($temp->vnTitle)) {
                 $check = false;
             }
-            if (!$this->checkNumber($temp->position)) {
+            if (!$this->sortingService->checkNumber($temp->position)) {
                 $check = false;
             }
-            if (!$this->checkString($temp->price)) {
+            if (!$this->sortingService->checkString($temp->price)) {
                 $check = false;
             }
             if (!$this->checkDescriptions($temp->enDescription, $temp->vnDescription)) {
                 $check = false;
             }
             if ($check === true) {
-                $this->data = new BilingualMenuItem($temp->price, $temp->position, $temp->enTitle,
+                $this->data = new BilingualMenuItem(
+                    $temp->price, $temp->position, $temp->enTitle,
                     $temp->vnTitle, $temp->enDescription, $temp->vnDescription);
+
                 $this->data->setCategoryId($temp->category);
             }
         } else {
@@ -180,36 +189,18 @@ class CreateMenu
     }
 
     /**
-     * This function makes sure that a value is set and an int, if it isn't it creates an error message
-     * @param string $type
-     * @param        $value
-     * @return bool
-     */
-    private function checkNumber($value) : bool
-    {
-
-        $check = true;
-        if (!isset($value)) {
-            $check = false;
-        } elseif (!is_int($value)) {
-            $check = false;
-        }
-
-        return $check;
-    }
-
-    /**
      * This function checks that page param is set and the correct value
      * @return bool
      */
     private function checkPage() : bool
     {
-
         $check = true;
-        if (isset($_POST['page'])) {
+        if ($$this->sortingService->checkPage($_POST['page'])) {
             $page = $_POST['page'];
+
             if ($page !== 'Menu') {
                 $check = false;
+
             }
         } else {
             $check = false;
@@ -234,25 +225,6 @@ class CreateMenu
     }
 
     /**
-     * This function makes sure that a value is set and a string, if it isn't it creates an error message
-     * @param string $type
-     * @param        $value
-     * @return bool
-     */
-    private function checkString($value) : bool
-    {
-
-        $check = true;
-        if (!isset($value)) {
-            $check = false;
-        } elseif (!is_string($value)) {
-            $check = false;
-        }
-
-        return $check;
-    }
-
-    /**
      * This function checks that the page task is of expected value
      * @return bool
      */
@@ -262,12 +234,16 @@ class CreateMenu
         $check = true;
         if (isset($_POST['task'])) {
             $task = $_POST['task'];
+
             if ($task === 'createMenuItem' && $this->checkNewItem()) {
                 $this->task = $task;
+
             } elseif ($task === 'createMenuCategory' && $this->checkNewCategory()) {
                 $this->task = $task;
+
             } else {
                 $check = false;
+
             }
         } else {
             $check = false;

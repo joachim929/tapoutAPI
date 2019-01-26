@@ -2,7 +2,6 @@
 
 // Objects
 require_once __DIR__ . '/../../Objects/Menu/BilingualMenuCategory.php';
-require_once __DIR__ . '/../../Objects/Shared/Message.php';
 require_once __DIR__ . '/../../Objects/Shared/Response.php';
 
 // Repos
@@ -29,16 +28,11 @@ class MenuCreateCategoryService
 
     // Variables
     /**
-     * @var Message
-     */
-    private $message;
-
-    /**
      * @var Response
      */
     private $response;
 
-    public function __construct ()
+    public function __construct()
     {
 
         // Services
@@ -48,7 +42,6 @@ class MenuCreateCategoryService
         $this->adminRepo = new MenuAdminRepository();
 
         //Variables
-        $this->message = new Message();
         $this->response = new Response();
     }
 
@@ -57,7 +50,7 @@ class MenuCreateCategoryService
      * @param BilingualMenuCategory $data
      * @return Response
      */
-    public function addNewCategory (BilingualMenuCategory $data)
+    public function addNewCategory(BilingualMenuCategory $data)
     {
 
         $categoryId = $this->adminRepo->newCategory($data);
@@ -67,14 +60,12 @@ class MenuCreateCategoryService
             $data->setId($categoryId);
             $newCategory = $this->reorderCategories($data);
         } else {
-            $this->message->addError('Failed inserting new category');
         }
         if ($newCategory === false) {
             $this->response->setData($data);
         } else {
             $this->response->setData($newCategory);
         }
-        $this->response->setMessage($this->message);
 
         return $this->response;
     }
@@ -86,22 +77,20 @@ class MenuCreateCategoryService
      * @param BilingualMenuCategory $data
      * @return BilingualMenuCategory|bool
      */
-    private function reorderCategories (BilingualMenuCategory $data)
+    private function reorderCategories(BilingualMenuCategory $data)
     {
 
         $categories = $this->adminRepo->getAllCategories();
         $newCategory = false;
 
         if ($categories === false) {
-            $this->message->addWarning('Failed to get categories to re-order');
         } else {
             $index = 1;
             foreach ($categories as $category) {
                 if ($category->position !== $index) {
                     $category->setPosition($index);
                     if (!$this->adminRepo->patchCategoryPosition($category)) {
-                        $this->message->addWarning('Failed to update category position with name: ' .
-                            $category->enName);
+
                     }
                 }
                 if ($data->id === $category->id) {

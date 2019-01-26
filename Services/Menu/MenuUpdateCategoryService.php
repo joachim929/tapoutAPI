@@ -2,7 +2,6 @@
 
 // Objects
 require_once __DIR__ . '/../../Objects/Menu/BilingualMenuCategory.php';
-require_once __DIR__ . '/../../Objects/Shared/Message.php';
 require_once __DIR__ . '/../../Objects/Shared/Response.php';
 
 // Services
@@ -36,7 +35,6 @@ class MenuUpdateCategoryService
         $this->sortingService = new SortingService();
 
         //Variables
-        $this->message = new Message();
         $this->response = new Response();
     }
 

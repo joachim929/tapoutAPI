@@ -3,7 +3,6 @@
 // Objects
 require_once __DIR__ . '/../../Objects/Menu/BilingualMenuItem.php';
 require_once __DIR__ . '/../../Objects/Menu/RawMenuItem.php';
-require_once __DIR__ . '/../../Objects/Shared/Message.php';
 require_once __DIR__ . '/../../Objects/Shared/Response.php';
 
 // Repos
@@ -40,7 +39,7 @@ class MenuCreateItemService
      */
     private $response;
 
-    public function __construct ()
+    public function __construct()
     {
 
         // Services
@@ -60,7 +59,7 @@ class MenuCreateItemService
      * @param BilingualMenuItem $data
      * @return Response
      */
-    public function addNewItem (BilingualMenuItem $data)
+    public function addNewItem(BilingualMenuItem $data)
     {
 
         $itemId = $this->adminRepo->newItem($data);
@@ -73,11 +72,8 @@ class MenuCreateItemService
                 $this->reorderMenuItems($data);
             }
 
-        } else {
-            $this->message->addError('Failed to insert menu item');
         }
         $this->response->setData($data);
-        $this->response->setMessage($this->message);
 
         return $this->response;
     }
@@ -89,7 +85,7 @@ class MenuCreateItemService
      * This is so that there are no duplicate category positions
      * @param BilingualMenuItem $data
      */
-    private function reorderMenuItems (BilingualMenuItem $data)
+    private function reorderMenuItems(BilingualMenuItem $data)
     {
 
         $menuItems = $this->adminRepo->getAllMenuItemsByCategory($data->categoryId);
@@ -100,14 +96,10 @@ class MenuCreateItemService
                 if ($menuItem->position !== $index) {
                     $menuItem->setPosition($index);
                     if (!$this->adminRepo->patchMenuItemPosition($menuItem)) {
-                        $this->message->addWarning('Was an error updating menu item with caption: '
-                            . $menuItem->getCaption());
                     }
                 }
                 $index++;
             }
-        } else {
-            $this->message->addWarning('Failed to get menu items by category, therefore couldn\'t reorder');
         }
     }
 
@@ -115,14 +107,13 @@ class MenuCreateItemService
      * This function insert menu item details into the database and checks that it succeeded in doing so
      * @param BilingualMenuItem $data
      */
-    private function addNewItemDetails (BilingualMenuItem $data)
+    private function addNewItemDetails(BilingualMenuItem $data)
     {
 
         $enItemId = $this->adminRepo->newItemDetails($data->itemId, $data->enTitle,
             $data->enDescription, 'en');
         if ($enItemId === false) {
             $this->response->setSuccess(false);
-            $this->message->addError('Failed to insert English menu item details');
         } else {
             $data->setEnId($enItemId);
 
@@ -130,7 +121,6 @@ class MenuCreateItemService
                 $data->vnDescription, 'vn');
 
             if ($vnItemId === false) {
-                $this->message->addError('Failed to insert Vietnamese menu item details');
                 $this->response->setSuccess(false);
             } else {
                 $data->setVnId($vnItemId);
