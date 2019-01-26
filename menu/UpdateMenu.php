@@ -1,7 +1,6 @@
 <?php
 
 //Objects
-require_once '../Objects/Shared/Message.php';
 require_once '../Objects/Shared/Response.php';
 require_once '../Objects/Menu/BilingualMenuCategory.php';
 require_once '../Objects/Menu/BilingualMenuItem.php';
@@ -32,12 +31,6 @@ class UpdateMenu
     private $sortingService;
 
     // Variables
-
-    /**
-     * @var Message
-     */
-    private $message;
-
     /**
      * @var Response
      */
@@ -53,24 +46,23 @@ class UpdateMenu
      */
     private $task;
 
-    public function __construct ()
+    public function __construct()
     {
 
         $this->categoryService = new MenuUpdateCategoryService();
         $this->itemService = new MenuUpdateItemService();
         $this->sortingService = new SortingService();
 
-        $this->message = new Message();
         $this->response = new Response();
     }
 
-    public function returnStatement ()
+    public function returnStatement()
     {
 
         echo json_encode($this->checkParams());
     }
 
-    private function checkParams ()
+    private function checkParams()
     {
 
         if ($this->checkPage() && $this->checkModule() && $this->checkTask()) {
@@ -83,12 +75,6 @@ class UpdateMenu
             }
         }
 
-        if ($this->response->hasMessages()) {
-            $this->response->message->mergeMessages($this->message);
-        } else {
-            $this->response->setMessage($this->message);
-        }
-
         return $this->response;
     }
 
@@ -96,7 +82,7 @@ class UpdateMenu
      * This function checks all post params are valid for updating a menu item
      * @return bool
      */
-    private function checkItem ()
+    private function checkItem()
     {
 
         $check = true;
@@ -104,51 +90,41 @@ class UpdateMenu
             $item = json_decode($_POST['item']);
 
             if (true !== ($catIdCheck = $this->sortingService->checkNumber('Category Id', $item->categoryId))) {
-                $this->message->addError($catIdCheck);
                 $check = false;
             }
 
             if (true !== ($itemIdCheck = $this->sortingService->checkNumber('Item Id', $item->itemId))) {
-                $this->message->addError($itemIdCheck);
                 $check = false;
             }
 
             if (true !== ($enIdCheck = $this->sortingService->checkNumber('English description Id', $item->enId))) {
-                $this->message->addError($enIdCheck);
                 $check = false;
             }
 
             if (true !== ($vnIdCheck = $this->sortingService->checkNumber('Vietnamese description Id', $item->vnId))) {
-                $this->message->addError($vnIdCheck);
                 $check = false;
             }
 
             if (true !== ($enTitleCheck = $this->sortingService->checkString('English title', $item->enTitle))) {
-                $this->message->addError($enTitleCheck);
                 $check = false;
             }
 
             if (true !== ($vnTitleCheck = $this->sortingService->checkString('Vietnamese title', $item->vnTitle))) {
-                $this->message->addError($vnTitleCheck);
                 $check = false;
             }
 
             if (true !== ($positionCheck = $this->sortingService->checkNumber('Category position', $item->position))) {
-                $this->message->addError($positionCheck);
                 $check = false;
             }
 
             if (true !== ($priceCheck = $this->sortingService->checkString('Price', $item->price))) {
-                $this->message->addError($priceCheck);
                 $check = false;
             }
 
             if (true !== $descriptionCheck = $this->sortingService->checkDescriptions($item->enDescription, $item->vnDescription)) {
-                $this->message->addError($descriptionCheck);
                 $check = false;
             }
         } else {
-            $this->message->addError('No item to update was set');
             $check = false;
         }
 
@@ -159,7 +135,7 @@ class UpdateMenu
      * This function checks all post params are valid for updating a menu category
      * @return bool
      */
-    private function checkCategory ()
+    private function checkCategory()
     {
 
         $check = true;
@@ -167,32 +143,26 @@ class UpdateMenu
             $item = json_decode($_POST['item']);
 
             if (true !== ($idCheck = $this->sortingService->checkNumber('Category Id', $item->id))) {
-                $this->message->addError($idCheck);
                 $check = false;
             }
 
             if (true !== ($enNameCheck = $this->sortingService->checkString('English Category Name', $item->enName))) {
-                $this->message->addError($enNameCheck);
                 $check = false;
             }
 
             if (true !== ($vnNameCheck = $this->sortingService->checkString('Vietnamese Category Name', $item->vnName))) {
-                $this->message->addError($vnNameCheck);
                 $check = false;
             }
 
             if (true !== ($categoryTypeCheck = $this->sortingService->checkMenuCategoryType($item->type))) {
-                $this->message->addError($categoryTypeCheck);
                 $check = false;
             }
 
             if (true !== ($positionCheck = $this->sortingService->checkNumber('Page position', $item->position))) {
-                $this->message->addError($positionCheck);
                 $check = false;
             }
 
         } else {
-            $this->message->addError('No item to update was set');
             $check = false;
         }
 
@@ -203,7 +173,7 @@ class UpdateMenu
      * This function checks to see if module param has been set and is valid
      * @return bool
      */
-    private function checkModule ()
+    private function checkModule()
     {
 
         $check = true;
@@ -211,11 +181,9 @@ class UpdateMenu
             $module = $_POST['module'];
             if ($module !== 'Admin') {
                 $check = false;
-                $this->message->addError('Invalid module given');
             }
         } else {
             $check = false;
-            $this->message->addError('Module not set');
         }
 
         return $check;
@@ -225,7 +193,7 @@ class UpdateMenu
      * This function checks to see if the page param has been set and is valid
      * @return bool
      */
-    private function checkPage ()
+    private function checkPage()
     {
 
         $check = true;
@@ -233,15 +201,12 @@ class UpdateMenu
             $page = $_POST['page'];
 
             if (!is_string($page)) {
-                $this->message->addError('Page isn\'t a string');
                 $check = false;
             } elseif ($page !== 'Menu') {
-                $this->message->addError('Invalid page');
                 $check = false;
             }
 
         } else {
-            $this->message->addError('Page wasn\'t set');
             $check = false;
         }
 
@@ -252,7 +217,7 @@ class UpdateMenu
      * This function checks to see if the task param has been set and is valid
      * @return bool
      */
-    private function checkTask ()
+    private function checkTask()
     {
 
         $check = true;
@@ -276,12 +241,10 @@ class UpdateMenu
 
             } else {
                 $check = false;
-                $this->message->addWarning('Invalid task given');
 
             }
 
         } else {
-            $this->message->addError('No task set');
             $check = false;
         }
 

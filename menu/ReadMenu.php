@@ -5,7 +5,6 @@ require_once '../Objects/Menu/MenuItem.php';
 require_once '../Objects/Menu/MenuCategory.php';
 require_once '../Objects/Menu/BilingualMenuItem.php';
 require_once '../Objects/Menu/BilingualMenuCategory.php';
-require_once '../Objects/Shared/Message.php';
 require_once '../Objects/Shared/Response.php';
 
 // Services

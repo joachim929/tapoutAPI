@@ -3,15 +3,13 @@
 // Objects
 require_once __DIR__ . '/../../Objects/Shared/Message.php';
 
+/**
+ * Class Response
+ */
 class Response
 {
 
     public $data;
-
-    /**
-     * @var Message
-     */
-    public $message;
 
     /**
      * @var boolean
@@ -36,30 +34,13 @@ class Response
         $this->data = $data;
     }
 
+    /**
+     * @param $data
+     */
     public function addData ($data)
     {
 
         $this->data[] = $data;
-    }
-
-    /**
-     * @return Message
-     */
-    public function getMessage () : Message
-    {
-
-        return $this->message;
-    }
-
-    /**
-     * @param Message $message
-     */
-    public function setMessage (Message $message)
-    {
-
-        if ($message->hasMessage()) {
-            $this->message = $message;
-        }
     }
 
     /**
@@ -100,33 +81,5 @@ class Response
         } else {
             $this->setData($response->data);
         }
-
-        if ($this->hasMessages()) {
-            $this->message->mergeMessages($response->message);
-        } elseif ($response->hasMessages()) {
-            $this->setMessage($response->message);
-        }
     }
-
-    /**
-     * This function checks if Message has any messages
-     * @return bool
-     */
-    public function hasMessages ()
-    {
-
-        $check = false;
-        if (isset($this->message)) {
-            $check = true;
-        }
-        if (isset($this->message)) {
-            $check = true;
-        }
-        if (isset($this->message)) {
-            $check = true;
-        }
-
-        return $check;
-    }
-
 }

@@ -3,7 +3,6 @@
 // Objects
 require_once '../Objects/Menu/BilingualMenuItem.php';
 require_once '../Objects/Menu/BilingualMenuCategory.php';
-require_once '../Objects/Shared/Message.php';
 require_once '../Objects/Shared/Response.php';
 
 // Services
@@ -26,10 +25,6 @@ class CreateMenu
     private $createCatService;
 
     // Variables
-    /**
-     * @var Message
-     */
-    private $message;
 
     /**
      * @var BilingualMenuItem|BilingualMenuCategory|null
@@ -46,7 +41,7 @@ class CreateMenu
      */
     private $task;
 
-    public function __construct ()
+    public function __construct()
     {
 
         $this->createItemService = new MenuCreateItemService();
@@ -55,7 +50,7 @@ class CreateMenu
         $this->response = new Response();
     }
 
-    public function returnStatement ()
+    public function returnStatement()
     {
 
         echo json_encode($this->checkParams());
@@ -68,30 +63,25 @@ class CreateMenu
      * @param $vnDescription
      * @return bool
      */
-    private function checkDescriptions ($enDescription, $vnDescription)
+    private function checkDescriptions($enDescription, $vnDescription)
     {
 
         $check = true;
         if (isset($enDescription, $vnDescription)) {
             if (!(is_string($enDescription) && is_string($vnDescription))) {
                 $check = false;
-                $this->message->addError('English and Vietnamese descriptions need to be strings');
             } else {
                 if (strlen($enDescription) < 4) {
                     $check = false;
-                    $this->message->addError('English description is too short');
                 }
                 if (strlen($vnDescription) < 4) {
                     $check = false;
-                    $this->message->addError('Vietnamese description is too short');
                 }
             }
         } elseif (!isset($enDescription) && isset($vnDescription)) {
             $check = false;
-            $this->message->addError('Only got a value for Vietnamese description, not English description');
         } elseif (!isset($vnDescription) && isset($enDescription)) {
             $check = false;
-            $this->message->addError('Only got a value for English description, not Vietnamese description');
         }
 
         return $check;
@@ -101,7 +91,7 @@ class CreateMenu
      * This function checks that the post param module is valid
      * @return bool
      */
-    private function checkModule () : bool
+    private function checkModule() : bool
     {
 
         $check = true;
@@ -109,33 +99,31 @@ class CreateMenu
             $module = $_POST['module'];
             if ($module !== 'Admin') {
                 $check = false;
-                $this->message->addError('Invalid module given');
             }
         } else {
             $check = false;
-            $this->message->addError('Module not set');
         }
 
         return $check;
     }
 
-    private function checkNewCategory () : bool
+    private function checkNewCategory() : bool
     {
 
         $check = true;
         if (isset($_POST['newMenuCategory'])) {
             $temp = json_decode($_POST['newMenuCategory']);
 
-            if (!$this->checkString('enCategoryName', $temp->enName)) {
+            if (!$this->checkString($temp->enName)) {
                 $check = false;
             }
-            if (!$this->checkString('vnCategoryName', $temp->vnName)) {
+            if (!$this->checkString($temp->vnName)) {
                 $check = false;
             }
-            if (!$this->checkString('type', $temp->type)) {
+            if (!$this->checkString($temp->type)) {
                 $check = false;
             }
-            if (!$this->checkNumber('pagePosition', $temp->position)) {
+            if (!$this->checkNumber($temp->position)) {
                 $check = false;
             }
             if ($check === true) {
@@ -143,7 +131,6 @@ class CreateMenu
             }
         } else {
             $check = false;
-            $this->message->addError('No item found in the expected place');
             $this->data = null;
         }
 
@@ -154,26 +141,26 @@ class CreateMenu
      * This function checks all expected post parameters and returns a value on its findings
      * @return bool
      */
-    private function checkNewItem () : bool
+    private function checkNewItem() : bool
     {
 
         $check = true;
         if (isset($_POST['newMenuItem'])) {
             $temp = json_decode($_POST['newMenuItem']);
 
-            if (!$this->checkNumber('category', $temp->category)) {
+            if (!$this->checkNumber($temp->category)) {
                 $check = false;
             }
-            if (!$this->checkString('English Title', $temp->enTitle)) {
+            if (!$this->checkString($temp->enTitle)) {
                 $check = false;
             }
-            if (!$this->checkString('Vietnamese Title', $temp->vnTitle)) {
+            if (!$this->checkString($temp->vnTitle)) {
                 $check = false;
             }
-            if (!$this->checkNumber('category position', $temp->position)) {
+            if (!$this->checkNumber($temp->position)) {
                 $check = false;
             }
-            if (!$this->checkString('price', $temp->price)) {
+            if (!$this->checkString($temp->price)) {
                 $check = false;
             }
             if (!$this->checkDescriptions($temp->enDescription, $temp->vnDescription)) {
@@ -186,7 +173,6 @@ class CreateMenu
             }
         } else {
             $check = false;
-            $this->message->addError('No item found in the expected place');
             $this->data = null;
         }
 
@@ -199,16 +185,14 @@ class CreateMenu
      * @param        $value
      * @return bool
      */
-    private function checkNumber (string $type, $value) : bool
+    private function checkNumber($value) : bool
     {
 
         $check = true;
         if (!isset($value)) {
             $check = false;
-            $this->message->addError("No value for $type given");
         } elseif (!is_int($value)) {
             $check = false;
-            $this->message->addError("No valid value given for $value");
         }
 
         return $check;
@@ -218,7 +202,7 @@ class CreateMenu
      * This function checks that page param is set and the correct value
      * @return bool
      */
-    private function checkPage () : bool
+    private function checkPage() : bool
     {
 
         $check = true;
@@ -226,11 +210,9 @@ class CreateMenu
             $page = $_POST['page'];
             if ($page !== 'Menu') {
                 $check = false;
-                $this->message->addError('Invalid page given');
             }
         } else {
             $check = false;
-            $this->message->addError('Page not set');
         }
 
         return $check;
@@ -240,18 +222,12 @@ class CreateMenu
      * This function makes sure all post params are good and if that is the case,
      * calls the create menu service
      */
-    private function checkParams ()
+    private function checkParams()
     {
 
         if ($this->checktask() && $this->checkPage() && $this->checkModule()) {
 
             $this->routeAction();
-        }
-
-        if ($this->response->hasMessages()) {
-            $this->response->message->mergeMessages($this->message);
-        } else {
-            $this->response->setMessage($this->message);
         }
 
         return $this->response;
@@ -263,16 +239,14 @@ class CreateMenu
      * @param        $value
      * @return bool
      */
-    private function checkString (string $type, $value) : bool
+    private function checkString($value) : bool
     {
 
         $check = true;
         if (!isset($value)) {
             $check = false;
-            $this->message->addError("No value for $type given");
         } elseif (!is_string($value)) {
             $check = false;
-            $this->message->addError("No valid value given for $value");
         }
 
         return $check;
@@ -282,7 +256,7 @@ class CreateMenu
      * This function checks that the page task is of expected value
      * @return bool
      */
-    private function checkTask () : bool
+    private function checkTask() : bool
     {
 
         $check = true;
@@ -294,11 +268,9 @@ class CreateMenu
                 $this->task = $task;
             } else {
                 $check = false;
-                $this->message->addWarning('Invalid task given');
             }
         } else {
             $check = false;
-            $this->message->addWarning('Task is not set');
         }
 
         return $check;
@@ -307,7 +279,7 @@ class CreateMenu
     /**
      * This function calls the service corresponding to the task
      */
-    private function routeAction ()
+    private function routeAction()
     {
 
         if ($this->task === 'createMenuItem') {
@@ -315,7 +287,6 @@ class CreateMenu
         } elseif ($this->task === 'createMenuCategory') {
             $this->response->mergeResponse($this->createCatService->addNewCategory($this->data));
         } else {
-            $this->message->addError('Something went wrong with the task: ' . $this->task);
         }
     }
 

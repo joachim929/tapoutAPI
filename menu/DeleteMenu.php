@@ -1,7 +1,6 @@
 <?php
 
 // Objects
-require_once '../Objects/Shared/Message.php';
 
 // Services
 require_once '../Services/Menu/MenuDeleteService.php';
@@ -26,7 +25,6 @@ class DeleteMenu
     {
 
         $this->deleteMenuService = new MenuDeleteService();
-        $this->message = new Message();
     }
 
     public function returnStatement ()
@@ -59,13 +57,10 @@ class DeleteMenu
                 } elseif (isset($item->type) && $item->type === 'item') {
                     $this->deleteMenuService->initializeItemDelete($item->id);
                 } else {
-                    $this->message->addWarning('No item/category was set to be deleted');
                 }
             } else {
-                $this->message->addWarning('No item id was set');
             }
         } else {
-            $this->message->addError('No item was set');
         }
     }
 
@@ -81,11 +76,9 @@ class DeleteMenu
             $module = $_POST['module'];
             if ($module !== 'Admin') {
                 $check = false;
-                $this->message->addError('Invalid module given');
             }
         } else {
             $check = false;
-            $this->message->addError('Module not set');
         }
 
         return $check;
@@ -103,15 +96,11 @@ class DeleteMenu
             $page = $_POST['page'];
 
             if (!is_string($page)) {
-                $this->message->addError('Page isn\'t a string');
                 $check = false;
             } elseif ($page !== 'Menu') {
-                $this->message->addError('Invalid page');
                 $check = false;
             }
-
         } else {
-            $this->message->addError('Page wasn\'t set');
             $check = false;
         }
 
@@ -129,11 +118,9 @@ class DeleteMenu
         if (isset($_POST['task'])) {
             $task = $_POST['task'];
             if (!is_string($task) || ($task !== 'deleteCategory' && $task !== 'deleteItem')) {
-                $this->message->addError('Incorrect task set');
                 $check = false;
             }
         } else {
-            $this->message->addError('No task set');
             $check = false;
         }
 
