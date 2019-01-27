@@ -265,8 +265,8 @@ class UpdateMenu
             $items[0]->enName, $items[0]->vnName, $items[0]->type, $items[0]->position, $items[0]->id,
             $items[0]->createdAt, $items[0]->editedAt);
         $this->updateItem[] = new BilingualMenuCategory(
-            $items[0]->enName, $items[0]->vnName, $items[0]->type, $items[0]->position, $items[0]->id,
-            $items[0]->createdAt, $items[0]->editedAt);
+            $items[1]->enName, $items[1]->vnName, $items[1]->type, $items[1]->position, $items[1]->id,
+            $items[1]->createdAt, $items[1]->editedAt);
     }
 
 }
