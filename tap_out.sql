@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2019 at 11:06 PM
+-- Generation Time: Jan 21, 2019 at 08:33 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.13
 
@@ -165,7 +165,10 @@ INSERT INTO `image_list` (`id`, `imgUrl`, `active`, `created_at`, `edited_at`) V
 (13, 'DSC07571.jpg', 1, '2018-12-30 22:27:23', NULL),
 (14, 'DSC07422.jpg', 1, '2018-12-30 22:27:23', NULL),
 (15, 'IMG_0246.jpg', 1, '2018-12-30 22:27:23', NULL),
-(16, 'DSC07657.jpg', 1, '2018-12-30 22:27:23', NULL);
+(16, 'DSC07657.jpg', 1, '2018-12-30 22:27:23', NULL),
+(17, 'testing', 1, '2019-01-12 14:15:32', NULL),
+(19, 'te1sting', 1, '2019-01-12 14:20:45', NULL),
+(20, 'te2sting', 1, '2019-01-12 14:22:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -190,8 +193,11 @@ CREATE TABLE `menu_category` (
 
 INSERT INTO `menu_category` (`id`, `en_name`, `vn_name`, `type`, `active`, `page_position`, `created_at`, `edited_at`) VALUES
 (1, 'EN Breakfast', 'VN Breakfast', 'food', 1, 1, '2019-01-11 23:02:25', NULL),
-(3, 'EN Mains', 'VN Mains', 'food', 1, 30, '2019-01-11 23:02:25', NULL),
-(12, 'EN White Wine', 'VN White Wines', 'drink', 1, 11, '2019-01-11 23:02:25', NULL);
+(3, 'EN Mains', 'VN Mains', 'food', 1, 6, '2019-01-11 23:02:25', '2019-01-13 20:47:51'),
+(12, 'EN White Wine', 'VN White Wines', 'drink', 1, 3, '2019-01-11 23:02:25', NULL),
+(13, 'EnName Test', 'VnName Test', 'food', 1, 2, '2019-01-13 17:11:39', NULL),
+(23, 'EnName Test', 'VnName Test', 'food', 1, 5, '2019-01-13 19:52:29', '2019-01-13 20:47:51'),
+(25, 'EnName Test', 'VnName Test', 'food', 1, 4, '2019-01-13 22:06:19', '2019-01-13 21:06:19');
 
 -- --------------------------------------------------------
 
@@ -202,7 +208,6 @@ INSERT INTO `menu_category` (`id`, `en_name`, `vn_name`, `type`, `active`, `page
 CREATE TABLE `menu_item` (
   `id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  `caption` varchar(255) COLLATE utf8_bin NOT NULL,
   `price` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `category_position` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -213,14 +218,27 @@ CREATE TABLE `menu_item` (
 -- Dumping data for table `menu_item`
 --
 
-INSERT INTO `menu_item` (`id`, `category_id`, `caption`, `price`, `category_position`, `created_at`, `edited_at`) VALUES
-(14, 1, 'Spinach & Artichoke DipSpinach & Artichoke Dip', '85K', 1, '2019-01-11 22:03:44', NULL),
-(16, 1, 'Loaded Fries', '140K', 2, '2019-01-11 22:03:44', NULL),
-(32, 3, '250g Australian Grain fed Rib Eye Steak', '250K', 5, '2019-01-11 22:03:44', NULL),
-(84, 12, 'The Accomplice – Chardonnay – Australia 2016', '115K/550K', 3, '2019-01-11 22:03:44', NULL),
-(102, 1, 'TestingFrontEnd', '125K', 9, '2019-01-11 22:03:44', NULL),
-(103, 1, 'TestingFrontEnd2', '125K', 2, '2019-01-11 22:03:44', NULL),
-(104, 1, 'Testing', '420K', 2, '2019-01-11 22:03:44', NULL);
+INSERT INTO `menu_item` (`id`, `category_id`, `price`, `category_position`, `created_at`, `edited_at`) VALUES
+(14, 1, '85K', 1, '2019-01-11 22:03:44', NULL),
+(16, 1, '140K', 2, '2019-01-11 22:03:44', NULL),
+(32, 3, '250K', 2, '2019-01-11 22:03:44', '2019-01-19 21:48:11'),
+(84, 12, '115K/550K', 3, '2019-01-11 22:03:44', NULL),
+(157, 25, 'testK', 1, '2019-01-13 21:06:40', '2019-01-13 21:06:41'),
+(158, 25, 'testK', 2, '2019-01-13 21:06:44', '2019-01-13 21:06:45'),
+(159, 1, '1337K', 8, '2019-01-16 15:44:52', '2019-01-16 15:45:57'),
+(160, 1, '1337K', 3, '2019-01-16 15:45:09', '2019-01-16 15:45:10'),
+(161, 1, '1337K', 4, '2019-01-16 15:45:22', '2019-01-16 15:45:22'),
+(162, 1, '1337K', 5, '2019-01-16 15:45:34', '2019-01-16 15:45:34'),
+(163, 1, '1337K', 6, '2019-01-16 15:45:45', '2019-01-16 15:45:46'),
+(164, 1, '1337K', 7, '2019-01-16 15:45:57', '2019-01-16 15:45:57'),
+(165, 1, '151', 9, '2019-01-19 21:41:31', NULL),
+(166, 1, '151', 11, '2019-01-19 21:42:10', '2019-01-19 21:47:27'),
+(167, 1, '151', 12, '2019-01-19 21:43:53', '2019-01-19 21:47:27'),
+(168, 1, '151', 13, '2019-01-19 21:45:19', '2019-01-19 21:47:27'),
+(169, 1, '151', 14, '2019-01-19 21:46:37', '2019-01-19 21:47:27'),
+(170, 1, '151', 10, '2019-01-19 21:47:27', '2019-01-19 21:47:27'),
+(171, 3, 'test', 1, '2019-01-19 21:48:10', '2019-01-19 21:48:11'),
+(172, 3, 'test', 3, '2019-01-19 21:48:12', '2019-01-19 21:48:12');
 
 -- --------------------------------------------------------
 
@@ -251,10 +269,30 @@ INSERT INTO `menu_item_details` (`id`, `item_id`, `title`, `description`, `langu
 (6, 32, 'chữ Quốc ngữ Australian burger', 'chữ Quốc ngữ Its a fooking burger alright', 'vn', '2019-01-11 22:04:28', NULL),
 (7, 14, 'En Spinach innit', 'Hand cut fries topped with pulled pork, bacon, cheddar cheese and Cool Ranch dressing', 'en', '2019-01-11 22:04:28', NULL),
 (8, 14, 'ở phíaServed Spinach with Two Choice of Sides', 'ở phíaServed with Two Choice of Sides', 'vn', '2019-01-11 22:04:28', NULL),
-(27, 102, 'EnTestingFrontEnd', '', 'en', '2019-01-11 22:04:28', NULL),
-(28, 102, 'VnTestingFrontEnd', '', 'vn', '2019-01-11 22:04:28', NULL),
-(29, 103, 'EnTestingFrontEnd', 'EnTestingFrontEnd', 'en', '2019-01-11 22:04:28', NULL),
-(30, 103, 'VnTestingFrontEnd', 'VnTestingFrontEnd', 'vn', '2019-01-11 22:04:28', NULL);
+(102, 157, 'Test', 'enDesc Test', 'en', '2019-01-13 21:06:40', NULL),
+(103, 157, 'Test', 'vnDesc Test', 'vn', '2019-01-13 21:06:40', NULL),
+(104, 158, 'Test', 'enDesc Test', 'en', '2019-01-13 21:06:45', NULL),
+(105, 158, 'Test', 'vnDesc Test', 'vn', '2019-01-13 21:06:45', NULL),
+(106, 159, 'enTest1', 'enDesc Test', 'en', '2019-01-16 15:44:52', NULL),
+(107, 159, 'vnTest1', 'vnDesc Test', 'vn', '2019-01-16 15:44:52', NULL),
+(108, 160, 'enTest2', 'enDesc Test', 'en', '2019-01-16 15:45:09', NULL),
+(109, 160, 'vnTest2', 'vnDesc Test', 'vn', '2019-01-16 15:45:10', NULL),
+(110, 161, 'enTest3', 'enDesc Test', 'en', '2019-01-16 15:45:22', NULL),
+(111, 161, 'vnTest3', 'vnDesc Test', 'vn', '2019-01-16 15:45:22', NULL),
+(112, 162, 'enTest4', 'enDesc Test', 'en', '2019-01-16 15:45:34', NULL),
+(113, 162, 'vnTest4', 'vnDesc Test', 'vn', '2019-01-16 15:45:34', NULL),
+(114, 163, 'enTest5', 'enDesc Test', 'en', '2019-01-16 15:45:45', NULL),
+(115, 163, 'vnTest5', 'vnDesc Test', 'vn', '2019-01-16 15:45:45', NULL),
+(116, 164, 'enTest6', 'enDesc Test', 'en', '2019-01-16 15:45:57', NULL),
+(117, 164, 'vnTest6', 'vnDesc Test', 'vn', '2019-01-16 15:45:57', NULL),
+(118, 169, 'testest', NULL, 'en', '2019-01-19 21:46:41', NULL),
+(119, 169, 'testetset', NULL, 'vn', '2019-01-19 21:46:49', NULL),
+(120, 170, 'testest', NULL, 'en', '2019-01-19 21:47:27', NULL),
+(121, 170, 'testetset', NULL, 'vn', '2019-01-19 21:47:27', NULL),
+(122, 171, 'ysetest', NULL, 'en', '2019-01-19 21:48:10', NULL),
+(123, 171, 'testsetst', NULL, 'vn', '2019-01-19 21:48:11', NULL),
+(124, 172, 'ysetest', NULL, 'en', '2019-01-19 21:48:12', NULL),
+(125, 172, 'testsetst', NULL, 'vn', '2019-01-19 21:48:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -424,7 +462,6 @@ ALTER TABLE `menu_category`
 --
 ALTER TABLE `menu_item`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `caption` (`caption`),
   ADD KEY `category_id` (`category_id`);
 
 --
@@ -494,25 +531,25 @@ ALTER TABLE `image_details`
 -- AUTO_INCREMENT for table `image_list`
 --
 ALTER TABLE `image_list`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `menu_category`
 --
 ALTER TABLE `menu_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `menu_item`
 --
 ALTER TABLE `menu_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
 -- AUTO_INCREMENT for table `menu_item_details`
 --
 ALTER TABLE `menu_item_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `new_image_details`

@@ -15,12 +15,6 @@ class DeleteMenu
      */
     private $deleteMenuService;
 
-    // Variables
-    /**
-     * @var Message
-     */
-    private $message;
-
     public function __construct ()
     {
 
@@ -35,20 +29,20 @@ class DeleteMenu
 
     private function checkParams ()
     {
-
+        $check = true;
         if ($this->checkpage() && $this->checkModule() && $this->checkTask()) {
-            $this->checkItem();
+            $check = $this->checkItem();
         }
 
-        return $this->message;
+        return $check;
     }
 
     /**
      * This function checks the item and routes to the correct service method depending on the variables
      */
-    private function checkItem ()
+    private function checkItem (): bool
     {
-
+        $check = true;
         if (isset($_POST['item'])) {
             $item = json_decode($_POST['item']);
             if (isset($item->id)) {
@@ -57,11 +51,16 @@ class DeleteMenu
                 } elseif (isset($item->type) && $item->type === 'item') {
                     $this->deleteMenuService->initializeItemDelete($item->id);
                 } else {
+                    $check = false;
                 }
             } else {
+                $check = false;
             }
         } else {
+            $check = false;
         }
+
+        return $check;
     }
 
     /**

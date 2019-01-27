@@ -1,11 +1,5 @@
 <?php
 
-// Objects
-require_once __DIR__ . '/../../Objects/Shared/Message.php';
-
-/**
- * Class Response
- */
 class Response
 {
 

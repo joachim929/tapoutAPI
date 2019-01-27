@@ -48,7 +48,6 @@ class MenuCategoryRepository
 
         while ($stmt->fetch()) {
             $categories[] = new BilingualMenuCategory($enName, $vnName, $type, $pagePosition, $id);
-
         }
 
         $stmt->close();
