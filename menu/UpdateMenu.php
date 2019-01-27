@@ -37,7 +37,7 @@ class UpdateMenu
     private $response;
 
     /**
-     * @var BilingualMenuCategory|BilingualMenuItem
+     * @var BilingualMenuCategory|BilingualMenuItem|array
      */
     private $updateItem;
 
@@ -64,7 +64,6 @@ class UpdateMenu
 
     private function checkParams()
     {
-
         if ($this->checkPage() && $this->checkModule() && $this->checkTask()) {
             if ($this->task === 'updateCategory') {
                 // todo Create update Category service
@@ -72,6 +71,10 @@ class UpdateMenu
 
             } elseif ($this->task === 'updateItem') {
                 $this->itemService->updateItem($this->updateItem);
+
+            } elseif ($this->task === 'updateCategoryPosition') {
+                $this->response = $this->categoryService->updateCategoryPosition($this->updateItem);
+
             }
         }
 
@@ -227,18 +230,23 @@ class UpdateMenu
             if ($this->task === 'updateItem' && $this->checkItem()) {
                 $item = json_decode($_POST['item']);
                 $this->updateItem = new BilingualMenuItem($item->price, $item->position, $item->enTitle,
-                    $item->vnTitle, $item->enDescription, $item->vnDescription, $item->enId, $item->vnId, $item->itemId);
+                    $item->vnTitle, $item->enDescription, $item->vnDescription, $item->enId,
+                    $item->vnId, $item->itemId);
                 $this->updateItem->setCategoryId($item->categoryId);
 
             } elseif ($this->task === 'updateCategory' && $this->checkCategory()) {
                 $item = json_decode($_POST['item']);
-                $this->updateItem = new BilingualMenuCategory($item->enName, $item->vnName, $item->type, $item->position,
+                $this->updateItem = new BilingualMenuCategory(
+                    $item->enName, $item->vnName, $item->type, $item->position,
                     $item->id);
 
             } elseif ($this->task === 'updateItemPosition') {
 
             } elseif ($this->task === 'updateCategoryPosition') {
-
+                $items = json_decode($_POST['items']);
+                if (count($items) === 2) {
+                    $this->setUpdateItemForCategoryPositionUpdate($items);
+                }
             } else {
                 $check = false;
 
@@ -249,6 +257,16 @@ class UpdateMenu
         }
 
         return $check;
+    }
+
+    private function setUpdateItemForCategoryPositionUpdate(array $items)
+    {
+        $this->updateItem[] = new BilingualMenuCategory(
+            $items[0]->enName, $items[0]->vnName, $items[0]->type, $items[0]->position, $items[0]->id,
+            $items[0]->createdAt, $items[0]->editedAt);
+        $this->updateItem[] = new BilingualMenuCategory(
+            $items[0]->enName, $items[0]->vnName, $items[0]->type, $items[0]->position, $items[0]->id,
+            $items[0]->createdAt, $items[0]->editedAt);
     }
 
 }
