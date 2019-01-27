@@ -229,13 +229,16 @@ class UpdateMenu
 
             if ($this->task === 'updateItem' && $this->checkItem()) {
                 $item = json_decode($_POST['item']);
+
                 $this->updateItem = new BilingualMenuItem($item->price, $item->position, $item->enTitle,
                     $item->vnTitle, $item->enDescription, $item->vnDescription, $item->enId,
                     $item->vnId, $item->itemId);
+
                 $this->updateItem->setCategoryId($item->categoryId);
 
             } elseif ($this->task === 'updateCategory' && $this->checkCategory()) {
                 $item = json_decode($_POST['item']);
+
                 $this->updateItem = new BilingualMenuCategory(
                     $item->enName, $item->vnName, $item->type, $item->position,
                     $item->id);

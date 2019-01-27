@@ -209,8 +209,6 @@ class MenuReadRepository
             LEFT JOIN menu_item AS item ON cat.id = item.category_id
             LEFT JOIN menu_item_details AS enDetails ON item.id = enDetails.item_id AND enDetails.language = "en"
             LEFT JOIN menu_item_details AS vnDetails ON item.id = vnDetails.item_id AND vnDetails.language = "vn"
-            WHERE enDetails.id IS NOT NULL 
-            AND vnDetails.id IS NOT NULL
             AND cat.active = 1
             ORDER BY pagePosition, catPosition'
         );
@@ -222,17 +220,20 @@ class MenuReadRepository
             $enId, $enTitle, $enDescription, $vnId, $vnTitle, $vnDescription);
 
         while ($stmt->fetch()) {
-            $menuItem = new BilingualMenuItem($itemPrice, $catPosition,
-                $enTitle, $vnTitle, $enDescription, $vnDescription, $enId, $vnId, $itemId);
-            $menuItem->setCategoryId($catId);
-            $menuItem->setCreatedAt($itemCreatedAt);
-            $menuItem->setEditedAt($itemEditedAt);
+
             if (!isset($results[$catId])) {
                 $results[$catId] = new BilingualMenuCategory($catEnName, $catVnName, $catType, $pagePosition, $catId);
                 $results[$catId]->setCreatedAt($catCreatedAt);
                 $results[$catId]->setEditedAt($catEditedAt);
             }
-            $results[$catId]->addItem($menuItem);
+            if ($itemId !== null) {
+                $menuItem = new BilingualMenuItem($itemPrice, $catPosition,
+                    $enTitle, $vnTitle, $enDescription, $vnDescription, $enId, $vnId, $itemId);
+                $menuItem->setCategoryId($catId);
+                $menuItem->setCreatedAt($itemCreatedAt);
+                $menuItem->setEditedAt($itemEditedAt);
+                $results[$catId]->addItem($menuItem);
+            }
         }
 
         if ($stmt->errno) {
