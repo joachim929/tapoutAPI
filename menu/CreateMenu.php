@@ -174,6 +174,9 @@ class CreateMenu
                 $check = false;
             }
             if ($check === true) {
+                if($temp->position < 1) {
+                    $temp->setPosition(1);
+                }
                 $this->data = new BilingualMenuItem(
                     $temp->price, $temp->position, $temp->enTitle,
                     $temp->vnTitle, $temp->enDescription, $temp->vnDescription,
