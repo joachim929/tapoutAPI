@@ -63,9 +63,10 @@ class BilingualMenuItem
      */
     public $editedAt;
 
-    public function __construct (string $price, int $position, ?string $enTitle, ?string $vnTitle,
-                                 ?string $enDescription, ?string $vnDescription,
-                                 ?int $enId, ?int $vnId, ?int $itemId)
+    public function __construct(
+        string $price, int $position, ?string $enTitle, ?string $vnTitle,
+        ?string $enDescription, ?string $vnDescription,
+        ?int $enId, ?int $vnId, ?int $itemId)
     {
 
         $this->setPrice($price);
@@ -270,7 +271,5 @@ class BilingualMenuItem
     {
         $this->editedAt = $editedAt;
     }
-
-
 
 }

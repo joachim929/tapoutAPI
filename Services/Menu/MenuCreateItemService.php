@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../Objects/Shared/Response.php';
 
 // Repos
 require_once __DIR__ . '/../../Repository/Menu/MenuAdminRepository.php';
+require_once __DIR__ . '/../../Repository/Menu/MenuReadRepository.php';
 
 // Services
 require_once __DIR__ . '/../Shared/SortingService.php';
@@ -27,6 +28,10 @@ class MenuCreateItemService
      * @var MenuAdminRepository
      */
     private $adminRepo;
+    /**
+     * @var MenuReadRepository
+     */
+    private $readRepo;
 
     // Variables
     /**
@@ -42,6 +47,7 @@ class MenuCreateItemService
 
         // Repos
         $this->adminRepo = new MenuAdminRepository();
+        $this->readRepo = new MenuReadRepository();
 
         //Variables
         $this->response = new Response();
@@ -66,8 +72,9 @@ class MenuCreateItemService
                 $this->reorderMenuItems($data);
             }
 
+        } else {
+            $this->response->setSuccess(false);
         }
-        $this->response->setData($data);
 
         return $this->response;
     }
@@ -120,6 +127,8 @@ class MenuCreateItemService
                 $data->setVnId($vnItemId);
                 $this->response->setSuccess(true);
             }
+            $this->response->setData($this->readRepo->getItemById($data->itemId));
+
         }
     }
 

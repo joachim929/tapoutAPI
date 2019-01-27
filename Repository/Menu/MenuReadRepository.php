@@ -39,7 +39,8 @@ class MenuReadRepository
         $result = false;
 
         $stmt = $this->mysqli->prepare(
-            'SELECT item.id AS itemId, item.price AS itemPrice, item.category_position AS catPosition,
+            'SELECT item.id AS itemId, item.price AS itemPrice, item.category_position AS catPosition, 
+            item.category_id AS catId, item.created_at AS createdAt, item.edited_at AS editedAt,
             enDetails.id AS enId, enDetails.title AS enTitle, enDetails.description AS enDescription,
             vnDetails.id AS vnId, vnDetails.title AS vnTitle, vnDetails.description AS vnDescription
             FROM menu_item AS item
@@ -52,23 +53,19 @@ class MenuReadRepository
 
         $stmt->execute();
 
-        $stmt->bind_result($itemId, $itemPrice, $catPosition, $enId, $enTitle, $enDescription, $vnId, $vnTitle, $vnDescription);
+        $stmt->bind_result($itemId, $itemPrice, $catPosition, $catId, $createdAt, $editedAt,
+            $enId, $enTitle, $enDescription, $vnId, $vnTitle, $vnDescription);
 
         while ($stmt->fetch()) {
-            $result[] = new BilingualMenuItem($itemPrice, $catPosition, $enTitle, $vnTitle,
+            $result = new BilingualMenuItem($itemPrice, $catPosition, $enTitle, $vnTitle,
                 $enDescription, $vnDescription, $enId, $vnId, $itemId);
+            $result->setCategoryId($catId);
+            $result->setCreatedAt($createdAt);
+            $result->setEditedAt($editedAt);
         }
 
         if ($stmt->errno) {
             $result = false;
-        } else {
-            if (count($result) > 1) {
-                $result = $result[0];
-            } elseif (count($result) === 1) {
-                $result = $result[0];
-            } else {
-                $result = false;
-            }
         }
 
         return $result;

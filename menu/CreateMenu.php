@@ -176,7 +176,8 @@ class CreateMenu
             if ($check === true) {
                 $this->data = new BilingualMenuItem(
                     $temp->price, $temp->position, $temp->enTitle,
-                    $temp->vnTitle, $temp->enDescription, $temp->vnDescription);
+                    $temp->vnTitle, $temp->enDescription, $temp->vnDescription,
+                    null, null, null);
 
                 $this->data->setCategoryId($temp->category);
             }
