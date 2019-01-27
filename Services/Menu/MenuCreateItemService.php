@@ -30,11 +30,6 @@ class MenuCreateItemService
 
     // Variables
     /**
-     * @var Message
-     */
-    private $message;
-
-    /**
      * @var Response
      */
     private $response;
@@ -49,13 +44,12 @@ class MenuCreateItemService
         $this->adminRepo = new MenuAdminRepository();
 
         //Variables
-        $this->message = new Message();
         $this->response = new Response();
     }
 
     /**
      * This function adds a new menu item into the database and on success calls functions that will insert
-     * the menu item details. It returns Response which should contain data, and any warning/error messages
+     * the menu item details. It returns Response which should contain data
      * @param BilingualMenuItem $data
      * @return Response
      */

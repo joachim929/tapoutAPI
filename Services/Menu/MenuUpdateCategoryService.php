@@ -32,7 +32,7 @@ class MenuUpdateCategoryService
      */
     private $response;
 
-    public function __construct ()
+    public function __construct()
     {
 
         // Repos
@@ -45,12 +45,18 @@ class MenuUpdateCategoryService
         $this->response = new Response();
     }
 
-    /**
-     * @todo: Check category exists
-     *      Then update position
-     *      On success get items and return them
-     */
-    //
+    public function updateCategory(BilingualMenuCategory $category)
+    {
+        $allCategories = $this->categoryRepo->getCategories();
+        foreach ($allCategories as $allCategory) {
+            if ($category->id === $allCategory->id) {
+                $this->checkCategory($category);
+            }
+
+        }
+
+        return $this->response;
+    }
 
     /**
      * @param array $items
@@ -59,6 +65,7 @@ class MenuUpdateCategoryService
     public function updateCategoryPosition(array $items)
     {
         $this->checkCategories($items);
+
         return $this->response;
     }
 
@@ -69,7 +76,7 @@ class MenuUpdateCategoryService
     {
         $allCategories = $this->categoryRepo->getCategories();
 
-        if($allCategories !== [] && count($categories) === 2) {
+        if ($allCategories !== [] && count($categories) === 2) {
             foreach ($allCategories as $category) {
                 if ($category->id === $categories[0]->id) {
                     $this->checkCategory($categories[0]);
@@ -91,10 +98,10 @@ class MenuUpdateCategoryService
         }
 
         $category = $this->categoryRepo->patchMenuCategory($category);
-        if($category === false) {
+        if ($category === false) {
             $this->response->setSuccess(false);
         } else {
-            if(isset($this->response->success) && $this->response->success === false) {
+            if (isset($this->response->success) && $this->response->success === false) {
                 $this->response->addData($category);
             } else {
                 $this->response->addData($category);

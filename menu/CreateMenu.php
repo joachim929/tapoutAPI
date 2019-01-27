@@ -195,7 +195,7 @@ class CreateMenu
     private function checkPage() : bool
     {
         $check = true;
-        if ($$this->sortingService->checkPage($_POST['page'])) {
+        if ($this->sortingService->checkPage($_POST['page'])) {
             $page = $_POST['page'];
 
             if ($page !== 'Menu') {
