@@ -33,7 +33,6 @@ class MenuCategoryRepository
     }
 
     /**
-     * This function gets all distinct menu category tags and returns an array with null values
      * @return BilingualMenuCategory[]
      */
     public function getCategories ()

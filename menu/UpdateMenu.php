@@ -74,6 +74,8 @@ class UpdateMenu
             } elseif ($this->task === 'updateCategoryPosition') {
                 $this->response = $this->categoryService->updateCategoryPosition($this->updateItem);
 
+            } elseif ($this->task === 'updateItemPosition') {
+                $this->response = $this->itemService->swapItemPositions($this->updateItem);
             }
         }
 
@@ -243,6 +245,10 @@ class UpdateMenu
                     $item->id);
 
             } elseif ($this->task === 'updateItemPosition') {
+                $items = json_decode($_POST['items']);
+                if (count($items) === 2) {
+                    $this->setUpdateItemForItemPositionUpdate($items);
+                }
 
             } elseif ($this->task === 'updateCategoryPosition') {
                 $items = json_decode($_POST['items']);
@@ -259,6 +265,20 @@ class UpdateMenu
         }
 
         return $check;
+    }
+
+    private function setUpdateItemForItemPositionUpdate(array $items)
+    {
+        $this->updateItem[] = new BilingualMenuItem(
+            $items[0]->price, $items[0]->position, $items[0]->enTitle, $items[0]->vnTitle,
+            $items[0]->enDescription, $items[0]->vnDescription, $items[0]->enId,
+            $items[0]->vnId, $items[0]->itemId);
+        $this->updateItem[0]->setCategoryId($items[0]->categoryId);
+        $this->updateItem[] = new BilingualMenuItem(
+            $items[1]->price, $items[1]->position, $items[1]->enTitle, $items[1]->vnTitle,
+            $items[1]->enDescription, $items[1]->vnDescription, $items[1]->enId,
+            $items[1]->vnId, $items[1]->itemId);
+        $this->updateItem[1]->setCategoryId($items[1]->categoryId);
     }
 
     private function setUpdateItemForCategoryPositionUpdate(array $items)

@@ -67,6 +67,57 @@ class MenuUpdateItemService
         return $this->response;
     }
 
+    public function swapItemPositions(array $items)
+    {
+        if ($items[0]->categoryId === $items[1]->categoryId && $this->checkItemsExist($items)) {
+            $this->updateItemPositions($items);
+        }
+
+        return $this->response;
+    }
+
+    private function updateItemPositions(array $items)
+    {
+        $updatedItems[0] = $this->updateRepo->patchMenuItem($items[0]);
+        $updatedItems[1] = $this->updateRepo->patchMenuItem($items[1]);
+
+        if ($updatedItems[0] === false || $updatedItems[1] === false) {
+            $this->response->setSuccess(false);
+        } else {
+            $this->response->setSuccess(true);
+            $this->response->setData($updatedItems);
+        }
+
+    }
+
+    private function checkItemsExist(array $items)
+    {
+        $check = true;
+        $categoryItems = $this->readRepo->getItemsByCategory($items[0]->categoryId);
+        if($categoryItems !== false && count($categoryItems) > 1) {
+
+            $itemOneCheck = false;
+            $itemTwoCheck = false;
+
+            foreach ($categoryItems as $categoryItem) {
+
+                if ($categoryItem->id === $items[0]->itemId) {
+                    $itemOneCheck = true;
+                }
+
+                if ($categoryItem->id === $items[1]->itemId) {
+                    $itemTwoCheck = true;
+                }
+            }
+
+            if ($itemOneCheck === false || $itemTwoCheck === false) {
+                $check = false;
+            }
+        }
+
+        return $check;
+    }
+
     private function changePosition()
     {
 
