@@ -34,7 +34,7 @@ class MenuCategoryRepository
 
     /**
      * This function gets all distinct menu category tags and returns an array with null values
-     * @return array
+     * @return BilingualMenuCategory[]
      */
     public function getCategories ()
     {
@@ -44,7 +44,8 @@ class MenuCategoryRepository
         $stmt = $this->mysqli->prepare(
             'SELECT id, en_name, vn_name, type, page_position 
             FROM menu_category
-            WHERE active = 1'
+            WHERE active = 1
+            ORDER BY page_position ASC'
         );
 
         $stmt->execute();

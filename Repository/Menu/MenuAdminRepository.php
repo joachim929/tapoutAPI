@@ -246,7 +246,7 @@ class MenuAdminRepository
      */
     public function patchCategoryPosition (BilingualMenuCategory $category)
     {
-
+        $this->mysqli->autocommit(FALSE);
         $check = true;
 
         $editedAt = date('Y-m-d H:i:s');
@@ -262,7 +262,10 @@ class MenuAdminRepository
         $stmt->execute();
 
         if ($stmt->errno) {
-            $check = false;
+            $this->mysqli->rollback();
+        } else {
+            $this->mysqli->commit();
+            $check = true;
         }
 
         $stmt->close();

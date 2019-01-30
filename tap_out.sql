@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2019 at 08:33 PM
+-- Generation Time: Jan 30, 2019 at 06:43 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.13
 
@@ -183,7 +183,7 @@ CREATE TABLE `menu_category` (
   `type` set('food','drink') COLLATE utf8_bin NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `page_position` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `edited_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -192,12 +192,11 @@ CREATE TABLE `menu_category` (
 --
 
 INSERT INTO `menu_category` (`id`, `en_name`, `vn_name`, `type`, `active`, `page_position`, `created_at`, `edited_at`) VALUES
-(1, 'EN Breakfast', 'VN Breakfast', 'food', 1, 1, '2019-01-11 23:02:25', NULL),
-(3, 'EN Mains', 'VN Mains', 'food', 1, 6, '2019-01-11 23:02:25', '2019-01-13 20:47:51'),
-(12, 'EN White Wine', 'VN White Wines', 'drink', 1, 3, '2019-01-11 23:02:25', NULL),
-(13, 'EnName Test', 'VnName Test', 'food', 1, 2, '2019-01-13 17:11:39', NULL),
-(23, 'EnName Test', 'VnName Test', 'food', 1, 5, '2019-01-13 19:52:29', '2019-01-13 20:47:51'),
-(25, 'EnName Test', 'VnName Test', 'food', 1, 4, '2019-01-13 22:06:19', '2019-01-13 21:06:19');
+(1, 'Position 1', 'Position 1', 'drink', 1, 1, '2019-01-11 22:02:25', '2019-01-30 17:33:34'),
+(3, 'Position 5', 'Position 5', 'food', 1, 6, '2019-01-11 22:02:25', '2019-01-30 17:32:09'),
+(12, 'Position 2', 'Position 2', 'drink', 1, 3, '2019-01-11 22:02:25', '2019-01-30 17:33:05'),
+(23, 'Position 4', 'Position 4', 'food', 1, 5, '2019-01-13 18:52:29', '2019-01-30 17:32:00'),
+(25, 'Position 3', 'Position 3', 'food', 1, 4, '2019-01-13 21:06:19', '2019-01-30 17:31:52');
 
 -- --------------------------------------------------------
 
@@ -537,7 +536,7 @@ ALTER TABLE `image_list`
 -- AUTO_INCREMENT for table `menu_category`
 --
 ALTER TABLE `menu_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `menu_item`

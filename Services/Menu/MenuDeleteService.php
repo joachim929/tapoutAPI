@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../Objects/Menu/BilingualMenuCategory.php';
 require_once __DIR__ . '/../../Repository/Menu/MenuDeleteRepository.php';
 require_once __DIR__ . '/../../Repository/Menu/MenuReadRepository.php';
 require_once __DIR__ . '/../../Repository/Menu/MenuCategoryRepository.php';
+require_once __DIR__ . '/../../Repository/Menu/MenuAdminRepository.php';
 
 // Services
 require_once __DIR__ . '/../Shared/SortingService.php';
@@ -34,6 +35,10 @@ class MenuDeleteService
      * @var MenuCategoryRepository
      */
     private $categoryRepo;
+    /**
+     * @var MenuAdminRepository
+     */
+    private $adminRepo;
 
     // Variables
     /**
@@ -51,6 +56,7 @@ class MenuDeleteService
         $this->deleteRepo = new MenuDeleteRepository();
         $this->readRepo = new MenuReadRepository();
         $this->categoryRepo = new MenuCategoryRepository();
+        $this->adminRepo = new MenuAdminRepository();
 
     }
 
@@ -73,7 +79,9 @@ class MenuDeleteService
         if ($this->checkCategoryExists($categoryId)) {
             $data = $this->readRepo->getAllItemsByCategory($categoryId);
             if ($data !== false) {
-                $this->deleteCategory($data);
+                if (!$this->deleteCategory($data)) {
+                    $check = false;
+                }
             } else {
                 if (!$this->deleteRepo->deleteCategory($categoryId)) {
                     $check = false;
@@ -82,25 +90,25 @@ class MenuDeleteService
         } else {
             $check = false;
         }
+        $this->reorderCategories();
 
         return $check;
     }
 
-    private function sortMenuResults($rawResults)
+    private function reorderCategories()
     {
-        foreach ($rawResults as $result) {
-            if (!isset($sortedResults)) {
-                if ($result['catId'] !== null) {
-                    $sortedResults = new BilingualMenuCategory($result['catEnName'],
-                        $result['catVnName'], $result['catType'], $result['pagePosition'],
-                        $result['catId'], $result['createdAt'], $result['editedAt']);
+        $categories = $this->categoryRepo->getCategories();
+
+        if ($categories !== null && count($categories) > 0) {
+            $index = 1;
+            foreach ($categories as $category) {
+                if ($category->position !== $index) {
+                    $category->setPosition($index);
+                    $this->adminRepo->patchCategoryPosition($category);
                 }
+                $index++;
             }
-
-            //if (isset($result['itemId']))
         }
-
-        return $sortedResults;
     }
 
     public function checkCategoryExists(int $categoryId)
