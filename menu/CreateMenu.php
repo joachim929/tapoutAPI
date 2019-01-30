@@ -175,7 +175,7 @@ class CreateMenu
             }
             if ($check === true) {
                 if($temp->position < 1) {
-                    $temp->setPosition(1);
+                    $temp->position = 1;
                 }
                 $this->data = new BilingualMenuItem(
                     $temp->price, $temp->position, $temp->enTitle,

@@ -94,11 +94,20 @@ class MenuCreateItemService
         if ($menuItems !== false) {
             $index = 1;
             foreach ($menuItems as $key => $menuItem) {
-                if ($menuItem->position !== $index) {
+                if ($menuItem->id === $data->itemId) {
+                    continue;
+                }
+                if ($index === $data->position) {
+                    $index++;
+                }
+
+                if ($index !== $menuItem->position) {
                     $menuItem->setPosition($index);
                     if (!$this->adminRepo->patchMenuItemPosition($menuItem)) {
+                        break;
                     }
                 }
+
                 $index++;
             }
         }
