@@ -59,8 +59,8 @@ class MenuCreateCategoryService
         if (is_int($categoryId)) {
             $data->setId($categoryId);
             $newCategory = $this->reorderCategories($data);
-        } else {
         }
+
         if ($newCategory === false) {
             $this->response->setData($data);
         } else {
@@ -87,20 +87,28 @@ class MenuCreateCategoryService
         } else {
             $index = 1;
             foreach ($categories as $category) {
+                if ($category->id === $data->id) {
+                    $newCategory = $category;
+                    continue;
+                }
+
+                if ($index === $data->position) {
+                    $index++;
+                }
+
                 if ($category->position !== $index) {
                     $category->setPosition($index);
                     if (!$this->adminRepo->patchCategoryPosition($category)) {
-
+                        break;
                     }
-                }
-                if ($data->id === $category->id) {
-                    $newCategory = $category;
                 }
                 $index++;
             }
         }
         if ($newCategory !== false) {
             $this->response->setSuccess(true);
+        } else {
+            $this->response->setSuccess(false);
         }
 
         return $newCategory;
