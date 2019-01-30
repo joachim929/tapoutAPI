@@ -136,16 +136,13 @@ class MenuUpdateItemService
             }
         }
         if ($this->hasItemDifferences($oldItem)) {
-
-            $newItem = $this->updateRepo->patchMenuItem($this->postedItem);
-
-            if ($newItem !== false) {
-                $this->response->setData($newItem);
-
-            } else {
+            if ($this->updateRepo->patchMenuItem($this->postedItem) === false) {
                 $check = false;
-
             }
+        }
+
+        if ($check) {
+            $this->response->setData($this->readRepo->getItemById($this->postedItem->itemId));
         }
 
         $this->response->setSuccess($check);
@@ -205,6 +202,5 @@ class MenuUpdateItemService
 
         return $check;
     }
-
 
 }

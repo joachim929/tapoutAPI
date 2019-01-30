@@ -266,7 +266,7 @@ class MenuReadRepository
         $stmt->bind_result($id, $catId, $price, $catPosition, $createdAt, $editedAt);
 
         while ($stmt->fetch()) {
-            $result[] = new RawMenuItem($catId, $price, $catPosition, $createdAt, $editedAt, $id);
+            $result[] = new RawMenuItem($catId, $price, $catPosition, null, null, $id);
         }
 
         if ($stmt->errno) {

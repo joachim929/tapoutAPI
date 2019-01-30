@@ -66,11 +66,10 @@ class UpdateMenu
     {
         if ($this->checkPage() && $this->checkModule() && $this->checkTask()) {
             if ($this->task === 'updateCategory') {
-                // todo Create update Category service
                 $this->response = $this->categoryService->updateCategory($this->updateItem);
 
             } elseif ($this->task === 'updateItem') {
-                $this->itemService->updateItem($this->updateItem);
+                $this->response = $this->itemService->updateItem($this->updateItem);
 
             } elseif ($this->task === 'updateCategoryPosition') {
                 $this->response = $this->categoryService->updateCategoryPosition($this->updateItem);
@@ -92,35 +91,35 @@ class UpdateMenu
         if (isset($_POST['item'])) {
             $item = json_decode($_POST['item']);
 
-            if (true !== ($catIdCheck = $this->sortingService->checkNumber('Category Id', $item->categoryId))) {
+            if (true !== ($catIdCheck = $this->sortingService->checkNumber($item->categoryId))) {
                 $check = false;
             }
 
-            if (true !== ($itemIdCheck = $this->sortingService->checkNumber('Item Id', $item->itemId))) {
+            if (true !== ($itemIdCheck = $this->sortingService->checkNumber($item->itemId))) {
                 $check = false;
             }
 
-            if (true !== ($enIdCheck = $this->sortingService->checkNumber('English description Id', $item->enId))) {
+            if (true !== ($enIdCheck = $this->sortingService->checkNumber($item->enId))) {
                 $check = false;
             }
 
-            if (true !== ($vnIdCheck = $this->sortingService->checkNumber('Vietnamese description Id', $item->vnId))) {
+            if (true !== ($vnIdCheck = $this->sortingService->checkNumber($item->vnId))) {
                 $check = false;
             }
 
-            if (true !== ($enTitleCheck = $this->sortingService->checkString('English title', $item->enTitle))) {
+            if (true !== ($enTitleCheck = $this->sortingService->checkString($item->enTitle))) {
                 $check = false;
             }
 
-            if (true !== ($vnTitleCheck = $this->sortingService->checkString('Vietnamese title', $item->vnTitle))) {
+            if (true !== ($vnTitleCheck = $this->sortingService->checkString($item->vnTitle))) {
                 $check = false;
             }
 
-            if (true !== ($positionCheck = $this->sortingService->checkNumber('Category position', $item->position))) {
+            if (true !== ($positionCheck = $this->sortingService->checkNumber($item->position))) {
                 $check = false;
             }
 
-            if (true !== ($priceCheck = $this->sortingService->checkString('Price', $item->price))) {
+            if (true !== ($priceCheck = $this->sortingService->checkString($item->price))) {
                 $check = false;
             }
 
@@ -153,7 +152,7 @@ class UpdateMenu
                 $check = false;
             }
 
-            if (true !== ($vnNameCheck = $this->sortingService->checkString( $item->vnName))) {
+            if (true !== ($vnNameCheck = $this->sortingService->checkString($item->vnName))) {
                 $check = false;
             }
 

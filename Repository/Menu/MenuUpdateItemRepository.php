@@ -41,12 +41,12 @@ class MenuUpdateItemRepository
     /**
      * This function edits menu item details and gives a boolean value whether
      * it was a success or not
-     * @param int    $id
-     * @param string $title
-     * @param string $description
+     * @param int         $id
+     * @param string      $title
+     * @param null|string $description
      * @return bool
      */
-    public function patchMenuItemDetails (int $id, string $title, string $description)
+    public function patchMenuItemDetails (int $id, string $title, ?string $description)
     {
 
         $check = true;
