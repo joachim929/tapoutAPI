@@ -139,8 +139,26 @@ class MenuDeleteService
         } else {
             $check = false;
         }
+        $this->reorderCategoryItems($data);
 
         return $check;
+    }
+
+    private function reorderCategoryItems($data)
+    {
+        $items = $this->readRepo->getItemsByCategory($data->categoryId);
+
+        if ($items !== null && count($items) > 0) {
+            $index = 1;
+            foreach ($items as $item) {
+                if ($item->position !== $index) {
+                    $item->setPosition($index);
+                    $this->adminRepo->patchMenuItemPosition($item);
+                }
+                $index++;
+            }
+        }
+
     }
 
     private function deleteCategory(BilingualMenuCategory $category)
@@ -178,7 +196,7 @@ class MenuDeleteService
             }
         }
         if ($item->vnId !== null) {
-            if ($this->deleteDescription($item->vnId)) {
+            if (!$this->deleteDescription($item->vnId)) {
                 $check = false;
             }
         }
