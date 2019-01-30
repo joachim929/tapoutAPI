@@ -269,6 +269,12 @@ class UpdateMenu
 
     private function setUpdateItemForItemPositionUpdate(array $items)
     {
+        if ($items[0]->position < 1) {
+            $items[0]->position = 1;
+        }
+        if ($items[1]->position < 1) {
+            $items[0]->position = 1;
+        }
         $this->updateItem[] = new BilingualMenuItem(
             $items[0]->price, $items[0]->position, $items[0]->enTitle, $items[0]->vnTitle,
             $items[0]->enDescription, $items[0]->vnDescription, $items[0]->enId,

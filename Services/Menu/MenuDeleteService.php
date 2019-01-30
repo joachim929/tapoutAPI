@@ -147,17 +147,19 @@ class MenuDeleteService
     private function reorderCategoryItems($data)
     {
         $items = $this->readRepo->getItemsByCategory($data->categoryId);
-
-        if ($items !== null && count($items) > 0) {
-            $index = 1;
-            foreach ($items as $item) {
-                if ($item->position !== $index) {
-                    $item->setPosition($index);
-                    $this->adminRepo->patchMenuItemPosition($item);
+        if ($items !== false) {
+            if ($items !== null && count($items) > 0) {
+                $index = 1;
+                foreach ($items as $item) {
+                    if ($item->position !== $index) {
+                        $item->setPosition($index);
+                        $this->adminRepo->patchMenuItemPosition($item);
+                    }
+                    $index++;
                 }
-                $index++;
             }
         }
+
 
     }
 

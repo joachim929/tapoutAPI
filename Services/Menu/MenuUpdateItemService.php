@@ -94,7 +94,7 @@ class MenuUpdateItemService
     {
         $check = true;
         $categoryItems = $this->readRepo->getItemsByCategory($items[0]->categoryId);
-        if($categoryItems !== false && count($categoryItems) > 1) {
+        if ($categoryItems !== false && count($categoryItems) > 1) {
 
             $itemOneCheck = false;
             $itemTwoCheck = false;
@@ -120,27 +120,31 @@ class MenuUpdateItemService
 
     private function changePosition()
     {
-
+        // Hunch is that you need to skip this on an empty category
         $items = $this->readRepo->getItemsByCategory($this->postedItem->categoryId);
-
-        $index = 1;
-        foreach ($items as $item) {
-            if ($item->id === $this->postedItem->itemId) {
-                continue;
-            }
-
-            if ($index === $this->postedItem->position) {
-                $index++;
-            }
-
-            if ($item->position !== $index) {
-                if (!$this->updateRepo->patchMenuItemPosition($item->id, $item->position)) {
+        if ($items !== false && $items !== []) {
+            $index = 1;
+            foreach ($items as $item) {
+                if ($item->id === $this->postedItem->itemId) {
+                    continue;
                 }
+
+                if ($index === $this->postedItem->position) {
+                    $index++;
+                }
+
+                if ($item->position !== $index) {
+                    if (!$this->updateRepo->patchMenuItemPosition($item->id, $item->position)) {
+                    }
+                }
+
+                $index++;
+
             }
-
-            $index++;
-
+        } else {
+            echo 'test';
         }
+
     }
 
     /**
@@ -151,7 +155,7 @@ class MenuUpdateItemService
     private function checkChanges()
     {
 
-        $oldItem = $this->readRepo->getitemById($this->postedItem->itemId);
+        $oldItem = $this->readRepo->getItemById($this->postedItem->itemId);
         if ($oldItem->position !== $this->postedItem->position) {
             $this->changePosition();
         }
