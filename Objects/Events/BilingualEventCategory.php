@@ -4,9 +4,19 @@ class BilingualEventCategory
 {
 
     /**
+     * @var ?int
+     */
+    public $id;
+
+    /**
      * @var string
      */
-    public $tag;
+    public $enName;
+
+    /**
+     * @var string
+     */
+    public $vnName;
 
     /**
      * @var string
@@ -16,175 +26,153 @@ class BilingualEventCategory
     /**
      * @var int
      */
-    public $pagePosition;
+    public $position;
 
     /**
      * @var array
      */
-    public $eventItems;
+    public $items;
 
     /**
-     * @var int
+     * @var ?DateTime
      */
-    public $enCatId;
+    public $createdAt;
 
     /**
-     * @var string
+     * @var ?DateTime
      */
-    public $enCatName;
+    public $editedAt;
 
-    /**
-     * @var int
-     */
-    public $vnCatId;
-
-    /**
-     * @var string
-     */
-    public $vnCatName;
-
-    /**
-     * @return string
-     */
-    public function getTag () : string
+    public function __construct()
     {
 
-        return $this->tag;
     }
 
     /**
-     * @param string $tag
+     * @return mixed
      */
-    public function setTag (string $tag)
+    public function getId()
     {
+        return $this->id;
+    }
 
-        $this->tag = $tag;
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
      * @return string
      */
-    public function getType () : string
+    public function getEnName() : string
     {
+        return $this->enName;
+    }
 
+    /**
+     * @param string $enName
+     */
+    public function setEnName(string $enName)
+    {
+        $this->enName = $enName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVnName() : string
+    {
+        return $this->vnName;
+    }
+
+    /**
+     * @param string $vnName
+     */
+    public function setVnName(string $vnName)
+    {
+        $this->vnName = $vnName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType() : string
+    {
         return $this->type;
     }
 
     /**
      * @param string $type
      */
-    public function setType (string $type)
+    public function setType(string $type)
     {
-
         $this->type = $type;
     }
 
     /**
      * @return int
      */
-    public function getPagePosition () : int
+    public function getPosition() : int
     {
-
-        return $this->pagePosition;
+        return $this->position;
     }
 
     /**
-     * @param int $pagePosition
+     * @param int $position
      */
-    public function setPagePosition (int $pagePosition)
+    public function setPosition(int $position)
     {
-
-        $this->pagePosition = $pagePosition;
+        $this->position = $position;
     }
 
     /**
      * @return array
      */
-    public function getEventItems () : array
+    public function getItems() : array
     {
-
-        return $this->eventItems;
+        return $this->items;
     }
 
     /**
-     * @param array $eventItems
+     * @param array $items
      */
-    public function setEventItems (array $eventItems)
+    public function setItems(array $items)
     {
-
-        $this->eventItems = $eventItems;
+        $this->items = $items;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getEnCatId () : int
+    public function getCreatedAt()
     {
-
-        return $this->enCatId;
+        return $this->createdAt;
     }
 
     /**
-     * @param int $enCatId
+     * @param mixed $createdAt
      */
-    public function setEnCatId (int $enCatId)
+    public function setCreatedAt($createdAt)
     {
-
-        $this->enCatId = $enCatId;
+        $this->createdAt = $createdAt;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getEnCatName () : string
+    public function getEditedAt()
     {
-
-        return $this->enCatName;
+        return $this->editedAt;
     }
 
     /**
-     * @param string $enCatName
+     * @param mixed $editedAt
      */
-    public function setEnCatName (string $enCatName)
+    public function setEditedAt($editedAt)
     {
-
-        $this->enCatName = $enCatName;
+        $this->editedAt = $editedAt;
     }
-
-    /**
-     * @return int
-     */
-    public function getVnCatId () : int
-    {
-
-        return $this->vnCatId;
-    }
-
-    /**
-     * @param int $vnCatId
-     */
-    public function setVnCatId (int $vnCatId)
-    {
-
-        $this->vnCatId = $vnCatId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getVnCatName () : string
-    {
-
-        return $this->vnCatName;
-    }
-
-    /**
-     * @param string $vnCatName
-     */
-    public function setVnCatName (string $vnCatName)
-    {
-
-        $this->vnCatName = $vnCatName;
-    }
-
 }

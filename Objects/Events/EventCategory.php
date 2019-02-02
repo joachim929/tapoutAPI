@@ -24,11 +24,6 @@ class EventCategory
     public $language;
 
     /**
-     * @var string
-     */
-    public $tag;
-
-    /**
      * @var ?DateTime
      */
     public $createdAt;
@@ -46,16 +41,15 @@ class EventCategory
     /**
      * @var array
      */
-    public $categoryItems;
+    public $item;
 
-    public function __construct ($name, $type, $language, $tag, $pagePosition,
+    public function __construct ($name, $type, $language, $pagePosition,
                                  $id = null, $createdAt = null, $editedAt = null)
     {
 
         $this->setName($name);
         $this->setType($type);
         $this->setLanguage($language);
-        $this->setTag($tag);
         $this->setPagePosition($pagePosition);
         $this->setId($id);
         $this->setCreatedAt($createdAt);
@@ -135,24 +129,6 @@ class EventCategory
     }
 
     /**
-     * @return string
-     */
-    public function getTag () : string
-    {
-
-        return $this->tag;
-    }
-
-    /**
-     * @param string $tag
-     */
-    public function setTag (string $tag)
-    {
-
-        $this->tag = $tag;
-    }
-
-    /**
      * @return mixed
      */
     public function getCreatedAt ()
@@ -209,19 +185,19 @@ class EventCategory
     /**
      * @return array
      */
-    public function getCategoryItems () : array
+    public function getItems () : array
     {
 
-        return $this->categoryItems;
+        return $this->item;
     }
 
     /**
-     * @param array $categoryItems
+     * @param array $item
      */
-    public function setCategoryItems (array $categoryItems)
+    public function setItems (array $item)
     {
 
-        $this->categoryItems = $categoryItems;
+        $this->item = $item;
     }
 
 }

@@ -4,29 +4,9 @@ class BilingualEventItem
 {
 
     /**
-     * @var string
+     * @var int
      */
-    public $tag;
-
-    /**
-     * @var DateTime
-     */
-    public $startTime;
-
-    /**
-     * @var DateTime
-     */
-    public $endTime;
-
-    /**
-     * @var DateTime
-     */
-    public $createdAt;
-
-    /**
-     * @var DateTime
-     */
-    public $editedAt;
+    public $categoryId;
 
     /**
      * @var int
@@ -34,295 +14,312 @@ class BilingualEventItem
     public $categoryPosition;
 
     /**
-     * @var int
+     * @var ?int
      */
-    public $vnItemId;
+    public $itemId;
 
     /**
-     * @var int
+     * @var ?int
      */
-    public $vnCatId;
-
-    /**
-     * @var string
-     */
-    public $vnItemHeading;
+    public $enId;
 
     /**
      * @var string
      */
-    public $vnItemDescription;
+    public $enHeading;
 
     /**
-     * @var int
+     * @var ?string
      */
-    public $enItemId;
+    public $enDescription;
 
     /**
-     * @var int
+     * @var ?int
      */
-    public $enCatId;
-
-    /**
-     * @var string
-     */
-    public $enItemHeading;
+    public $vnId;
 
     /**
      * @var string
      */
-    public $enItemDescription;
+    public $vnHeading;
 
     /**
-     * @return string
+     * @var ?string
      */
-    public function getTag () : string
-    {
-
-        return $this->tag;
-    }
+    public $vnDescription;
 
     /**
-     * @param string $tag
+     * @var DateTime
      */
-    public function setTag (string $tag)
-    {
-
-        $this->tag = $tag;
-    }
+    public $startTime;
 
     /**
-     * @return DateTime
+     * @var ?DateTime
      */
-    public function getStartTime () : DateTime
-    {
-
-        return $this->startTime;
-    }
+    public $endTime;
 
     /**
-     * @param DateTime $startTime
+     * @var DateTime
      */
-    public function setStartTime (DateTime $startTime)
-    {
-
-        $this->startTime = $startTime;
-    }
+    public $startDate;
 
     /**
-     * @return DateTime
+     * @var ?DateTime
      */
-    public function getEndTime () : DateTime
-    {
-
-        return $this->endTime;
-    }
+    public $endDate;
 
     /**
-     * @param DateTime $endTime
+     * @var DateTime
      */
-    public function setEndTime (DateTime $endTime)
-    {
-
-        $this->endTime = $endTime;
-    }
+    public $createdAt;
 
     /**
-     * @return DateTime
+     * @var ?DateTime
      */
-    public function getCreatedAt () : DateTime
+    public $editedAt;
+
+    public function __construct()
     {
 
-        return $this->createdAt;
-    }
-
-    /**
-     * @param DateTime $createdAt
-     */
-    public function setCreatedAt (DateTime $createdAt)
-    {
-
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getEditedAt () : DateTime
-    {
-
-        return $this->editedAt;
-    }
-
-    /**
-     * @param DateTime $editedAt
-     */
-    public function setEditedAt (DateTime $editedAt)
-    {
-
-        $this->editedAt = $editedAt;
     }
 
     /**
      * @return int
      */
-    public function getCategoryPosition () : int
+    public function getCategoryId() : int
     {
+        return $this->categoryId;
+    }
 
+    /**
+     * @param int $categoryId
+     */
+    public function setCategoryId(int $categoryId)
+    {
+        $this->categoryId = $categoryId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategoryPosition() : int
+    {
         return $this->categoryPosition;
     }
 
     /**
      * @param int $categoryPosition
      */
-    public function setCategoryPosition (int $categoryPosition)
+    public function setCategoryPosition(int $categoryPosition)
     {
-
         $this->categoryPosition = $categoryPosition;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getVnItemId () : int
+    public function getItemId()
     {
-
-        return $this->vnItemId;
+        return $this->itemId;
     }
 
     /**
-     * @param int $vnItemId
+     * @param mixed $itemId
      */
-    public function setVnItemId (int $vnItemId)
+    public function setItemId($itemId)
     {
-
-        $this->vnItemId = $vnItemId;
+        $this->itemId = $itemId;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getVnCatId () : int
+    public function getEnId()
     {
-
-        return $this->vnCatId;
+        return $this->enId;
     }
 
     /**
-     * @param int $vnCatId
+     * @param mixed $enId
      */
-    public function setVnCatId (int $vnCatId)
+    public function setEnId($enId)
     {
-
-        $this->vnCatId = $vnCatId;
+        $this->enId = $enId;
     }
 
     /**
      * @return string
      */
-    public function getVnItemHeading () : string
+    public function getEnHeading() : string
     {
-
-        return $this->vnItemHeading;
+        return $this->enHeading;
     }
 
     /**
-     * @param string $vnItemHeading
+     * @param string $enHeading
      */
-    public function setVnItemHeading (string $vnItemHeading)
+    public function setEnHeading(string $enHeading)
     {
-
-        $this->vnItemHeading = $vnItemHeading;
+        $this->enHeading = $enHeading;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getVnItemDescription () : string
+    public function getEnDescription()
     {
-
-        return $this->vnItemDescription;
+        return $this->enDescription;
     }
 
     /**
-     * @param string $vnItemDescription
+     * @param mixed $enDescription
      */
-    public function setVnItemDescription (string $vnItemDescription)
+    public function setEnDescription($enDescription)
     {
-
-        $this->vnItemDescription = $vnItemDescription;
+        $this->enDescription = $enDescription;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getEnItemId () : int
+    public function getVnId()
     {
-
-        return $this->enItemId;
+        return $this->vnId;
     }
 
     /**
-     * @param int $enItemId
+     * @param mixed $vnId
      */
-    public function setEnItemId (int $enItemId)
+    public function setVnId($vnId)
     {
-
-        $this->enItemId = $enItemId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getEnCatId () : int
-    {
-
-        return $this->enCatId;
-    }
-
-    /**
-     * @param int $enCatId
-     */
-    public function setEnCatId (int $enCatId)
-    {
-
-        $this->enCatId = $enCatId;
+        $this->vnId = $vnId;
     }
 
     /**
      * @return string
      */
-    public function getEnItemHeading () : string
+    public function getVnHeading() : string
     {
-
-        return $this->enItemHeading;
+        return $this->vnHeading;
     }
 
     /**
-     * @param string $enItemHeading
+     * @param string $vnHeading
      */
-    public function setEnItemHeading (string $enItemHeading)
+    public function setVnHeading(string $vnHeading)
     {
-
-        $this->enItemHeading = $enItemHeading;
+        $this->vnHeading = $vnHeading;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getEnItemDescription () : string
+    public function getVnDescription()
     {
-
-        return $this->enItemDescription;
+        return $this->vnDescription;
     }
 
     /**
-     * @param string $enItemDescription
+     * @param mixed $vnDescription
      */
-    public function setEnItemDescription (string $enItemDescription)
+    public function setVnDescription($vnDescription)
     {
-
-        $this->enItemDescription = $enItemDescription;
+        $this->vnDescription = $vnDescription;
     }
 
+    /**
+     * @return DateTime
+     */
+    public function getStartTime() : DateTime
+    {
+        return $this->startTime;
+    }
+
+    /**
+     * @param DateTime $startTime
+     */
+    public function setStartTime(DateTime $startTime)
+    {
+        $this->startTime = $startTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEndTime()
+    {
+        return $this->endTime;
+    }
+
+    /**
+     * @param mixed $endTime
+     */
+    public function setEndTime($endTime)
+    {
+        $this->endTime = $endTime;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getStartDate() : DateTime
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @param DateTime $startDate
+     */
+    public function setStartDate(DateTime $startDate)
+    {
+        $this->startDate = $startDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEndDate()
+    {
+        return $this->endDate;
+    }
+
+    /**
+     * @param mixed $endDate
+     */
+    public function setEndDate($endDate)
+    {
+        $this->endDate = $endDate;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt() : DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param DateTime $createdAt
+     */
+    public function setCreatedAt(DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEditedAt()
+    {
+        return $this->editedAt;
+    }
+
+    /**
+     * @param mixed $editedAt
+     */
+    public function setEditedAt($editedAt)
+    {
+        $this->editedAt = $editedAt;
+    }
 }
