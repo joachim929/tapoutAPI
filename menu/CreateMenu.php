@@ -155,7 +155,7 @@ class CreateMenu
         if (isset($_POST['newMenuItem'])) {
             $temp = json_decode($_POST['newMenuItem']);
 
-            if (!$this->sortingService->checkNumber($temp->category)) {
+            if (!$this->sortingService->checkNumber($temp->categoryId)) {
                 $check = false;
             }
             if (!$this->sortingService->checkString($temp->enTitle)) {
@@ -182,7 +182,7 @@ class CreateMenu
                     $temp->vnTitle, $temp->enDescription, $temp->vnDescription,
                     null, null, null);
 
-                $this->data->setCategoryId($temp->category);
+                $this->data->setCategoryId($temp->categoryId);
             }
         } else {
             $check = false;
