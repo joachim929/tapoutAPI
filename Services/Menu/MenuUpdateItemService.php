@@ -141,10 +141,7 @@ class MenuUpdateItemService
                 $index++;
 
             }
-        } else {
-            echo 'test';
         }
-
     }
 
     /**

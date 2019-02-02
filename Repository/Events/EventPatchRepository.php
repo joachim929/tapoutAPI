@@ -2,14 +2,13 @@
 
 require_once __DIR__ . '/../../ConnectDb.php';
 
-// Objects
-require_once __DIR__ . '/../../Objects/Menu/BilingualMenuCategory.php';
+require_once __DIR__ . '/../../Objects/Events/BilingualEventCategory.php';
+require_once __DIR__ . '/../../Objects/Events/BilingualEventItem.php';
+require_once __DIR__ . '/../../Objects/Events/EventCategory.php';
+require_once __DIR__ . '/../../Objects/Events/EventItem.php';
 
-class MenuUpdateCategoryRepository
+class EventPatchRepository
 {
-
-    // Variables
-
     /**
      * @var
      */
@@ -22,19 +21,12 @@ class MenuUpdateCategoryRepository
      * @var mysqli
      */
     private $mysqli;
-    /**
-     * @var DateTime
-     */
-    private $editedAt;
 
-    public function __construct()
+    public function __construct ()
     {
 
         $this->connectDb = new ConnectDb();
         $this->conn = $this->connectDb->getInstance();
         $this->mysqli = $this->conn->getConnection();
-        $this->editedAt = date('Y-m-d H:i:s');
     }
-
-
 }
