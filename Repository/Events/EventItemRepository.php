@@ -1,4 +1,6 @@
 <?php
+// todo OLD, REMOVE ONCE DONE
+
 require_once __DIR__ . '/../../ConnectDb.php';
 
 // Objects

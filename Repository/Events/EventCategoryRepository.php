@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../../ConnectDb.php';
 
 // Objects
+// todo OLD, REMOVE ONCE DONE
+
 require_once __DIR__ . '/../../Objects/Events/EventCategory.php';
 
 class EventCategoryRepository extends ConnectDb
