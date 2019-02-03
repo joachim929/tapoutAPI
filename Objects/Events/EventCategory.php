@@ -19,41 +19,23 @@ class EventCategory
     public $type;
 
     /**
-     * @var string
-     */
-    public $language;
-
-    /**
-     * @var ?DateTime
-     */
-    public $createdAt;
-
-    /**
-     * @var ?DateTime
-     */
-    public $editedAt;
-
-    /**
      * @var int
      */
-    public $pagePosition;
+    public $position;
 
     /**
      * @var array
      */
-    public $item;
+    public $items;
 
-    public function __construct ($name, $type, $language, $pagePosition,
-                                 $id = null, $createdAt = null, $editedAt = null)
+    public function __construct ($name, $type, $position,
+                                 ?int $id)
     {
 
         $this->setName($name);
         $this->setType($type);
-        $this->setLanguage($language);
-        $this->setPagePosition($pagePosition);
+        $this->setPosition($position);
         $this->setId($id);
-        $this->setCreatedAt($createdAt);
-        $this->setEditedAt($editedAt);
     }
 
     /**
@@ -111,75 +93,21 @@ class EventCategory
     }
 
     /**
-     * @return string
-     */
-    public function getLanguage () : string
-    {
-
-        return $this->language;
-    }
-
-    /**
-     * @param string $language
-     */
-    public function setLanguage (string $language)
-    {
-
-        $this->language = $language;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt ()
-    {
-
-        return $this->createdAt;
-    }
-
-    /**
-     * @param mixed $createdAt
-     */
-    public function setCreatedAt ($createdAt)
-    {
-
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEditedAt ()
-    {
-
-        return $this->editedAt;
-    }
-
-    /**
-     * @param mixed $editedAt
-     */
-    public function setEditedAt ($editedAt)
-    {
-
-        $this->editedAt = $editedAt;
-    }
-
-    /**
      * @return int
      */
-    public function getPagePosition () : int
+    public function getPosition () : int
     {
 
-        return $this->pagePosition;
+        return $this->position;
     }
 
     /**
-     * @param int $pagePosition
+     * @param int $position
      */
-    public function setPagePosition (int $pagePosition)
+    public function setPosition (int $position)
     {
 
-        $this->pagePosition = $pagePosition;
+        $this->position = $position;
     }
 
     /**
@@ -188,7 +116,7 @@ class EventCategory
     public function getItems () : array
     {
 
-        return $this->item;
+        return $this->items;
     }
 
     /**
@@ -197,7 +125,22 @@ class EventCategory
     public function setItems (array $item)
     {
 
-        $this->item = $item;
+        $this->items = $item;
+    }
+
+    /**
+     * @param EventItem $item
+     */
+    public function addItem(EventItem $item)
+    {
+        $now = new DateTime('+2 days');
+        if ($this->type === 'unique') {
+            if ($item->getStart() > $now && $item->isValid()) {
+                $this->items[] = $item;
+            }
+        } elseif ($item->isValid()) {
+            $this->items[] = $item;
+        }
     }
 
 }

@@ -16,7 +16,7 @@ class EventItem
     /**
      * @var string
      */
-    public $heading;
+    public $title;
 
     /**
      * @var ?string
@@ -24,60 +24,59 @@ class EventItem
     public $description;
 
     /**
-     * @var string
-     */
-    public $language;
-
-    /**
      * @var int
      */
-    public $categoryPosition;
+    public $position;
 
     /**
      * @var DateTime
      */
-    public $startDate;
+    public $start;
 
     /**
-     * @var ?DateTime
+     * @var DateTime
      */
-    public $endDate;
+    public $end;
 
     /**
-     * @var ?DateTime
+     * @var bool
      */
-    public $startTime;
+    public $usesStartTime;
 
     /**
-     * @var ?DateTime
+     * @var bool
      */
-    public $endTime;
+    public $usesEndTime;
 
     /**
-     * @var ?DateTime
+     * @var bool
      */
-    public $createdAt;
+    public $usesEndDate;
 
     /**
-     * @var ?DateTime
+     * @var bool
      */
-    public $editedAt;
+    public $valid;
 
-    public function __construct (int $categoryId, string $heading, ?string $description, ?string $language,
-                                 int $categoryPosition, ?DateTime $startDate, ?int $id, ?DateTime $createdAt, ?DateTime $editedAt, ?DateTime $startTime, ?DateTime $endTime)
+    public function __construct(int $categoryId, string $title, int $position,
+                                DateTime $start, DateTime $end, ?int $id,
+                                ?string $description, bool $usesStartTime,
+                                bool $usesEndTime, bool $usesEndDate)
     {
-
         $this->setCategoryId($categoryId);
-        $this->setHeading($heading);
+        $this->setTitle($title);
         $this->setDescription($description);
-        $this->setLanguage($language);
-        $this->setCategoryPosition($categoryPosition);
-        $this->setStartDate($startDate);
+        $this->setPosition($position);
         $this->setId($id);
-        $this->setCreatedAt($createdAt);
-        $this->setEditedAt($editedAt);
-        $this->setStartTime($startTime);
-        $this->setEndTime($endTime);
+
+        $this->setUsesStartTime($usesStartTime);
+        $this->setStart($start);
+
+        $this->setUsesEndTime($usesEndTime);
+        $this->setUsesEndDate($usesEndDate);
+        $this->setEnd($end);
+
+        $this->setValid();
     }
 
     /**
@@ -115,17 +114,17 @@ class EventItem
     /**
      * @return string
      */
-    public function getHeading() : string
+    public function getTitle() : string
     {
-        return $this->heading;
+        return $this->title;
     }
 
     /**
-     * @param string $heading
+     * @param string $title
      */
-    public function setHeading(string $heading)
+    public function setTitle(string $title)
     {
-        $this->heading = $heading;
+        $this->title = $title;
     }
 
     /**
@@ -145,131 +144,150 @@ class EventItem
     }
 
     /**
-     * @return string
-     */
-    public function getLanguage() : string
-    {
-        return $this->language;
-    }
-
-    /**
-     * @param string $language
-     */
-    public function setLanguage(string $language)
-    {
-        $this->language = $language;
-    }
-
-    /**
      * @return int
      */
-    public function getCategoryPosition() : int
+    public function getPosition() : int
     {
-        return $this->categoryPosition;
+        return $this->position;
     }
 
     /**
-     * @param int $categoryPosition
+     * @param int $position
      */
-    public function setCategoryPosition(int $categoryPosition)
+    public function setPosition(int $position)
     {
-        $this->categoryPosition = $categoryPosition;
+        $this->position = $position;
     }
 
     /**
      * @return DateTime
      */
-    public function getStartDate() : DateTime
+    public function getStart() : DateTime
     {
-        return $this->startDate;
+        return $this->start;
     }
 
     /**
-     * @param DateTime $startDate
+     * @param DateTime $start
      */
-    public function setStartDate(DateTime $startDate)
+    public function setStart(DateTime $start)
     {
-        $this->startDate = $startDate;
+        if ($this->usesStartTime) {
+            $this->start = $start;
+        } else {
+            $this->start = ($start->setTime(13, 37, 13));
+        }
     }
 
     /**
-     * @return mixed
+     * @return DateTime
      */
-    public function getEndDate()
+    public function getEnd() : DateTime
     {
-        return $this->endDate;
+        return $this->end;
     }
 
     /**
-     * @param mixed $endDate
+     * @param DateTime $end
      */
-    public function setEndDate($endDate)
+    public function setEnd(DateTime $end)
     {
-        $this->endDate = $endDate;
+        if (!$this->usesEndDate) {
+            $end = $end->setDate(2013, 3, 7);
+        }
+        if (!$this->usesEndTime) {
+            $end = $end->setTime(13, 37, 13);
+        }
+        $this->end = $end;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getStartTime()
+    public function isUsesStartTime() : bool
     {
-        return $this->startTime;
+        return $this->usesStartTime;
     }
 
     /**
-     * @param mixed $startTime
+     * @param bool $usesStartTime
      */
-    public function setStartTime($startTime)
+    public function setUsesStartTime(bool $usesStartTime)
     {
-        $this->startTime = $startTime;
+        $this->usesStartTime = $usesStartTime;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getEndTime()
+    public function isUsesEndTime() : bool
     {
-        return $this->endTime;
+        return $this->usesEndTime;
     }
 
     /**
-     * @param mixed $endTime
+     * @param bool $usesEndTime
      */
-    public function setEndTime($endTime)
+    public function setUsesEndTime(bool $usesEndTime)
     {
-        $this->endTime = $endTime;
+        $this->usesEndTime = $usesEndTime;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getCreatedAt()
+    public function isUsesEndDate() : bool
     {
-        return $this->createdAt;
+        return $this->usesEndDate;
     }
 
     /**
-     * @param mixed $createdAt
+     * @param bool $usesEndDate
      */
-    public function setCreatedAt($createdAt)
+    public function setUsesEndDate(bool $usesEndDate)
     {
-        $this->createdAt = $createdAt;
+        $this->usesEndDate = $usesEndDate;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getEditedAt()
+    public function isValid() : bool
     {
-        return $this->editedAt;
+        return $this->valid;
     }
 
-    /**
-     * @param mixed $editedAt
-     */
-    public function setEditedAt($editedAt)
+    public function setValid()
     {
-        $this->editedAt = $editedAt;
+        if (isset($this->start, $this->end, $this->usesEndTime, $this->usesEndDate, $this->usesStartTime)) {
+            if ($this->usesEndDate === true) {
+                $start = $this->start->format('Y-m-d');
+                $end = $this->end->format('Y-m-d');
+                if ($start > $end) {
+                    $this->valid = false;
+                } else {
+                    if ($this->usesStartTime === true && $this->usesEndTime === true) {
+                        $startTime = $this->start->format('H:i:s');
+                        $endTime = $this->end->format('H:i:s');
+                        if ($start === $end) {
+                            if ($startTime > $endTime) {
+                                $this->valid = false;
+                            } else {
+                                $this->valid = true;
+                            }
+                        } else {
+                            $this->valid = true;
+                        }
+                    } else {
+                        $this->valid = true;
+                    }
+                }
+            } else {
+                $this->valid = true;
+            }
+        } else {
+            $this->valid = false;
+        }
     }
 
 }
