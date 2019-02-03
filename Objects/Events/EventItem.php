@@ -289,5 +289,4 @@ class EventItem
             $this->valid = false;
         }
     }
-
 }

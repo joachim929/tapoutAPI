@@ -2,8 +2,8 @@
 
 // Objects
 
-require_once __DIR__ . '/../../Objects/Events/BilingualEventCategory.php';
-require_once __DIR__ . '/../../Objects/Events/BilingualEventItem.php';
+require_once __DIR__ . '/../../Objects/Events/AdminEventCategory.php';
+require_once __DIR__ . '/../../Objects/Events/AdminEventItem.php';
 require_once __DIR__ . '/../../Objects/Events/EventCategory.php';
 require_once __DIR__ . '/../../Objects/Events/EventItem.php';
 require_once __DIR__ . '/../../Objects/Shared/Response.php';
@@ -50,9 +50,24 @@ class ReadService
         $this->response = new Response();
     }
 
+    public function getAdminEvents()
+    {
+        $results = $this->readRepo->getAllEvents();
+
+        if ($results !== false && $results !== []) {
+            $sortedResults = $this->sortingService->removeArrayKeys($results);
+            $this->response->setData($sortedResults);
+            $this->response->setSuccess(true);
+        } else {
+            $this->response->setSuccess(false);
+        }
+
+        return $this->response;
+    }
+
     public function getGuestEvents(string $language)
     {
-        $results = $this->readRepo->getMenuByLanguage($language);
+        $results = $this->readRepo->getEventsByLanguage($language);
 
         if ($results !== false && $results !== []) {
             $this->sortGuestEvents($results, $language);
@@ -89,7 +104,7 @@ class ReadService
                 $item['categoryType'],
                 $item['pagePosition'],
                 $item['categoryId']
-                );
+            );
         } else {
             $category = new EventCategory(
                 $item['categoryVnName'],
@@ -116,11 +131,6 @@ class ReadService
             $item['usesEndTime'],
             $item['usesEndDate']
         );
-    }
-
-    public function getAdminEvents()
-    {
-
     }
 
 }

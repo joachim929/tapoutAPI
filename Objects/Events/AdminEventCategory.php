@@ -1,6 +1,6 @@
 <?php
 
-class BilingualEventCategory
+class AdminEventCategory
 {
 
     /**
@@ -43,9 +43,22 @@ class BilingualEventCategory
      */
     public $editedAt;
 
-    public function __construct()
-    {
+    /**
+     * @var bool
+     */
+    public $active;
 
+    public function __construct(?int $id, string $enName, string $vnName, string $type,
+                                int $position, ?DateTime $createdAt, ?DateTime $editedAt, bool $active)
+    {
+        $this->setId($id);
+        $this->setEnName($enName);
+        $this->setVnName($vnName);
+        $this->setType($type);
+        $this->setPosition($position);
+        $this->setCreatedAt($createdAt);
+        $this->setEditedAt($editedAt);
+        $this->setActive($active);
     }
 
     /**
@@ -144,6 +157,11 @@ class BilingualEventCategory
         $this->items = $items;
     }
 
+    public function addItem(AdminEventItem $item)
+    {
+        $this->items[] = $item;
+    }
+
     /**
      * @return mixed
      */
@@ -175,4 +193,21 @@ class BilingualEventCategory
     {
         $this->editedAt = $editedAt;
     }
+
+    /**
+     * @return bool
+     */
+    public function isActive() : bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool $active
+     */
+    public function setActive(bool $active)
+    {
+        $this->active = $active;
+    }
+
 }

@@ -2,8 +2,8 @@
 
 // Objects
 
-require_once __DIR__ . '/../../Objects/Events/BilingualEventCategory.php';
-require_once __DIR__ . '/../../Objects/Events/BilingualEventItem.php';
+require_once __DIR__ . '/../../Objects/Events/AdminEventCategory.php';
+require_once __DIR__ . '/../../Objects/Events/AdminEventItem.php';
 require_once __DIR__ . '/../../Objects/Events/EventCategory.php';
 require_once __DIR__ . '/../../Objects/Events/EventItem.php';
 require_once __DIR__ . '/../../Objects/Shared/Response.php';
