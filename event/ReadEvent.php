@@ -1,5 +1,4 @@
 <?php
-require_once '../ConnectDb.php';
 
 // Objects
 require_once '../Objects/Shared/Response.php';
@@ -17,19 +16,6 @@ class ReadEvent
     private $readService;
 
     // Variables
-
-    /**
-     * @var ConnectDb|null
-     */
-    private $conn;
-    /**
-     * @var mysqli
-     */
-    private $mysqli;
-    /**
-     * @var ConnectDb
-     */
-    private $connectDb;
     /**
      * @var Response
      */
@@ -50,10 +36,6 @@ class ReadEvent
     public function __construct()
     {
         $this->readService = new ReadService();
-
-        $this->connectDb = new ConnectDb();
-        $this->conn = $this->connectDb->getInstance();
-        $this->mysqli = $this->conn->getConnection();
 
         $this->response = new Response();
     }

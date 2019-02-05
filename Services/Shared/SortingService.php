@@ -146,4 +146,26 @@ class SortingService
         return $check;
     }
 
+    public function checkForAdminModule(?string $module): bool
+    {
+        $check = false;
+        if (isset($module) && is_string($module) && $module === 'Admin') {
+            $check = true;
+        }
+
+        return $check;
+    }
+
+    public function isValidTimeStamp(?string $timestamp)
+    {
+        $check = false;
+        if (isset($timestamp)) {
+            $check = ((string) (int) $timestamp === $timestamp)
+                && ($timestamp <= PHP_INT_MAX)
+                && ($timestamp >= ~PHP_INT_MAX);
+        }
+        return $check;
+    }
+
+
 }
