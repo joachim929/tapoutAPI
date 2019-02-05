@@ -55,6 +55,17 @@ class Response
         $this->success = $success;
     }
 
+    public function failed()
+    {
+        $this->setSuccess(false);
+    }
+
+    public function passed()
+    {
+        $this->setSuccess(true);
+    }
+
+
     /**
      * This function merges two Response objects
      * @param Response $response
